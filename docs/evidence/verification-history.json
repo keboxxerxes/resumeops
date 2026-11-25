@@ -1296,5 +1296,63 @@
       "Evidence-only follow-up changes need new exact-head CI; this result proves733730c only."
     ]
   },
-  "complete_legacy_records": "Each retired tracked file remains at immutable baseline Git commit/blob recorded in cleanup-inventory.json; no history rewriting"
+  "complete_legacy_records": "Each retired tracked file remains at immutable baseline Git commit/blob recorded in cleanup-inventory.json; no history rewriting",
+  "single_maintainer_governance": {
+    "status": "NOT RUN",
+    "reason": "Current governance source change requires independent local review and separately authorized private feature-branch push before fresh exact-revision Ubuntu CI",
+    "historical_baseline": "ad9ef1095bbcbcde8b7bf93f1e173dd6f162f52c",
+    "policy": {
+      "required_pull_requests": true,
+      "required_approving_review_count": 0,
+      "require_last_push_approval": false,
+      "require_code_owner_reviews": false,
+      "dismiss_stale_reviews": true,
+      "enforce_admins": true,
+      "required_strict_status": "verify",
+      "required_environment_reviewers": true,
+      "owner_must_be_eligible": true,
+      "prevent_self_review": false,
+      "can_admins_bypass": false,
+      "deployment_branches": [
+        {
+          "name": "main",
+          "type": "branch"
+        }
+      ],
+      "independent_ai_review_is_human_approval": false
+    },
+    "cloud_and_repository_setting_changes": "NOT RUN / NOT AUTHORIZED",
+    "local_observed_checks": [
+      {
+        "command": "node --test --test-name-pattern='single-maintainer protection|authenticated plan handoff|destroy requires|drift classifies|content accepts|verification stage' tests/security.test.mjs",
+        "exit_code": 0,
+        "tests": 6,
+        "note": "Selected existing six Windows-compatible cases by their explicit names; full seven-case suite still mandatory in Ubuntu"
+      },
+      {
+        "command": "node tests/additional-security.mjs",
+        "exit_code": 0
+      },
+      {
+        "command": "python scripts/check-repository.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python tests/repository-integrity.py",
+        "exit_code": 0,
+        "tests": 19
+      },
+      {
+        "command": "python scripts/security.py",
+        "exit_code": 0
+      }
+    ],
+    "local_full_security_attempt": {
+      "exit_code": 1,
+      "passed": 6,
+      "failed": 1,
+      "reason": "A negative-name selection attempt ran all seven cases; .tools/venv/bin/python is Linux-only and unavailable on Windows. No full-suite local PASS claimed; full Ubuntu run remains mandatory.",
+      "command": "node --test --test-name-pattern=\"^(?!repository policy rejects).*\" tests/security.test.mjs"
+    }
+  }
 }

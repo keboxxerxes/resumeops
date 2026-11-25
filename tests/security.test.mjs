@@ -7,18 +7,36 @@ import {verifyProtection} from '../scripts/gate.mjs';
 import {validateRevision,ASSETS} from '../scripts/content.mjs';
 import {confirmDestroy} from '../scripts/confirm.mjs';
 import {driftStatus} from '../scripts/drift.mjs';
-const environment={can_admins_bypass:false,protection_rules:[{type:'required_reviewers',prevent_self_review:true,reviewers:[{reviewer:{id:1}}]}],deployment_branch_policy:{custom_branch_policies:true,protected_branches:false}};
-const policies={branch_policies:[{name:'main',type:'branch'}]};
-const branch={enforce_admins:{enabled:true},required_pull_request_reviews:{required_approving_review_count:1,dismiss_stale_reviews:true,require_last_push_approval:true,bypass_pull_request_allowances:{users:[],teams:[],apps:[]}},required_status_checks:{strict:true,contexts:['verify']}};
-test('actual protection checks reject every bypass and wrong branch',()=>{
- assert.doesNotThrow(()=>verifyProtection(environment,policies,branch));
- for(const edit of [e=>e.can_admins_bypass=true,e=>e.protection_rules[0].prevent_self_review=false,e=>e.protection_rules[0].reviewers=[],e=>e.deployment_branch_policy.protected_branches=true]) {
-  const e=structuredClone(environment);edit(e);assert.throws(()=>verifyProtection(e,policies,branch));
+const owner='owner';
+const environment={can_admins_bypass:false,protection_rules:[{type:'required_reviewers',prevent_self_review:false,reviewers:[{type:'User',reviewer:{id:1,login:owner}}]}],deployment_branch_policy:{custom_branch_policies:true,protected_branches:false}};
+const policies={total_count:1,branch_policies:[{name:'main',type:'branch'}]};
+const branch={enforce_admins:{enabled:true},required_pull_request_reviews:{required_approving_review_count:0,dismiss_stale_reviews:true,require_last_push_approval:false,require_code_owner_reviews:false,bypass_pull_request_allowances:{users:[],teams:[],apps:[]}},required_status_checks:{strict:true,contexts:['verify']}};
+const verify=(env=environment,policy=policies,protection=branch,expectedOwner=owner)=>verifyProtection(env,policy,protection,expectedOwner);
+
+test('single-maintainer protection accepts owner approval and rejects malformed or permissive settings',()=>{
+ assert.doesNotThrow(()=>verify());
+ assert.doesNotThrow(()=>verify(environment,policies,branch,'OWNER'));
+ const extra=structuredClone(environment);extra.protection_rules[0].reviewers.push({type:'Team',reviewer:{id:2,slug:'operators'}});assert.doesNotThrow(()=>verify(extra));
+ for(const expectedOwner of [undefined,null,'','bad/owner','-owner','owner--name','owner name',42]) assert.throws(()=>verifyProtection(environment,policies,branch,expectedOwner));
+ for(const edit of [e=>e.can_admins_bypass=true,e=>delete e.can_admins_bypass,e=>e.protection_rules[0].prevent_self_review=true,e=>delete e.protection_rules[0].prevent_self_review,e=>e.protection_rules[0].prevent_self_review='false',e=>e.protection_rules[0].reviewers=[],e=>e.protection_rules[0].reviewers='owner',e=>e.protection_rules[0].reviewers=[{}],e=>e.protection_rules[0].reviewers=[{type:'User',reviewer:{id:1,login:'different'}}],e=>e.protection_rules[0].reviewers=[{type:'Team',reviewer:{id:2,slug:'owner'}}],e=>e.protection_rules[0].reviewers[0].reviewer.id='1',e=>e.protection_rules[0].reviewers[0].reviewer.id=1e20,e=>e.protection_rules[0].reviewers[0].reviewer.id=0,e=>e.protection_rules[0].reviewers[0].type='App',e=>e.deployment_branch_policy.protected_branches=true,e=>e.protection_rules=null,e=>e.protection_rules.push(e.protection_rules[0])]) {
+  const env=structuredClone(environment);edit(env);assert.throws(()=>verify(env));
  }
- for(const policy of [{branch_policies:[]},{branch_policies:[{name:'*',type:'branch'}]},{branch_policies:[{name:'main',type:'tag'}]}]) assert.throws(()=>verifyProtection(environment,policy,branch));
- const missing=structuredClone(branch);delete missing.required_pull_request_reviews.required_approving_review_count;assert.throws(()=>verifyProtection(environment,policies,missing));
- const b=structuredClone(branch);b.required_pull_request_reviews.bypass_pull_request_allowances.users=[{}];assert.throws(()=>verifyProtection(environment,policies,b));
+ for(const policy of [{total_count:0,branch_policies:[]},{total_count:1,branch_policies:[{name:'*',type:'branch'}]},{total_count:1,branch_policies:[{name:'main',type:'tag'}]},{total_count:2,branch_policies:[{name:'main',type:'branch'}]},{total_count:1,branch_policies:[{name:'main',type:'branch'},{name:'main',type:'tag'}]},{branch_policies:[{name:'main',type:'branch'}]},{total_count:'1',branch_policies:[{name:'main',type:'branch'}]}]) assert.throws(()=>verify(environment,policy));
+ for(const count of [undefined,null,'0',-1,0.5,1]) {
+  const protection=structuredClone(branch);if(count===undefined)delete protection.required_pull_request_reviews.required_approving_review_count;else protection.required_pull_request_reviews.required_approving_review_count=count;assert.throws(()=>verify(environment,policies,protection));
+ }
+ for(const edit of [b=>delete b.required_pull_request_reviews,b=>b.required_pull_request_reviews=null,b=>b.required_pull_request_reviews.require_last_push_approval=true,b=>delete b.required_pull_request_reviews.require_last_push_approval,b=>b.required_pull_request_reviews.require_code_owner_reviews=true,b=>delete b.required_pull_request_reviews.require_code_owner_reviews,b=>b.required_pull_request_reviews.dismiss_stale_reviews=false,b=>b.enforce_admins.enabled=false,b=>b.required_status_checks.strict=false,b=>b.required_status_checks.contexts=[],b=>b.required_status_checks.contexts='verify']) {
+  const protection=structuredClone(branch);edit(protection);assert.throws(()=>verify(environment,policies,protection));
+ }
+ for(const kind of ['users','teams','apps']) {
+  const protection=structuredClone(branch);protection.required_pull_request_reviews.bypass_pull_request_allowances[kind]=[{}];assert.throws(()=>verify(environment,policies,protection));
+  protection.required_pull_request_reviews.bypass_pull_request_allowances[kind]=false;assert.throws(()=>verify(environment,policies,protection));
+ }
+ for(const allowances of [undefined,null,{},[],{users:[],teams:[],apps:[],unknown:[]}]) {
+  const protection=structuredClone(branch);protection.required_pull_request_reviews.bypass_pull_request_allowances=allowances;assert.throws(()=>verify(environment,policies,protection));
+ }
 });
+
 test('authenticated plan handoff rejects tampering, wrong source, wrong operation and stale plans',()=>{
  process.env.PLAN_ENCRYPTION_KEY=Buffer.alloc(32,7).toString('base64');
  const sha='a'.repeat(40), bytes=Buffer.from('dummy plan, no infrastructure');
