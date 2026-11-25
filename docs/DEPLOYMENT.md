@@ -1,8 +1,46 @@
 # Deployment and operations
 
-**Operational activation PR preparation; execution disabled.** The maintainer reports bootstrap/site provisioning, encrypted remote-state migration/recovery, IAM rebinding and a no-change plan completed. The agent has not independently verified or repeated those AWS operations. Current authorization prepares workflow definitions, not AWS resource creation, IAM changes, visibility changes, plan/apply/destroy, website deployment or enabling the operations flag. Obtain separate explicit approval before any account-side command or launching AWS CloudShell: launching CloudShell creates a compute environment. Verification GO is not deployment authority.
+**Immutable OIDC remediation; no account-side execution authorized.** Activation PR2 was merged. The first content run passed the repository protection gate but failed STS authentication before asset preparation/upload. The correction below changes source for the three existing role trust policies; it does not change deployed IAM, enable operations or retry content deployment. Bootstrap/site provisioning and recovery remain maintainer-reported progress. Obtain separate explicit approval before any account-side command or launching AWS CloudShell: launching CloudShell creates a compute environment. Verification GO is not deployment authority.
 
 Terraform execution is Linux-first: GitHub-hosted Ubuntu is canonical for CI; one-time bootstrap may use an approved AWS CloudShell session or another trusted Linux amd64 host with the same pins. Native Windows Terraform is out of scope. Windows remains supported for website/VS Code/Codex work.
+
+## Existing production: immutable OIDC trust correction
+
+GitHub's [immutable subject reference](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims) documents the default for repositories created after July 15, 2026. ResumeOps accepts only `repo:OWNER@OWNER_ID/REPOSITORY@REPOSITORY_ID:environment:ENVIRONMENT`; names alone are not accepted. Required `repository_owner_id` and `repository_id` are canonical positive decimal strings, with no defaults. Terraform string inputs may coerce caller numbers to strings; quote IDs and preserve their exact metadata spelling. A valid-looking wrong ID will deny authentication, so syntactic validation never proves identity.
+
+The following is a **future authorized human procedure**, not verification performed here. Do not edit IAM in the console, change GitHub OIDC settings, use `-target`, import/recreate roles, migrate state again or rerun bootstrap from empty local state to work around this defect.
+
+1. Obtain approval for the exact reviewed remediation revision, existing bootstrap backend/state and three in-place trust-policy changes. Transfer only its Git archive to a trusted pinned Linux environment as described below. Use the existing short-lived federated operator identity with authorized bootstrap access, never GitHub OIDC to repair its own broken trust and never static credentials.
+2. Privately verify `full_name`, `owner.login`, `owner.id` and `id` from `GET /repos/OWNER/REPOSITORY` (for example `gh api repos/OWNER/REPOSITORY --jq '{repository: .full_name, owner: .owner.login, repository_owner_id: (.owner.id|tostring), repository_id: (.id|tostring)}'` on the trusted operator terminal). Cross-check the exact names/IDs against the maintainer's private authenticated OIDC/CloudTrail evidence. Do not publish tokens, raw events or response dumps. Do not infer IDs from names, author IDs or an unrelated repository.
+3. Add only the two verified quoted ID values to the **existing ignored private bootstrap variables**, using the updated [example](../infra/bootstrap/bootstrap.example.tfvars). Preserve the deployed name/region, provider ARN, distribution/OAC/header-policy bindings, budget recipient and all prior values. Do not overwrite the private configuration from the example. Preserve the existing ignored partial backend and backend file, the bootstrap key, encryption and native locking. Retain approved encrypted recovery copies; do not download state into public evidence.
+4. Run the following only after the separate account-side authorization. Use a private terminal without log streaming, shell tracing or session capture; plan files/JSON contain sensitive values. Never upload them to GitHub.
+
+```sh
+set -euo pipefail
+umask 077
+mkdir -p .local
+# Existing backend.tf must be present; never initialize empty local state.
+test -f infra/bootstrap/backend.tf
+test -f .local/bootstrap.s3.tfbackend
+test -f .local/bootstrap.tfvars
+terraform -chdir=infra/bootstrap init -input=false -lockfile=readonly -backend-config=../../.local/bootstrap.s3.tfbackend
+terraform -chdir=infra/bootstrap validate -no-color
+# Do not use -upgrade, -migrate-state, -reconfigure, -refresh=false, -lock=false or -target.
+terraform -chdir=infra/bootstrap plan -input=false -lock-timeout=5m -var-file=../../.local/bootstrap.tfvars -out=../../.local/immutable-oidc.tfplan
+terraform -chdir=infra/bootstrap show -json ../../.local/immutable-oidc.tfplan > .local/immutable-oidc.plan.json
+```
+
+Privately inspect the exact saved plan and JSON. It must show **0 to add, 3 to change, 0 to destroy**, with only `aws_iam_role.github["plan"]`, `aws_iam_role.github["apply"]` and `aws_iam_role.github["content"]` using `actions: ["update"]`; no replacement/import/move, output change, unknown trust values or other resource changes. Compare each role's before/after attributes: only `assume_role_policy` may change. Decode its JSON and verify only the legacy subject list becomes the exact immutable list below, keeping the original principal ARN, `Version`, `Effect`, `Action`, audience and `StringEquals` unchanged. Order-only JSON encoding differences are not permission changes. Existing role names/ARNs, inline policies, CloudFront bindings, state/budget/provider/resources must remain identical. An unexpected diff is **STOP/NO-GO**; investigate configuration/state drift rather than hiding it with targeting. No production plan was executed by this remediation, so the expected shape is not an observed result.
+
+| Existing role | Only permitted immutable environment subjects |
+|---|---|
+| plan | `production-plan`, `production-drift` |
+| apply | `production-apply` |
+| content | `production-content` |
+
+Each suffix is attached to the same exact `repo:OWNER@OWNER_ID/REPOSITORY@REPOSITORY_ID:environment:` prefix. No legacy subjects, wildcard, `StringLike`, alternate audience or additional provider is acceptable. Record a private digest of the reviewed saved plan and obtain explicit approval for **that file**. Only after separate IAM/apply authorization may the human run `terraform -chdir=infra/bootstrap apply ../../.local/immutable-oidc.tfplan`; this SDD execution does not perform it. No state editing or migration is required for in-place role trust updates.
+
+After that separately authorized update, obtain a fresh bootstrap plan expecting no changes. Separately authorize protected main-only GitHub OIDC authentication checks for all four environments: plan/drift use the plan role, apply uses apply, content uses content. A mocked CI success is not proof of deployed trust or STS. Do not retry content/apply/destroy workflows just to test authentication: they have additional effects. A successful read-only identity check must not disclose account details. Keep the operations flag unchanged here; enabling it, content deployment, apply and teardown require their own decisions. Retain private sanitized outcomes and stop if any role can assume another role's environment.
 
 ## One-time bootstrap prerequisites
 
@@ -61,7 +99,7 @@ The operator must supply the authenticated key/files, not copy an unreviewed fin
 
 ### 3. Bootstrap separate state/IAM/budget
 
-Create ignored private `.local/bootstrap.tfvars` from the [bootstrap example](../infra/bootstrap/bootstrap.example.tfvars). Choose a unique name and actual exact repository; supply any existing OIDC ARN privately. Never commit account identifiers, role ARNs, backend details or recipient address. Read the budget email without echoing it or placing its value in history:
+Create ignored private `.local/bootstrap.tfvars` from the [bootstrap example](../infra/bootstrap/bootstrap.example.tfvars). Choose a unique name and actual exact repository; supply verified quoted `repository_owner_id` and `repository_id` from that repository metadata, plus any existing OIDC ARN privately. Never commit account identifiers, role ARNs, backend details or recipient address. Read the budget email without echoing it or placing its value in history:
 
 ```sh
 mkdir -p .local

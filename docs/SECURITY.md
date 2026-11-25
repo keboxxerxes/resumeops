@@ -1,5 +1,14 @@
 # Security review and control exceptions
 
+## Immutable OIDC identity remediation
+
+The first content run [45713987991](https://github.com/keboxxerxes/resumeops/actions/runs/45713987991) passed the GitHub protection gate but its twelve OIDC assumptions were denied; asset preparation/upload were skipped. Job metadata and filtered logs independently confirm these outcomes. The maintainer reports CloudTrail's immutable subject; no raw CloudTrail, JWT, AWS identifiers, state or keys are published. The bootstrap source used the legacy name-only subject for all three roles, inconsistent with [GitHub's immutable format](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims).
+
+Required canonical positive decimal-string `repository_owner_id` and `repository_id` bind exact names/IDs with `@` separators. No legacy fallback or wildcard is accepted. Wrong but syntactically valid IDs are rejected by exact trust matching, not guessed by Terraform validation. Review private metadata when configuring them. The plan role permits only production-plan/drift; apply and content each permit only their own environment. Exact provider, `StringEquals`, STS audience and all permission policies remain unchanged. Numeric-looking string inputs follow Terraform string coercion; operators must quote exact IDs.
+
+The immutable format mitigates namespace reuse; it does not replace trusted-main protection, environment approval, current-revision checks, exact private plan review, OIDC gates, state locks or least privilege. The required fresh CI must render the actual Terraform policies using synthetic mocked AWS data, without connecting to AWS; execution is pending publication authorization. Live IAM/STS correctness remains unverified until a separately authorized operator applies and tests the narrowly reviewed correction. See the [existing-production repair procedure](DEPLOYMENT.md#existing-production-immutable-oidc-trust-correction). Never revert GitHub to legacy claims to regain access.
+
+
 ## Scope and release boundary
 
 Linux CLI and GitHub-hosted Ubuntu CI are the supported verification environments. Native Windows Terraform support and troubleshooting are out of scope; the earlier certificate-substitution observation is a historical decision, not an active failure gate or a reason to weaken TLS. The cleanup revision must pass its own independent checks: the successful CI for an earlier revision is evidence of that revision only. See [verification](VERIFICATION.md) and [decisions](decisions/001-linux-first-terraform.md).

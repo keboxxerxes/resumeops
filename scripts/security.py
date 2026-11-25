@@ -181,6 +181,40 @@ def inspect_workflow(path,text):
         return errors+['Malformed or ambiguous workflow structure']
 
 
+def immutable_id_block(source,name):
+    match=re.search(r'variable\s+"'+re.escape(name)+r'"\s*\{',source)
+    if not match:raise ValueError('Required immutable ID input missing')
+    depth=0;quoted=False;escaped=False
+    for index in range(match.end()-1,len(source)):
+        char=source[index]
+        if quoted:
+            if escaped:escaped=False
+            elif char=='\\':escaped=True
+            elif char=='"':quoted=False
+        elif char=='"':quoted=True
+        elif char=='{':depth+=1
+        elif char=='}':
+            depth-=1
+            if depth==0:return source[match.start():index+1]+'\n'
+    raise ValueError('Malformed immutable ID declaration')
+
+
+def immutable_trust_errors(main,variables):
+    errors=[]
+    required=['repository_owner = split("/", var.repository)[0]','repository_name  = split("/", var.repository)[1]',
+              '"${local.repository_owner}@${var.repository_owner_id}/${local.repository_name}@${var.repository_id}"',
+              '"repo:${local.oidc_repository}:environment:${env}"','"token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"']
+    if not all(fragment in main for fragment in required) or '"repo:${var.repository}:environment:${env}"' in main:
+        errors.append('Exact immutable GitHub owner/repository subject required; legacy fallback forbidden')
+    for name in ['repository_owner_id','repository_id']:
+        try:
+            block=immutable_id_block(variables,name)
+            if not re.search(r'\btype\s*=\s*string\b',block) or not re.search(r'\bnullable\s*=\s*false\b',block) or re.search(r'\bdefault\s*=',block) or 'can(regex("^[1-9][0-9]*$", var.'+name+'))' not in block:
+                errors.append('Immutable GitHub IDs must be required nonnullable canonical decimal strings')
+        except ValueError:errors.append('Required immutable GitHub ID input missing or malformed')
+    return errors
+
+
 def inspect(files):
     errors=[]
     for path,text in files.items():
@@ -193,6 +227,8 @@ def inspect(files):
             if 'viewer_protocol_policy' in text and 'redirect-to-https' not in text: errors.append('HTTPS redirect missing')
             if re.search(r'"token.actions.githubusercontent.com:sub"\s*=\s*"[^"\n]*\*',text): errors.append('wildcard OIDC trust')
             if re.search(r'Action\s*=\s*\[?\s*"(?:iam:\*|sts:AssumeRole|\*)"',text): errors.append('runtime escalation')
+    if 'infra/bootstrap/main.tf' in files:
+        errors += immutable_trust_errors(files['infra/bootstrap/main.tf'],files.get('infra/bootstrap/variables.tf',''))
     return errors
 
 

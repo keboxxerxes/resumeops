@@ -36,6 +36,8 @@ The origin has all S3 public-access blocks, bucket ownership enforcement, explic
 
 Bootstrap state is separate, encrypted/versioned, publicly blocked and protected by `prevent_destroy`; its noncurrent versions are bounded at 90 days. Native S3 lockfiles replace any need for DynamoDB. Use distinct explicit keys `bootstrap/terraform.tfstate` and `site/production/terraform.tfstate`, never Terraform workspaces. Site destruction cannot delete bootstrap resources or state.
 
+GitHub trust subjects bind both exact names and required immutable owner/repository IDs: `repo:OWNER@OWNER_ID/REPOSITORY@REPOSITORY_ID:environment:ENVIRONMENT`. `StringEquals` permits only the STS audience and plan/drift environments for the plan role, apply for apply, and content for content. Legacy name-only subjects are rejected; ID validation checks syntax, while the operator must verify the actual identity privately.
+
 Plan/drift reads the exact site state and can modify only its precise lock object. Apply can write that state but cannot delete it, administer IAM or change bootstrap. Content can write four explicit object keys and invalidate the exact distribution. Runtime CloudFront reads/mutations bind to exact distribution/OAC/header-policy IDs. To avoid broad create/retag escalation, first creation and later replacement belong to a separately authorized local Linux operator, followed by exact-ID rebinding through bootstrap.
 
 ## Delivery and operations
