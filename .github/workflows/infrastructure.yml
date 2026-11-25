@@ -23,7 +23,7 @@ env:
   TF_VAR_region: ${{ vars.AWS_REGION }}
 jobs:
   plan:
-    if: github.ref == 'refs/heads/main' && vars.ALLOW_AWS_OPERATIONS == 'true'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && vars.ALLOW_AWS_OPERATIONS == 'true'
     runs-on: ubuntu-24.04
     environment: production-plan
     timeout-minutes: 20
@@ -33,11 +33,11 @@ jobs:
     env:
       OPERATION: ${{ inputs.operation }}
       CONFIRMATION: ${{ inputs.confirmation }}
-      PLAN_ENCRYPTION_KEY: ${{ secrets.PLAN_ENCRYPTION_KEY }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+          ref: ${{ github.sha }}
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: '24.22.2'
@@ -63,6 +63,8 @@ jobs:
           set -euo pipefail
           terraform -chdir=infra/site init -input=false -lockfile=readonly -backend-config="bucket=$STATE_BUCKET" -backend-config="region=$AWS_REGION" -backend-config='key=site/production/terraform.tfstate' -backend-config=encrypt=true -backend-config=use_lockfile=true > /dev/null 2>&1
       - name: Fresh private plan and encrypted handoff
+        env:
+          PLAN_ENCRYPTION_KEY: ${{ secrets.PLAN_ENCRYPTION_KEY }}
         run: |
           set -euo pipefail
           umask 077
@@ -81,6 +83,7 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
   apply:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && vars.ALLOW_AWS_OPERATIONS == 'true'
     needs: plan
     runs-on: ubuntu-24.04
     environment: production-apply
@@ -91,11 +94,11 @@ jobs:
     env:
       OPERATION: ${{ inputs.operation }}
       CONFIRMATION: ${{ inputs.confirmation }}
-      PLAN_ENCRYPTION_KEY: ${{ secrets.PLAN_ENCRYPTION_KEY }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+          ref: ${{ github.sha }}
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: '24.22.2'
@@ -125,6 +128,8 @@ jobs:
           name: encrypted-plan
           path: .local/handoff
       - name: Apply exact privately reviewed plan
+        env:
+          PLAN_ENCRYPTION_KEY: ${{ secrets.PLAN_ENCRYPTION_KEY }}
         run: |
           set -euo pipefail
           umask 077

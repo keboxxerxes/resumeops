@@ -2,7 +2,19 @@
 
 Canonical environment: GitHub-hosted Ubuntu 24.04, Terraform 1.17.2, AWS provider 6.74.0. Native Windows Terraform is **OUT OF SCOPE**. Website development/browser tests remain supported on Windows. There are no production Node dependencies; both locked devDependencies are used by Playwright and axe. Checkov is installed fresh for Linux verification only.
 
-## Current protection API compatibility correction
+## Current operational workflow activation preparation
+
+The existing main contains merged PR1. The maintainer reports post-merge CI, AWS bootstrap15resources, encrypted/versioned S3 state migration, website10resources, production state verification, CloudShell recovery, IAM resource rebinding and a no-change post-rebinding plan. These AWS outcomes are maintainer-reported, not independently asserted by this agent; no account identifiers or private deployment evidence are published.
+
+The authorized local change moves the three existing operational templates into infrastructure/content/drift workflow definitions and adds an isolated protected GitHub-only preflight. Exactly five workflow roles are expected. CI remains credential-free for PRs/branch pushes. Credentialed jobs require allowed manual/drift-schedule events, current trusted main, the explicit operations flag, protected owner approval and API protection checks before OIDC. Plan encryption/review/explicit protected apply approval, rollback, state locks and typed site-only teardown remain. Preflight is manual protected main-only, reads all four environments with the restricted GH token, and cannot request OIDC/AWS credentials or run Terraform/backend/plan/deployment operations. It deliberately works with AWS operations disabled.
+
+Independent read-only checks found ALLOW_AWS_OPERATIONS absent via specific repository/four-environment HTTP404 responses, not a literal configured false. The exact-true guards therefore remain off. The agent does not change that flag, IAM, resources, protection settings or content. Restricted-token execution is NOT RUN: owner CLI reads/mocks cannot prove the secret works; the protected preflight becomes a separate safe manual check after an authorized merge.
+
+Before any push, independently review the exact public source/diff/privacy inventory and request human publication authorization. Full fresh Ubuntu CI must then check every declared workflow (all pins/role semantics/order), retain the original22records and all15exceptions, validate both real Terraform roots with readonly locks/backend disabled, and exercise preflight flag-off/API denial plus unsafe operational mutations. Verify latest remote branch SHA and actual PR synthetic checkout parents/tree, full logs/artifacts/all exits. No older successful revision is reused as a pass. Local/source handoff results and actual post-push status are separate; a restricted-token/live AWS result is never inferred from CI. Final verdict is for merging the activation source only; no merge or operational execution is authorized here.
+
+Actual local results before publication: all5validroles and72unsafe semantic mutations accepted/rejected as expected;19integrity cases,26provenance resolver fixtures, six Windows-compatible Node cases and the API/preflight/plan negatives passed. Intended-source guardrails and graph checks exited0. A public-only70file snapshot secret scan found no leaks; no ignored deployment input/state was scanned. Full seven-case Node suite, actionlint and real Terraform validation remain mandatory in fresh Ubuntu CI, not claimed passed locally. Exact commands and the approved path mapping are retained in the existing [structured history](evidence/verification-history.json).
+
+## Historical protection API compatibility correction
 
 The user authorized a reviewed correction on the existing `single-maintainer-governance` branch/PR1, followed by credential-free Ubuntu verification and a final merge recommendation. Do not merge or change repository visibility/protections, operational workflows, AWS resources/credentials or IAM.
 
@@ -68,13 +80,13 @@ Pinned CI installs official checksum-verified tools, exact npm dependencies and 
 | Each root readonly init + real validate | `-backend=false -input=false -lockfile=readonly`; provider-schema validation, not static substitution |
 | TFLint both roots | Existing recommended rules |
 | Checkov IaC | Complete graph and15individually reviewed resource-specific exceptions |
-| Workflow syntax + guardrails | OnlyCIactive;3exactinerttemplates; pins/permissions/triggers |
+| Workflow syntax + guardrails | Five exact workflow roles; CI isolation, protected no-AWS preflight, trusted main/flag/environment gates and gate-before-OIDC ordering; pins/permissions/triggers |
 | Source/privacy scans | Exact intended index/history; no contacts, secrets, state/plans/logs/keys |
 | Dependency provenance | Official action pins/versions, all17providerhashes, runtime IAM action names |
 | Negative/adversarial tests | Real publicS3/unsafe-workflow rejection, IAM mutations, failed approvals/API cases, AES-GCM age/integrity/source, typed teardown |
 | Drift runner test | Actual template shell with synthetic0/1/2 function; no real plan |
 | Browser/axe/local smoke | Desktop/mobile, keyboard/reduced motion/metadata, no remote requests/overflow |
-| Repository integrity + negative tests | Docs/links, code/command/asset references, TFmoduleboundaries, artifactprivacy, inertoperations andorphans |
+| Repository integrity + negative tests | Docs/links, code/command/asset references, TFmoduleboundaries, artifactprivacy, isolated workflow roles andorphans |
 | Lock immutability | Both locks SHA256 before/after; changes fail |
 
 Current runner emits **22** records: the original20 plus repository integrity and its negative cases. Unit counts are7security,19repository-integrity and6browser, plus scanner/IAM/API/crypto/drift cases. All these counts were observed in the new implementation run; earlier Windows security prerequisite failure remains historical and is not relabeled as a pass.
@@ -120,13 +132,14 @@ Actual post-cleanup commands all exit0: `python scripts/check-repository.py`, `p
 
 ## Final tree and readiness
 
-Actual retained source tree (69files;11canonicalMarkdownfiles and3essentialJSON records):
+Current intended source tree (70files; original cleanup snapshot was69; activation relocates3workflows and adds only1necessary preflight workflow):
 
 ```text
 .codex/agents/builder.toml
 .codex/agents/planner.toml
 .codex/agents/reviewer.toml
 .github/workflows/ci.yml
+.github/workflows/preflight.yml
 .gitignore
 .gitleaks.toml
 .tflint.hcl
@@ -189,9 +202,9 @@ tests/repository-integrity.py
 tests/security.test.mjs
 tests/serve.mjs
 tests/site.spec.mjs
-workflow-templates/content.yml
-workflow-templates/drift.yml
-workflow-templates/infrastructure.yml
+.github/workflows/content.yml
+.github/workflows/drift.yml
+.github/workflows/infrastructure.yml
 ```
 
 The separately authorized private push and fresh implementation run succeeded. Subsequent evidence-only HEADs require their own full CI and independent review; consult that exact commit's Actions run/artifact rather than inferring a pass from this document.
@@ -217,6 +230,6 @@ terraform -chdir=infra/site init -backend=false -input=false -lockfile=readonly
 terraform -chdir=infra/site validate -no-color
 ```
 
-The recursive format command covers both roots and their module. TFLint both roots, actionlint active/inert workflows, secret/provenance scans, actual negative scanner/adversarial cases and drift shell tests all exited0. Checkov observed67passed,0failed,15individually reviewed skips; repository-integrity19, Node security7 and browser/axe6 all passed. Both17-hash locks and all version constraints remain unchanged. Full22ordered commands/exits, run/job/artifact identities/digests and independent findings are retained in [structured history](evidence/verification-history.json). No raw job logs were published. Native Windows Terraform is **OUT OF SCOPE**, not PASS.
+These commands/results describe the historically reviewed implementation revision above, not the current activation candidate. The recursive format command covered both roots and their module. TFLint both roots, actionlint for the then-active CI and three then-inert templates, secret/provenance scans, actual negative scanner/adversarial cases and drift shell tests all exited0 at that recorded revision. Actionlint against the current five-workflow activation candidate is NOT RUN at local source handoff and requires fresh Ubuntu CI. Checkov observed67passed,0failed,15individually reviewed skips; repository-integrity19, Node security7 and browser/axe6 all passed. Both17-hash locks and all version constraints remain unchanged. Full22ordered commands/exits, run/job/artifact identities/digests and independent findings are retained in [structured history](evidence/verification-history.json). No raw job logs were published. Native Windows Terraform is **OUT OF SCOPE**, not PASS.
 
 Remaining live checks are NOT RUN: GitHub protection availability, actual OIDC/least privilege, lock/recovery, origin denial, HTTPS/deploy/metadata, drift, rollback, budget delivery and authorized temporary teardown. Source/cleanup GO never authorizes account changes or public visibility.

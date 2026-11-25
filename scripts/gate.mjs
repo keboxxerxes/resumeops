@@ -70,9 +70,9 @@ export async function github(path) {
   if (!response.ok) throw new Error('Cannot prove repository protection: API access failed');
   return response.json();
 }
-export async function gate(envs) {
-  if (process.env.ALLOW_AWS_OPERATIONS !== 'true' || process.env.GITHUB_REF !== 'refs/heads/main' || !/^[a-f0-9]{40}$/.test(process.env.GITHUB_SHA ?? ''))
-    throw new Error('Live operations disabled or revision is not trusted main');
+async function verifyTrustedMain(envs) {
+  if (process.env.GITHUB_REF !== 'refs/heads/main' || !/^[a-f0-9]{40}$/.test(process.env.GITHUB_SHA ?? ''))
+    throw new Error('Revision is not trusted main');
   const repository = (process.env.GITHUB_REPOSITORY ?? '').split('/');
   if (repository.length !== 2 || !validOwner(repository[0]) || !/^[a-z0-9_.-]{1,100}$/i.test(repository[1]) || ['.','..'].includes(repository[1]))
     throw new Error('Exact valid repository owner/name required');
@@ -85,5 +85,16 @@ export async function gate(envs) {
   if (head.object.sha !== process.env.GITHUB_SHA) throw new Error('Workflow revision is no longer current main');
   const branch = await github('branches/main/protection');
   for (const env of envs) verifyProtection(await github(`environments/${env}`), await github(`environments/${env}/deployment-branch-policies`), branch, repositoryMetadata, process.env.GITHUB_REPOSITORY);
+}
+export async function gate(envs) {
+  if (process.env.ALLOW_AWS_OPERATIONS !== 'true') throw new Error('Live operations disabled');
+  const allowedEvent=process.env.GITHUB_EVENT_NAME==='workflow_dispatch'
+    || (process.env.GITHUB_EVENT_NAME==='schedule' && Array.isArray(envs) && envs.length===1 && envs[0]==='production-drift');
+  if (!allowedEvent) throw new Error('Operational execution requires its approved manual or drift-schedule event');
+  await verifyTrustedMain(envs);
+}
+export async function preflight() {
+  if (arguments.length!==0 || process.env.GITHUB_EVENT_NAME!=='workflow_dispatch') throw new Error('Read-only preflight requires a manual event');
+  await verifyTrustedMain([...productionEnvironments]);
 }
 if (process.argv[1]?.endsWith('gate.mjs')) gate(process.argv.slice(2)).then(() => console.log('Protection and trusted revision verified')).catch(() => { console.error('Protection gate failed; no AWS access permitted'); process.exitCode = 1; });

@@ -16,7 +16,7 @@ ENTRYPOINTS={
  '.codex/agents/planner.toml','.codex/agents/builder.toml','.codex/agents/reviewer.toml',
  'site/index.html','infra/bootstrap/versions.tf','infra/bootstrap/.terraform.lock.hcl',
  'infra/site/versions.tf','infra/site/.terraform.lock.hcl'}
-TEMPLATES={'workflow-templates/content.yml','workflow-templates/drift.yml','workflow-templates/infrastructure.yml'}
+WORKFLOWS={'.github/workflows/ci.yml','.github/workflows/preflight.yml','.github/workflows/content.yml','.github/workflows/drift.yml','.github/workflows/infrastructure.yml'}
 IGNORED_ROOTS={'.git','.tools','.local','node_modules','test-results','playwright-report','dist','__pycache__'}
 GENERATED={'infra/bootstrap/backend.tf'}
 SOURCE_PATH=re.compile(r'(?<![\w./-])((?:scripts|tests|site|infra|requirements|workflow-templates|docs)/[A-Za-z0-9_./-]+\.[A-Za-z0-9_.-]+)')
@@ -41,14 +41,14 @@ def inspect(root,files,documents=CANONICAL_DOCUMENTS,entrypoints=ENTRYPOINTS):
  root=root.resolve();errors=[];edges={name:set() for name in files}
  forbidden={name for name in files if private_payload(name)}
  if forbidden:errors.append('Intended source contains ignored/private payload; remove it from the source inventory')
- required=set(documents)|set(entrypoints)|TEMPLATES
+ required=set(documents)|set(entrypoints)|WORKFLOWS
  errors += ['Missing required source: '+name for name in sorted(required-files)]
  markdown={name for name in files if name.endswith('.md')}
  errors += ['Noncanonical Markdown file: '+name for name in sorted(markdown-set(documents))]
  active={name for name in files if name.startswith('.github/workflows/') and name.endswith(('.yml','.yaml'))}
- if active!={'.github/workflows/ci.yml'}:errors.append('Only ci.yml may be executable; operational workflows must remain inert')
+ if active!=WORKFLOWS:errors.append('Exactly the five approved CI/preflight/operational workflows are required')
  archived={name for name in files if name.startswith('workflow-templates/') and name.endswith(('.yml','.yaml'))}
- if archived!=TEMPLATES:errors.append('Missing or unexpected inert workflow template')
+ if archived:errors.append('Operational workflows must not be duplicated in the retired template directory')
  for name in sorted(name for name in files if name.startswith('docs/evidence/')):
   if name in forbidden:continue
   if not name.endswith('.json'):errors.append('Evidence directory permits reviewed JSON records only: '+name)
@@ -140,4 +140,4 @@ if __name__=='__main__':
   print('Repository integrity check could not complete:',type(error).__name__);raise SystemExit(1)
  if failures:
   print('\n'.join(failures));raise SystemExit(1)
- print('PASS: canonical documents, local dependencies, Terraform modules, inert workflows and source reachability')
+ print('PASS: canonical documents, local dependencies, Terraform modules, workflow architecture and source reachability')

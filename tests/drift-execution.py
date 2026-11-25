@@ -7,7 +7,7 @@ if sys.platform != "linux":
 root=pathlib.Path.cwd(); bash=shutil.which('bash')
 (root/'.local/reviewer').mkdir(parents=True,exist_ok=True)
 if not bash: raise SystemExit('Bash is required for runner-shell integration tests')
-workflow=yaml.safe_load((root/'workflow-templates/drift.yml').read_text())
+workflow=yaml.safe_load((root/'.github/workflows/drift.yml').read_text())
 block=next(s['run'] for s in workflow['jobs']['drift']['steps'] if s.get('name')=='Detect without applying')
 with tempfile.TemporaryDirectory(dir=root/'.local/reviewer') as directory:
     for code,label,expected in [(0,'NO_DRIFT',0),(1,'Operation failed',1),(2,'DRIFT',1)]:

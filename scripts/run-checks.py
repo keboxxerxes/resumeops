@@ -15,7 +15,7 @@ TOOLS=ROOT/'.tools'
 PYTHON=pathlib.Path(sys.executable)
 TF=os.environ.get('RESUMEOPS_TERRAFORM','terraform')
 CHECKOV=TOOLS/'venv'/'bin'/'checkov'
-workflows=[ROOT/'.github/workflows/ci.yml',*(ROOT/'workflow-templates').glob('*.yml')]
+workflows=sorted((ROOT/'.github/workflows').glob('*.yml'))
 locks=[ROOT/p/'.terraform.lock.hcl' for p in ['infra/bootstrap','infra/site']]
 original={str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in locks}
 environment={k:v for k,v in os.environ.items() if not k.startswith('AWS_')}
@@ -27,7 +27,7 @@ for root in ['infra/bootstrap','infra/site']:
             (root+' TFLint',[str(TOOLS/'tflint'),'--chdir='+root,'--config='+str(ROOT/'.tflint.hcl')])]
 checks += [
  ('Checkov IaC',[str(PYTHON),str(CHECKOV),'-d','infra','--framework','terraform','--compact','--quiet','--skip-download']),
- ('Active and archived workflow syntax',[str(TOOLS/'actionlint'),*[str(path) for path in workflows]]),
+ ('Active workflow syntax',[str(TOOLS/'actionlint'),*[str(path) for path in workflows]]),
  ('Source secret scan',[str(TOOLS/'gitleaks'),'dir','.','--redact','--no-banner']),
  ('Workflow and IaC guardrails',[str(PYTHON),'scripts/security.py']),
  ('Repository links and dependency integrity',[str(PYTHON),'scripts/check-repository.py']),

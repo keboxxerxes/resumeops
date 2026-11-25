@@ -1,0 +1,26 @@
+name: Read-only protection preflight
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preflight:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: production-plan
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.22.2'
+      - name: Verify current main and all production protections
+        env:
+          GH_PROTECTION_TOKEN: ${{ secrets.GH_PROTECTION_TOKEN }}
+        run: >-
+          node --input-type=module -e "import { preflight } from './scripts/gate.mjs'; try { await preflight(); console.log('Read-only protection preflight passed'); } catch { console.error('Read-only protection preflight failed'); process.exit(1); }"
