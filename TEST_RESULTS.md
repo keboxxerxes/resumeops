@@ -1,40 +1,51 @@
 # Test results
 
-> Private Ubuntu CI verification is now explicitly authorized by the user (2026-11-25), including creation of a private `resumeops` repository and reviewed source commits/pushes. Public publication, AWS credentials/resources/IAM and Terraform apply/destroy remain prohibited. The approved SPEC amendment permits independently inspected successful credential-free CI validation of both pinned roots as the implementation gate; Windows remains a separate environment verdict. At this preparation point no hosted CI success is claimed. Only `ci.yml` is executable; the three operational workflows are inert source under `workflow-templates/` and cannot be dispatched or scheduled. Restoration requires a separately authorized enabling change.
+Existing SDD cycle, private Ubuntu verification, 2026-11-25. No unexecuted test is passed and no deployment is implied.
 
-Continuation of the existing SDD cycle, 2026-11-25. Results below are observed, not planned. Exact commands, working directories, exit codes and scanner summaries: [independent continuation evidence](docs/reviewer/continuation-commands.json) and [authorized orchestrator diagnostics](docs/continuation/orchestrator-diagnostics.json). Earlier-cycle evidence remains in `docs/reviewer/commands.json` and `docs/orchestrator-checks.json`.
+Verified implementation commit: [`48f21a8f78f8d968dbf87d451b050492558bb4e4`](https://github.com/keboxxerxes/resumeops/commit/48f21a8f78f8d968dbf87d451b050492558bb4e4). Actual [Ubuntu run 45613932613](https://github.com/keboxxerxes/resumeops/actions/runs/45613932613) / [verify job 139204326432](https://github.com/keboxxerxes/resumeops/actions/runs/45613932613/job/139204326432) completed **successfully**. The independent reviewer fetched the actual job metadata, full logs and artifact, matched the exact SHA/runner and confirmed all 19 command exits plus the lockfile immutability check were 0. This is actual Terraform validation, not a static-scanner substitute. Sanitized evidence: [successful-ci-run.json](docs/github/successful-ci-run.json) and [independent run record](docs/reviewer/github/run-45613932613.json).
 
-| Applicable verification | Actual current result | Boundary |
+## Successful hosted checks
+
+| Actual command/check | Result |
+|---|---|
+| `terraform version -json` | PASS, exit 0; exact 1.17.2 |
+| `terraform fmt -check -recursive infra` | PASS, exit 0; both roots and reusable module |
+| `terraform -chdir=infra/bootstrap init -backend=false -input=false -lockfile=readonly` | PASS, exit 0; official hashicorp/aws 6.74.0, no remote backend |
+| `terraform -chdir=infra/bootstrap validate -no-color` | PASS, exit 0; actual log: configuration valid |
+| `terraform -chdir=infra/site init -backend=false -input=false -lockfile=readonly` | PASS, exit 0; same pins/isolation |
+| `terraform -chdir=infra/site validate -no-color` | PASS, exit 0; actual log: configuration valid |
+| TFLint each root, existing recommended rules | PASS, exit 0 each |
+| Checkov 3.4.11 IaC | PASS, exit 0; 67 passed, 0 failed, 15 individually justified resource-specific skips, 0 parsing errors |
+| actionlint, active CI plus three inert templates | PASS, exit 0 |
+| Gitleaks source secret scan | PASS, exit 0; hidden/tracked source included, only documented local dependency/cache exclusions |
+| Workflow/IaC and verification-stage guardrails | PASS, exit 0; only CI executable; no operational credentials/execution path |
+| Official dependency and cross-platform lock provenance | PASS, exit 0; action SHA pins, registries, both reviewed content hashes and all 15 original official archive hashes |
+| Actual public-S3 negative scanner | PASS, harness exit 0; actual Checkov CKV_AWS_20 rejects fixture |
+| Independent IAM/unsafe-workflow scanner cases | PASS, exit 0; five source mutations, actual CKV_GHA_2 and malformed-workflow actionlint rejection |
+| Node security/negative suite | PASS, exit 0; 7 tests |
+| Independent API and plan-crypto adversarial cases | PASS, exit 0; local dummy bytes only, no Terraform plan produced |
+| Actual archived drift shell with synthetic Terraform function | PASS, exit 0; synthetic 0/1/2 captured distinctly; no real plan/apply or AWS operation |
+| Browser, axe, keyboard, reduced motion, metadata/local HTTP smoke | PASS, exit 0; 6 desktop/mobile cases |
+| SHA256 of both lockfiles before versus after all checks | PASS, internal exit 0; readonly CI did not mutate either lock |
+
+The artifact contains all 20 ordered records (19 subprocess commands and one internal immutability assertion), source SHA and Linux runner OS. Job setup identifies the GitHub Actions runner group/Ubuntu 24.04; the reviewer matched the remote commit/workflow and inspected actual full logs, not builder reports or a green badge alone. GitHub token permissions are narrowly read-only for source checkout; no AWS/OIDC/custom secret credentials were supplied. Only CI is registered and repository secrets count is 0.
+
+## First-run failure and explicitly reviewed repair
+
+[Run 45611385516](https://github.com/keboxxerxes/resumeops/actions/runs/45611385516), exact source `ce7394c1e1e4df2378558adc36bbbda9af1256da`, actually **FAILED**: both readonly initializations exited 0, but both validates exited 1 because the unpacked Linux provider matched no recorded content hash. Its other 18 records were 0. This was a cross-platform lock correctness gap, distinct from Windows TLS substitution. [Actual failure artifact](docs/github/first-ci-run.json).
+
+Both original locks trusted the official Linux archive through `zh`, but contained only the Windows unpacked-content `h1`. Builder and independent reviewer separately verified official archives and canonical Hash1, reproducing the original Windows hash; the pinned official Terraform CLI independently produced the same Linux hash in an ignored copied fixture. The reviewed source repair adds exactly one Linux `h1` per lock and preserves every original hash, exact provider/Terraform versions and constraint. Provenance now rejects missing/unreviewed content hashes and removal of any original archive hash. The successful rerun above verifies the actual repaired roots with readonly locks; no checksum/verification bypass was used. [Compatibility evidence](docs/github/LOCKFILE_COMPATIBILITY.md).
+
+## Windows and unexecuted live checks
+
+Native Windows initialization still passes and actual validation remains failed at provider mTLS because a verified direct client observes a substituted peer certificate. The responsible local component remains unidentified. Existing WSL launch timed out before Terraform ran, so WSL target verification is NOT RUN. The approved CI alternative establishes implementation readiness without relabeling either environment result. No security control was weakened. Historical native evidence remains under `docs/continuation/` and `docs/reviewer/private-stage-windows-run.json`.
+
+**NOT RUN:** AWS/OIDC/account-side least privilege, remote state locking/recovery, origin privacy against actual S3, live HTTPS/deployment metadata, actual drift/rollback, budget delivery and authorized temporary teardown. Hosted protected environments/live-release protections were not configured or assumed. No AWS credentials, resources or IAM were configured; no Terraform plan/apply/destroy or public publication occurred.
+
+| Gate | Verdict | Evidence / limit |
 |---|---|---|
-| Terraform 1.17.2 recursive formatting | **PASS**, exit 0 | Both roots and reusable module. |
-| Bootstrap init, `-backend=false -input=false -lockfile=readonly` | **PASS**, exit 0 | Independent sandbox and authorized outside-sandbox attempts; no remote backend. Readonly mirror warning recorded, no lockfile change. |
-| Site init, same flags | **PASS**, exit 0 | Same isolation and preservation. |
-| Bootstrap `validate -no-color` | **FAIL**, exit 1 | Provider schema unavailable at mTLS startup; successful source validation NOT established. |
-| Site `validate -no-color` | **FAIL**, exit 1 | Same actual failure; no static substitute. |
-| TFLint each root | **PASS**, exit 0 each | Existing recommended rules unchanged. |
-| GitHub Actions/actionlint | **PASS**, exit 0 | Existing four SHA-pinned workflows. Actual hosted CI NOT RUN. |
-| Checkov 3.4.11 final source | **PASS**, exit 0 | 67 passed, 0 failed, 15 individually assessed resource-specific exceptions, 0 parsing errors, 25 resources. Skipped controls remain absent. |
-| Individual exception review | **COMPLETE**, all 15 retained with precise justification/residual | 11 scoped architecture/API residuals and 4 not-applicable controls; rationale defects corrected, no mandatory control suppressed. See `docs/EXCEPTION_REASSESSMENT.md`. |
-| Source secret scanning | **PASS**, exit 0 | Redacted Gitleaks includes hidden/untracked intended source and excludes only local dependencies/caches. Final post-report result is in continuation final-sanitization evidence. |
-| Browser/local HTTP/accessibility | **PASS**, exit 0, 6 cases | Desktop/mobile, axe, keyboard skip, reduced motion, metadata, no remote requests/overflow; screenshots independently inspected. |
-| Security tests | **PASS**, exit 0, 6 cases | Protection gates, exact-plan crypto, typed destroy, drift classification, allowlisted content and guardrail negatives. |
-| Dependency/provenance verification | **PASS**, exit 0 | Official upstream action tags/commit pins and provider/scanner/browser versions. Three version-constraint files and both lockfiles unchanged: `docs/continuation/dependency-preservation.json`. |
-| Real negative scanners | **PASS**, harness exit 0 | Public S3 rejected by Checkov CKV_AWS_20; unsafe workflow rejected by CKV_GHA_2; malformed workflow rejected by actionlint. Nested scanner failures are expected, not waived positive results. |
-| Independent IAM/API/crypto adversarial tests | **PASS**, exit 0 | Five static IAM mutations plus missing/bypass/stale/fork/API/key/date cases. Not live IAM simulation or rendered provider-backed evaluation. |
-| Actual drift shell under runner-style errexit | **PASS**, exit 0 | Synthetic Terraform statuses 0/1/2 classified distinctly; resulting workflow statuses 0/1/1. Stub only, no cloud operation. |
-| Official runtime IAM action names | **PASS**, exit 0 | 30 S3 and 15 CloudFront actions independently checked against public official metadata. |
-| Public pricing and cost/budget inspection | **PASS** for source/estimate | Official S3 us-east-1 prices retrieved; CloudFront pay-as-you-go/Budgets sources rechecked. Approximately USD 0.1063 illustrative low-traffic usage before allowances/overhead/tax; below-USD-1 target and USD-5 budget/actual USD-1/3/5 thresholds preserved. Account eligibility and alert delivery NOT RUN. |
-
-## Provider diagnosis and execution environments
-
-Pinned provider binary matches the official archive member. A minimal AWS-only configuration and direct provider client reproduce the failure; a pinned Terraform core/builtin-only control initializes and validates with exit 0. That control is diagnostic isolation, not validation of ResumeOps. The provider-advertised self-issued CA certificate has a valid self-signature; a verified client instead observes a different, non-self-issued peer certificate with a different issuer and rejects it (verification error 20). Independent reviewer corroborated the certificate substitution. The responsible component and exact sandbox/endpoint boundary are not established. [Detailed reproduction](docs/MTLS_DIAGNOSTICS.md).
-
-The user explicitly authorized narrow local diagnostics outside the sandbox. Both real root initializations exited 0 there; both validations exited 1. Existing Ubuntu WSL was listed successfully, but the authorized Linux validation launch exited 1 with `Wsl/Service/WSAETIMEDOUT` before the script ran. Exact Linux Terraform/provider archives were checksum-verified, but **Linux target init/validate are NOT RUN**. No new OS environment was installed, no service restarted and no security control disabled.
-
-The tracked `scripts/diagnose-provider-mtls.py` returns 1 for this observed TLS failure, 2 if diagnosis cannot complete and 0 only for verified pinned TLS. The earlier ignored collection harness returned 0 for capturing a failed handshake; that is not a successful connection or Terraform validation. Reproduction does not send provider configuration RPCs or use cloud credentials.
-
-## Unexecuted mandatory live verification
-
-**NOT RUN:** actual hosted protection/plan availability and CI; real OIDC allow/deny/least privilege; state lock contention/recovery; origin anonymous-denial; HTTPS/default-root/headers/deployment metadata; real drift/no-change/error; prior-content rollback; budget recipient/delivery; authorized temporary teardown with bootstrap retention. Provider-rendered IAM testing is also NOT RUN because schema retrieval remains blocked. No deployed URL or CI link exists.
-
-**Verdicts:** local implementation **NO-GO**; GitHub publication **NO-GO**; live AWS release **NO-GO**. Successful non-Terraform tests and justified exceptions do not override the missing successful root validations.
+| Local Windows environment | **NO-GO** | Provider certificate substitution remains; native validation is not relabeled successful. |
+| Implementation based on independently verified CI | **GO** | Exact reviewed source passed all 20 checks on GitHub-hosted Ubuntu, including both real root validations. |
+| Private repository verification | **GO** | Private visibility, reviewed history/source, credential-free CI, sole active verification workflow and zero repository secrets independently verified. |
+| Public repository publication | **NO-GO** | Not authorized; private verification does not approve public resume/repository exposure. |
+| Live AWS release | **NO-GO** | Not authorized; AWS credentials, IAM, resources, plan/apply/destroy remain prohibited and mandatory live proofs are NOT RUN. |

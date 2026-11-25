@@ -1,0 +1,16 @@
+[
+  {
+    "path": "infra/bootstrap/.terraform.lock.hcl",
+    "original_hashes_retained": 16,
+    "new_hash_count": 17,
+    "only_added_hash": "h1:GX7SKlV247NJ8PMuI3qvO//dcXb6UZYTXxJhLB4Yx/g=",
+    "exact_one_added_line": true
+  },
+  {
+    "path": "infra/site/.terraform.lock.hcl",
+    "original_hashes_retained": 16,
+    "new_hash_count": 17,
+    "only_added_hash": "h1:GX7SKlV247NJ8PMuI3qvO//dcXb6UZYTXxJhLB4Yx/g=",
+    "exact_one_added_line": true
+  }
+]

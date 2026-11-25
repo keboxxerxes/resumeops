@@ -1,24 +1,38 @@
 # Independent security review
 
-Private-verification amendment review: 2026-11-25. The latest user-approved SPEC.md amendment authorizes only private `resumeops` source creation/commit/push and credential-free Ubuntu verification. The orchestrator owns those writes; the reviewer remains read-only except assigned local evidence. All source, privacy, original cost/budget and authorization boundaries remain in force. Previous continuation evidence below is preserved history, not an assertion that private push is still forbidden or that Ubuntu CI already ran.
+Final private-verification review: 2026-11-25. The user's latest SPEC.md amendment authorizes private source commits/pushes and credential-free hosted Ubuntu CI as the implementation-validation alternative. The reviewer independently audited exact source/index/commit history and actual GitHub job logs/artifacts; the orchestrator performed the authorized private repository writes. No AWS account API, credentials, IAM, resource creation, deployment, public publication, merge or destruction was performed.
 
-| Gate | Current verdict | Evidence boundary |
+| Gate | Verdict | Actual evidence boundary |
 |---|---|---|
-| Native Windows validation readiness | **NO-GO** | Current independent full runner emits all 20 records; bootstrap and site validate still exit 1. Prior mutually authenticated loopback certificate-substitution diagnosis remains visible. |
-| Credential-free CI implementation readiness | **NOT RUN** | No actual hosted Ubuntu run at the reviewed revision has yet been independently inspected. A verified successful run is the approved implementation alternative; Windows remains separately failed. |
-| Private GitHub verification readiness | **PENDING** | Working-tree source/privacy and workflow safety review passed, but exact index/commit, actual private remote and matching successful hosted CI still require evidence. Authorized does not mean performed or passed. |
-| Public publication readiness | **NO-GO** | No authorization for public visibility or public personal-content publication. Private verification cannot confer it. |
-| Live AWS release readiness | **NO-GO** | No authorization for AWS credentials/IAM/resources or operational workflow enabling, and all original mandatory live evidence is absent. |
+| Native Windows validation readiness | **NO-GO** | The recorded pinned Windows provider mTLS/schema startup failure remains. Ubuntu success does not change the Windows result. |
+| Credential-free CI implementation readiness | **GO** | Exact reviewed correction `48f21a8f78f8d968dbf87d451b050492558bb4e4`, independently fetched [run 45613932613](https://github.com/keboxxerxes/resumeops/actions/runs/45613932613): GitHub-hosted Ubuntu 24.04, all 20 required records exit 0, both actual root validations succeed. |
+| Private GitHub verification readiness | **GO** for the reviewed correction | Actual private repository, independently audited staged trees/commit history/noreply identities and authorized pushes; sole CI workflow, zero configured repository secrets and a complete successful matching run. Any evidence-only final head is separately verified before completion. |
+| Public publication readiness | **NO-GO** | No public visibility or public personal-content publication authorization. Private verification cannot confer it. |
+| Live AWS release readiness | **NO-GO** | No AWS/IAM/deployment authorization or mandatory live evidence. Operational workflows are inert source templates until a separately authorized enabling review. |
 
-## Independent private pre-push assessment
+## Exact private source and actual CI results
 
-[PRIVATE_PUBLICATION_REVIEW.md](docs/PRIVATE_PUBLICATION_REVIEW.md) records the comprehensive intended-file privacy audit, physical workflow isolation, executable-path inspection, commit-identity/remote gates and current limitations. The active tree has exactly `ci.yml`; content/drift/infrastructure templates are outside `.github/workflows`. No active/direct/indirect path requests AWS/OIDC credentials, a remote backend, plan/apply/destroy or deployment. Immutable dependency pins, all 15 individually justified exceptions and the original below-USD-1 target/USD-5 budget/private actual alerts at USD 1/3/5 are preserved.
+[PRIVATE_PUBLICATION_REVIEW.md](docs/PRIVATE_PUBLICATION_REVIEW.md) records the complete source/privacy/call-graph assessment and staged commit gates. Initial 89-file tree `adb2852b0e48b4c0fc20325ec70bee704cd26e12` and corrected 95-file tree `d5b9232bc0f68c097f641cfd629b27eb312d332d` were independently reconstructed from regular Git blob objects and scanned exactly, including strict UTF-8, raw-artifact/contact/credential checks and redacted Gitleaks. README encoding was corrected before the initial commit. Both actual author and committer identities were privacy-preserving GitHub noreply identities; full history scans passed. Canonical remote URLs contain no embedded credentials.
 
-The reviewer independently ran the new complete verification runner on Windows. It correctly returned **1**, retaining **18 zero exits and 2 validation failures** across all 20 records rather than hiding later checks. Current evidence is [private-stage-windows-run.json](docs/reviewer/private-stage-windows-run.json); no Ubuntu success or immutable commit identity is fabricated. Exact index/commit/history and remote/run verification will be added only when actually inspected.
+The initial private [run 45611385516](https://github.com/keboxxerxes/resumeops/actions/runs/45611385516) on `ce7394c1e1e4df2378558adc36bbbda9af1256da` **FAILED** with two cached Linux provider checksum errors; all other 18 records passed. This is not the Windows mTLS failure. Its actual logs/artifact were independently inspected and the failed result remains preserved in [run evidence](docs/reviewer/github/run-45611385516.json).
 
-All confirmed source security findings remain closed in reviewed working source. The earlier conditional publication blocker is now superseded only for the explicitly authorized private verification path; public/AWS boundaries remain unchanged. No reviewer GitHub mutation, commit, push, AWS account API, role assumption, resource creation, deployment or destruction occurred.
+**Cross-platform finding CLOSED:** the sole original content hash described Windows; readonly init authenticated the Linux archive but could not add its content hash, so subsequent cached-directory validation rejected it. The exact reviewed repair adds only the official Linux `h1:GX7SKlV247NJ8PMuI3qvO//dcXb6UZYTXxJhLB4Yx/g=` to each existing lock. All 16 original hashes, selected provider/source/constraints and Terraform pins remain. The reviewer independently verified official zip SHA256s, derived both canonical content hashes, reproduced the existing Windows hash and matched pinned Terraform's canonical result. The strengthened provenance guard requires both reviewed content hashes and all 15 original official archive hashes. No unverified package, mutable CI initialization, disabled checksum, dev override or TLS bypass was accepted. [Independent derivation](docs/reviewer/github/lock-hash-independent.json), [compatibility record](docs/github/LOCKFILE_COMPATIBILITY.md)
 
-## Final continuation evidence
+The corrected [run 45613932613](https://github.com/keboxxerxes/resumeops/actions/runs/45613932613) actually **SUCCEEDED** at exact reviewed SHA `48f21a8f78f8d968dbf87d451b050492558bb4e4`. The reviewer independently read complete job logs, API metadata and the sanitized results artifact: source SHA agrees everywhere, runner is GitHub-hosted Ubuntu 24.04/Linux, Terraform is 1.17.2, 19 ordered command/exit pairs are all zero, both actual `validate` commands report valid configurations, and the twentieth per-run lock-immutability record is zero. Required lint/security/secret/provenance/negative-workflow/IAM/API/crypto/drift/browser/accessibility/local-smoke checks all passed. [Independent successful-run evidence](docs/reviewer/github/run-45613932613.json)
+
+Lockfiles are **not globally byte-identical to the initial revision**: they gained the single reviewed Linux content hash. All original values remain, Git CRLF/LF normalization was explicitly distinguished, and both committed locks remained immutable during each CI run. Older source digests and Windows results below are retained historical evidence. They do not override the user-approved Ubuntu alternative or the later complete successful result. Provider-rendered IAM simulations and actual AWS controls remain **NOT RUN**; Terraform validation is not a live authorization test.
+
+## Current security/privacy boundaries
+
+Only `.github/workflows/ci.yml` is executable. All operational content/drift/infrastructure/destroy workflows are preserved outside that directory in `workflow-templates`, so no unset-variable assumption is needed. Independent source/call-graph inspection found no active AWS/OIDC authentication, remote backend, plan/apply/destroy or deployment path, including test imports and synthetic shell fixtures. Actual GitHub API inspection confirms one registered active CI workflow, private repository visibility and zero configured repository secrets. Actual job token permissions are contents/metadata read; no user/AWS credential is passed to CI.
+
+All 15 Checkov resource/check exceptions retain the individual actual-control/spec-justification/compensating-control/residual-risk assessment in [EXCEPTION_REASSESSMENT.md](docs/EXCEPTION_REASSESSMENT.md). There is no new blanket waiver. The original below-USD-1 low-traffic target, USD-5 account-wide budget and private ACTUAL alerts at USD 1/3/5 remain unchanged and are not a spend cap. No alert email, personal contact, PDF, state, plan, raw job/diagnostic log, generated certificate/key or local tool/cache was accepted into source. Current evidence uses structured statuses/source/run identities and digests; raw logs stay ignored.
+
+Confirmed source/security/compatibility findings are closed at the corrected reviewed revision. Native Windows validation remains a separate host limitation; public publication and live AWS release remain unauthorized/NO-GO. Final evidence-only changes must preserve this source/permission boundary and pass independent exact-index/identity/privacy review plus actual final-head CI verification before the task is declared complete. Reports reference already-known immutable validation revisions rather than claiming their own not-yet-created SHA.
+
+## Earlier continuation evidence (retained history)
+
+### Final continuation evidence
 
 Exact commands, working directory, exits, versions and sanitized outcomes are in [continuation-commands.json](docs/reviewer/continuation-commands.json). Initial evidence remains preserved separately. Raw diagnostics stay ignored; no certificates, ephemeral keys, credentials, state, plans or private contacts appear in committed evidence.
 
@@ -43,7 +57,7 @@ The orchestrator separately records freshly authorized outside-sandbox Terraform
 
 Provider-backed rendered-policy tests and every mandatory live test remain **NOT RUN**. Core-only checks, successful init, a zero-failure security scan, and a successful diagnostic wrapper do not substitute for the two mandatory validations.
 
-## All 15 exceptions independently reassessed
+### All 15 exceptions independently reassessed
 
 [EXCEPTION_REASSESSMENT.md](docs/EXCEPTION_REASSESSMENT.md) contains **15 separate exact resource/check rows** with the actual omitted control, original-spec basis, inspected source controls, residual risk and disposition. [continuation-exceptions.json](docs/reviewer/continuation-exceptions.json) independently inventories all 15 final scanner skips. Eleven are narrow architecture/API residuals, four are inapplicable controls for the required workload/hostname. None is a blanket waiver or evidence that the absent control exists.
 
@@ -51,7 +65,7 @@ Confirmed rationale deficiencies are **CLOSED**: inline comments, README and sca
 
 The original below-USD-1 low-traffic target and USD-5 account-wide budget/actual alerts at USD 1/3/5 are unchanged. Public pricing was independently rechecked and recorded in [continuation-pricing.json](docs/reviewer/continuation-pricing.json); account eligibility, future traffic, alert confirmation/delivery and live charges remain unverified. The target is not a cap. No newly unjustified suppression or unresolved source security finding remains in the reviewed scope; the validation and live-evidence blockers remain explicit.
 
-## Initial independent checks (retained history)
+### Initial independent checks (retained history)
 
 
 Exact commands, exit codes and timings are in [commands.json](docs/reviewer/commands.json). Raw tool logs remain ignored under `.local/reviewer/`; no plans, state, private contacts or account details are included in this report.
@@ -89,7 +103,7 @@ python docs/reviewer/action-names.py
 
 The independent IAM tests inspect parsed source invariants; they are not rendered-policy evaluation, IAM simulation or live authorization tests. Native provider-backed rendered IAM testing was NOT RUN because provider startup already failed. No TLS check was disabled. Initial reviewer harness development included an overbroad matcher that also rejected allowed CreateInvalidation; that harness was corrected and rerun successfully, without changing implementation policy to satisfy it.
 
-## Findings and closure evidence
+### Findings and closure evidence
 
 | Finding | Disposition / independently verified closure |
 |---|---|
@@ -104,7 +118,7 @@ The independent IAM tests inspect parsed source invariants; they are not rendere
 
 No confirmed unresolved source security finding remains in the reviewed scope. Provider startup and unperformed live checks remain release blockers, not findings silently marked fixed.
 
-## Controls and residual constraints
+### Controls and residual constraints
 
 - OIDC trust uses exact repository/environment subjects and `sts.amazonaws.com`; environment subjects do not encode a branch. The gate independently requires actual main-only environment policies, independent required reviewers, no administrator bypass and protected main/current SHA before OIDC. Missing API access or unsupported GitHub plan features fail closed. This API behavior has local negative tests; actual repository configuration is NOT RUN.
 - Plan/drift can read only site state and modify only its exact lockfile. Apply can write that state but cannot delete state, administer IAM or modify bootstrap. Content can upload only four explicit site keys and invalidate the exact distribution. CloudFront reads/mutations use exact configured IDs, with impossible unconfigured targets. First creation/recreation/rebinding requires separately authorized local operator work.
@@ -117,6 +131,6 @@ No confirmed unresolved source security finding remains in the reviewed scope. P
 
 Official permission references independently consulted: [CloudFront action mapping](https://docs.aws.amazon.com/service-authorization/latest/reference/list_cloudfront.html), [S3 machine-readable service metadata](https://servicereference.us-east-1.amazonaws.com/v1/s3/s3.json), [CloudFront machine-readable service metadata](https://servicereference.us-east-1.amazonaws.com/v1/cloudfront/cloudfront.json). Publisher signature verification was not performed; exact official TLS-delivered checksums, lockfile integrity and upstream tag provenance are the recorded evidence.
 
-## Remaining release gates
+### Remaining release gates
 
 Repair local provider mTLS startup without disabling certificate verification, then pass Terraform validate for both roots. Obtain separate explicit authorization before AWS/IAM/billing operations or publishing. Verify the actual GitHub plan and protections, OIDC allowed/denied subjects, state locking/recovery, origin anonymity denial, HTTPS deployment/headers/metadata, budget delivery, drift, rollback and authorized temporary teardown. All those live checks are **NOT RUN**. Until evidence exists, live release remains **NO-GO**.

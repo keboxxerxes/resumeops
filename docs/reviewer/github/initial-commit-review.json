@@ -1,0 +1,24 @@
+{
+  "commit_sha": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+  "tree_sha": "adb2852b0e48b4c0fc20325ec70bee704cd26e12",
+  "approved_tree_matches": true,
+  "initial_commit_has_no_parents": true,
+  "head_matches": true,
+  "entire_existing_history_count": 1,
+  "identities": [
+    {
+      "kind": "author",
+      "approved_github_noreply_identity": true
+    },
+    {
+      "kind": "committer",
+      "approved_github_noreply_identity": true
+    }
+  ],
+  "history_gitleaks_command": ".tools/gitleaks.exe git . --redact --no-banner",
+  "history_gitleaks_exit": 0,
+  "remote_origin_check": {
+    "configured": false
+  },
+  "decision": "APPROVE reviewed source commit for authorized private push to independently verified keboxxerxes/resumeops; no public/AWS authority"
+}

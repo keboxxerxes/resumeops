@@ -1,19 +1,29 @@
 # Final assessment
 
-Existing SDD cycle: authorized private Ubuntu CI verification stage, 2026-11-25. No implementation restart or milestones.
+Existing end-to-end SDD cycle, private GitHub Ubuntu verification, 2026-11-25. This is not a restart, milestone release, public publication or AWS deployment.
 
-> Private Ubuntu CI verification is now explicitly authorized by the user (2026-11-25), including creation of a private `resumeops` repository and reviewed source commits/pushes. Public publication, AWS credentials/resources/IAM and Terraform apply/destroy remain prohibited. The approved SPEC amendment permits independently inspected successful credential-free CI validation of both pinned roots as the implementation gate; Windows remains a separate environment verdict. At this preparation point no hosted CI success is claimed. Only `ci.yml` is executable; the three operational workflows are inert source under `workflow-templates/` and cannot be dispatched or scheduled. Restoration requires a separately authorized enabling change.
+| Gate | Verdict | Evidence / limit |
+|---|---|---|
+| Local Windows environment | **NO-GO** | Provider certificate substitution remains; native validation is not relabeled successful. |
+| Implementation based on independently verified CI | **GO** | Exact reviewed source passed all 20 checks on GitHub-hosted Ubuntu, including both real root validations. |
+| Private repository verification | **GO** | Private visibility, reviewed history/source, credential-free CI, sole active verification workflow and zero repository secrets independently verified. |
+| Public repository publication | **NO-GO** | Not authorized; private verification does not approve public resume/repository exposure. |
+| Live AWS release | **NO-GO** | Not authorized; AWS credentials, IAM, resources, plan/apply/destroy remain prohibited and mandatory live proofs are NOT RUN. |
 
-| Gate | Current verdict / evidence |
-|---|---|
-| Local Windows environment readiness | **NO-GO**. Actual provider TLS substitution persists; no security control disabled. |
-| Implementation readiness based on independently verified CI | **NO-GO / pending actual CI**. The user-approved SPEC amendment accepts successful Ubuntu both-root fmt/init-backendfalse-lockreadonly/validate with independent run/log/SHA/exit review. The first actual run failed both validations on cross-platform cached-provider hash compatibility; no successful hosted validation is claimed. |
-| Private repository verification readiness | **NO-GO / pending**. Source audit, exact staged-tree/history review, private visibility proof, credentials-free CI and actual hosted evidence required. The private `keboxxerxes/resumeops` repository was created and independently checkable metadata shows private visibility, empty source, zero initial workflows and zero repository secrets. Reviewed source was pushed as ce7394c1e1e4df2378558adc36bbbda9af1256da. First CI run 45611385516 failed only the two validations; exact evidence is in docs/github/first-ci-run.json and the reviewed compatibility repair is pending rerun. |
-| Public repository publication readiness | **NO-GO**. No authorization; private verification does not approve public exposure of resume content. |
-| Live AWS release readiness | **NO-GO**. No AWS credentials/resources/IAM/apply/destroy permitted. Actual deployment/OIDC/lock/origin/HTTPS/drift/rollback/budget/teardown evidence absent. |
+Verified implementation commit: [`48f21a8f78f8d968dbf87d451b050492558bb4e4`](https://github.com/keboxxerxes/resumeops/commit/48f21a8f78f8d968dbf87d451b050492558bb4e4). Actual [Ubuntu run 45613932613](https://github.com/keboxxerxes/resumeops/actions/runs/45613932613) / [verify job 139204326432](https://github.com/keboxxerxes/resumeops/actions/runs/45613932613/job/139204326432) completed **successfully**. The independent reviewer fetched the actual job metadata, full logs and artifact, matched the exact SHA/runner and confirmed all 19 command exits plus the lockfile immutability check were 0. This is actual Terraform validation, not a static-scanner substitute. Sanitized evidence: [successful-ci-run.json](docs/github/successful-ci-run.json) and [independent run record](docs/reviewer/github/run-45613932613.json).
 
-Only `.github/workflows/ci.yml` can execute. `workflow-templates/{content,drift,infrastructure}.yml` are inert source retained for separately authorized future operational work. Active CI has no OIDC/cloud credential configuration, remote backend or deployment/destructive path. It records each required command's actual status, source SHA and runner OS in sanitized bounded-retention evidence; no state or plans are uploaded.
+## Findings and controls
 
-The original below-USD-1 low-traffic AWS target and USD-5 account-wide budget with private ACTUAL USD-1/3/5 alerts remain unchanged. All 15 resource/check exceptions remain individually assessed in `docs/EXCEPTION_REASSESSMENT.md`; none represents an implemented missing audit/DR/WAF/TLS control.
+The first Ubuntu run failed at cached-package checksum validation. The independently reviewed additive Linux content hash repaired that cross-platform issue while retaining every original lock entry, all version constraints and integrity/readonly controls. Both real roots now initialize and validate successfully in the unaffected GitHub-hosted environment. All remaining required checks passed and no confirmed source security finding remains open. The Windows certificate substitution is still unresolved and recorded as a local environment limitation, not an implementation defect after the approved CI acceptance alternative passed.
 
-Earlier observed results remain in the archived continuation evidence. Latest hosted commit/run/job/log/exit proof will be recorded only after execution and independent review. Until then hosted checks are **NOT RUN**. No successful Windows or hosted validation is fabricated. The first hosted run is preserved as a failure and cannot serve as a GO.
+All 15 Checkov resource/check exceptions were individually reviewed and remain justified within the original architecture, with explicit residuals for state-read audit evidence, regional recovery, WAF/rate controls and default-certificate legacy TLS. No missing control is falsely described as implemented. Source history, author/committer noreply identity, exact staged trees, no private contacts/credentials/state/plans/raw diagnostics, workflow triggers and permissions were independently reviewed before private pushes.
+
+Only `ci.yml` is registered/executable. Operational templates are outside `.github/workflows`; enabling them requires a separate authorized reviewed change. CI contains no AWS authentication, OIDC, remote backend, Terraform plan/apply/destroy or deployment path. It uses only the standard short-lived read-only GitHub checkout token and sanitized bounded-retention results. The repository is private and has zero repository secrets; no AWS credential configuration or IAM modification occurred.
+
+The target remains below USD 1/month at low traffic, not a hard cap. The reviewed illustrative AWS usage is about USD 0.1063 before allowances/state overhead/tax; USD 5 account-wide monthly budget and private ACTUAL USD 1/3/5 alerts are preserved. No AWS deployment or alert delivery is claimed. Actual GitHub protected-environment availability and all original mandatory AWS/OIDC/state/origin/HTTPS/drift/rollback/budget/temporary-teardown proofs remain NOT RUN.
+
+## Authority and evidence
+
+Private reviewed source commits/pushes and credential-free CI were explicitly authorized and performed. No public visibility change, AWS credentials/resources/IAM, Terraform plan/apply/destroy, merge or unauthorized destruction was performed. A GO verdict for private source verification does not grant any wider authority.
+
+The reports record immutable already-observed CI evidence. A final evidence-only commit must preserve verified implementation files and pass the same CI, with its actual SHA/run/log/exit results inspected independently; no self-referential future SHA is fabricated. [Test results](TEST_RESULTS.md), [security review](SECURITY_REVIEW.md), [private source review](docs/PRIVATE_PUBLICATION_REVIEW.md), [compatibility review](docs/github/LOCKFILE_COMPATIBILITY.md), [Windows diagnosis](docs/MTLS_DIAGNOSTICS.md).

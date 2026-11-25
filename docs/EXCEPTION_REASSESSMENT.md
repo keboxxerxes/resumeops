@@ -40,11 +40,14 @@ The target remains **below USD 1/month at low traffic**; the budget remains **US
 
 These choices do not remove billable-traffic risk, audit blind spots or regional recovery limits. Before any authorized live release, recheck current product rates, free allowances, expected traffic and alert delivery. No AWS credentials, account API, infrastructure plan, resource creation or publication was used for this price/exception review.
 
-## Three independent verdicts
+## Current five independent verdicts
 
-| Gate | Current verdict and evidence boundary |
-|---|---|
-| Technical local readiness | **NO-GO**: final independent native Terraform init succeeded for both roots, but both validate commands failed at provider schema startup. The independent complete non-Terraform suite passed; accepted exceptions do not override failed validation. |
-| GitHub publication readiness | **NO-GO**: required source validation remains incomplete despite passing secret/source checks. Actual hosted privileged CI, repository protections and AWS checks belong to the separate live gate, not a circular requirement to publish first. Any future advisory publication GO still requires separate explicit human authorization before publishing personal content or pushing. |
-| Live release | **NO-GO**: separate authorization and mandatory actual GitHub/AWS/OIDC/locking/origin/HTTPS/deployment/drift/rollback/budget/temporary-teardown evidence remain absent. |
+The original Windows-only failure gate was superseded by the user-approved credential-free CI acceptance alternative. The independent reviewer inspected successful Ubuntu run [45613932613](https://github.com/keboxxerxes/resumeops/actions/runs/45613932613) at exact source `48f21a8f78f8d968dbf87d451b050492558bb4e4`; all 20 records exited 0, including both real Terraform validations. The resource/check decisions above remain unchanged.
 
+| Gate | Verdict | Evidence / limit |
+|---|---|---|
+| Local Windows environment | **NO-GO** | Provider certificate substitution remains; native validation is not relabeled successful. |
+| Implementation based on independently verified CI | **GO** | Exact reviewed source passed all 20 checks on GitHub-hosted Ubuntu, including both real root validations. |
+| Private repository verification | **GO** | Private visibility, reviewed history/source, credential-free CI, sole active verification workflow and zero repository secrets independently verified. |
+| Public repository publication | **NO-GO** | Not authorized; private verification does not approve public resume/repository exposure. |
+| Live AWS release | **NO-GO** | Not authorized; AWS credentials, IAM, resources, plan/apply/destroy remain prohibited and mandatory live proofs are NOT RUN. |

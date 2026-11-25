@@ -2,19 +2,23 @@
 
 A small professional resume in semantic HTML, CSS and vanilla JavaScript, backed by Terraform for private S3 + CloudFront and GitHub Actions with OIDC. The supplied resume is the content baseline. The user has authorized private GitHub source verification only. AWS operations, public publication and merge remain prohibited.
 
-Private verification preparation, 2026-11-25:
+Private Ubuntu verification completed in the existing SDD cycle on 2026-11-25. Repository: [keboxxerxes/resumeops](https://github.com/keboxxerxes/resumeops), verified **private**.
 
-| Gate | Current verdict |
-|---|---|
-| Local Windows environment | **NO-GO** — provider TLS certificate substitution persists. |
-| Implementation based on independent CI | **NO-GO / pending** — first Ubuntu run executed; validation failed on unpacked Linux provider hash compatibility. A narrowly reviewed additive platform hash repair is pending rerun. |
-| Private repository verification | **NO-GO / pending** — the private repository has been created and verified; reviewed source was pushed; the first run failed only the two validations on cross-platform lock compatibility; repair and rerun are pending. |
-| Public repository publication | **NO-GO** — not authorized. |
-| Live AWS release | **NO-GO** — not authorized; mandatory live proofs absent. |
+| Gate | Verdict | Evidence / limit |
+|---|---|---|
+| Local Windows environment | **NO-GO** | Provider certificate substitution remains; native validation is not relabeled successful. |
+| Implementation based on independently verified CI | **GO** | Exact reviewed source passed all 20 checks on GitHub-hosted Ubuntu, including both real root validations. |
+| Private repository verification | **GO** | Private visibility, reviewed history/source, credential-free CI, sole active verification workflow and zero repository secrets independently verified. |
+| Public repository publication | **NO-GO** | Not authorized; private verification does not approve public resume/repository exposure. |
+| Live AWS release | **NO-GO** | Not authorized; AWS credentials, IAM, resources, plan/apply/destroy remain prohibited and mandatory live proofs are NOT RUN. |
 
-> Private Ubuntu CI verification is now explicitly authorized by the user (2026-11-25), including creation of a private `resumeops` repository and reviewed source commits/pushes. Public publication, AWS credentials/resources/IAM and Terraform apply/destroy remain prohibited. The approved SPEC amendment permits independently inspected successful credential-free CI validation of both pinned roots as the implementation gate; Windows remains a separate environment verdict. At this preparation point no hosted CI success is claimed. The private repository is `https://github.com/keboxxerxes/resumeops`; its visibility was verified as private, with zero initial repository secrets and zero registered workflows before source push. Only `ci.yml` is executable; the three operational workflows are inert source under `workflow-templates/` and cannot be dispatched or scheduled. Restoration requires a separately authorized enabling change.
+Verified implementation commit: [`48f21a8f78f8d968dbf87d451b050492558bb4e4`](https://github.com/keboxxerxes/resumeops/commit/48f21a8f78f8d968dbf87d451b050492558bb4e4). Actual [Ubuntu run 45613932613](https://github.com/keboxxerxes/resumeops/actions/runs/45613932613) / [verify job 139204326432](https://github.com/keboxxerxes/resumeops/actions/runs/45613932613/job/139204326432) completed **successfully**. The independent reviewer fetched the actual job metadata, full logs and artifact, matched the exact SHA/runner and confirmed all 19 command exits plus the lockfile immutability check were 0. This is actual Terraform validation, not a static-scanner substitute. Sanitized evidence: [successful-ci-run.json](docs/github/successful-ci-run.json) and [independent run record](docs/reviewer/github/run-45613932613.json).
 
-The provider advertises a self-signed certificate, but a verified Windows local client receives a different certificate and fails closed. The component responsible remains unidentified. An independently verified successful Ubuntu CI run can satisfy implementation validation without relabeling Windows as healthy. Dependency constraints and lockfiles stay unchanged. See [SPEC amendment](SPEC.md), [diagnosis](docs/MTLS_DIAGNOSTICS.md), [15-exception review](docs/EXCEPTION_REASSESSMENT.md), [final assessment](FINAL_ASSESSMENT.md) and [tests](TEST_RESULTS.md).
+Only `.github/workflows/ci.yml` is executable. The three AWS/content/drift/destructive workflows are inert source under `workflow-templates/`; GitHub reports only CI registered. Active CI has no OIDC, AWS authentication, remote backend, plan/apply/destroy or deployment path. No AWS credentials or repository secrets were configured. Restoring operational workflows requires a separately authorized reviewed change.
+
+The Windows failure remains an environment limitation, not an unresolved implementation defect after the approved unaffected-CI alternative passed. No mTLS, endpoint protection or integrity check was disabled. The first Ubuntu run exposed a separate cross-platform content-hash gap; its failure is preserved. The reviewed repair adds only the official pinned Linux `h1` to each lockfile, retaining all original hashes, versions and constraints. [Exact compatibility review](docs/github/LOCKFILE_COMPATIBILITY.md), [Windows diagnosis](docs/MTLS_DIAGNOSTICS.md), [15 exceptions](docs/EXCEPTION_REASSESSMENT.md), [final assessment](FINAL_ASSESSMENT.md), [tests](TEST_RESULTS.md).
+
+Subsequent evidence-only commits must preserve the verified implementation files and pass the same CI. A report records an already-observed immutable run; it does not invent its own future commit SHA.
 
 ## Architecture
 
@@ -79,7 +83,9 @@ for root in infra/bootstrap infra/site; do
 done
 ```
 
-Every command must exit 0. A core-only control, scanner, copied provider cache or successful init cannot substitute for either real root validation. The readonly-mirror init warning observed here did not modify either lockfile; their fingerprints and all version constraints remain unchanged. Once validation passes, rerun the complete applicable suite and reassess the three gates. Publication approval and AWS deployment approval remain separate human decisions. Current Windows/WSL blockers remain unresolved. Successful both-root validation on the exact reviewed commit in credential-free GitHub-hosted Ubuntu CI is now an approved alternative; until actual independently reviewed results exist, no Linux validation success is claimed.
+Every command must exit 0. A core-only control, scanner, copied provider cache or successful init cannot substitute for either real root validation. Preserve all existing lock entries; the separately reviewed Linux content-hash addition is documented above. The successful Ubuntu run proved both readonly initializations and validations, and both locks remained unchanged during that run. Reassess all five gates after any implementation change. Publication approval and AWS deployment approval remain separate human decisions. Current Windows/WSL blockers remain unresolved. The approved alternative has now passed for both real roots on the exact reviewed Ubuntu CI commit linked above; this does not make native Windows healthy.
+
+The canonical complete verification command is `.tools/venv/bin/python scripts/run-checks.py` on Ubuntu (Windows uses `.tools/venv/Scripts/python` and the documented pinned Terraform/browser paths). It runs every required command, lints active and inert workflows, prints every exit status and fails if any check or lock-immutability comparison fails. CI uploads only its sanitized `.local/verification/results.json`, with three-day retention; no plan, state or raw diagnostic payload is uploaded.
 
 ## Authorization and repository preparation
 
