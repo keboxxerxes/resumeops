@@ -92,6 +92,11 @@ resource "aws_iam_openid_connect_provider" "github" {
   client_id_list = ["sts.amazonaws.com"]
 }
 locals {
+  repository_owner = split("/", var.repository)[0]
+  repository_name  = split("/", var.repository)[1]
+  oidc_repository  = "${local.repository_owner}@${var.repository_owner_id}/${local.repository_name}@${var.repository_id}"
+}
+locals {
   subjects = {
     plan    = ["production-plan", "production-drift"]
     apply   = ["production-apply"]
@@ -109,7 +114,7 @@ resource "aws_iam_role" "github" {
         Federated = local.provider_arn
         }, Action = "sts:AssumeRoleWithWebIdentity", Condition = {
         StringEquals = {
-          "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com", "token.actions.githubusercontent.com:sub" = [for env in each.value : "repo:${var.repository}:environment:${env}"]
+          "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com", "token.actions.githubusercontent.com:sub" = [for env in each.value : "repo:${local.oidc_repository}:environment:${env}"]
         }
       }
     }]

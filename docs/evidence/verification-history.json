@@ -4183,5 +4183,175 @@
     "restricted_token_preflight": "NOT RUN; available only after authorized merge on trusted main with protected owner approval; flag can remain off",
     "aws_live_agent_actions": "NOT RUN/NOT AUTHORIZED; no private state/account identifiers/credential/key contents inspected or published",
     "unchanged_controls": "Terraform/IAM/module source, all version constraints/17hash locks, action/npm/tool pins, all15Checkov rationales, remote state/locks, plancrypto, rollback/teardown and below1USDtarget/5USDbudget1/3/5alerts"
+  },
+  "immutable_oidc_remediation": {
+    "baseline_commit": "764e1511303529845765a217437c96bc9c491bd0",
+    "branch": "fix/immutable-oidc-subjects",
+    "status": "local source preparation; publication authorization and fresh complete Ubuntu CI pending",
+    "confirmed_incident": {
+      "run_url": "https://github.com/keboxxerxes/resumeops/actions/runs/45713987991",
+      "job": 139555262450,
+      "independent_evidence": "GitHub connector job metadata and filtered in-memory full job logs",
+      "protection_gate": "success",
+      "oidc_attempts": 12,
+      "credential_step": "failure: sts:AssumeRoleWithWebIdentity denied",
+      "asset_preparation": "skipped",
+      "content_upload": "skipped",
+      "raw_logs_published": false,
+      "cloudtrail_subject": "maintainer-reported; private raw events not accessed"
+    },
+    "official_reference": "https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims",
+    "scope": "Required immutable owner/repository IDs and exact environment subjects; preserve three roles, all permissions/resources, provider locks, workflow gates, 15 Checkov rationales and cost controls",
+    "local_observed_checks": [
+      {
+        "command": "node --test --test-name-pattern='single-maintainer protection|authenticated plan handoff|destroy requires|drift classifies|content accepts|five workflow roles' tests/security.test.mjs",
+        "exit_code": 0,
+        "result": "six Windows-compatible cases passed; not the complete seven-case Linux suite"
+      },
+      {
+        "command": "node tests/additional-security.mjs",
+        "exit_code": 0
+      },
+      {
+        "command": "python tests/repository-integrity.py",
+        "exit_code": 0,
+        "cases": 19
+      },
+      {
+        "command": "python tests/independent_checks.py --action-tag-fixtures-only",
+        "exit_code": 0,
+        "cases": 26
+      },
+      {
+        "command": "npm test",
+        "exit_code": 1,
+        "result": "execution policy blocked npm.ps1; no policy changed"
+      },
+      {
+        "command": "npm.cmd test",
+        "exit_code": 1,
+        "result": "six tests could not launch because required Chromium was absent; no browser assertion ran"
+      },
+      {
+        "command": "$env:PLAYWRIGHT_BROWSERS_PATH=Join-Path (Get-Location) '.local/immutable-oidc/browsers'; node node_modules/@playwright/test/cli.js install chromium",
+        "exit_code": 1,
+        "result": "default Node CA verification failed; no certificate validation disabled"
+      },
+      {
+        "command": "$env:PLAYWRIGHT_BROWSERS_PATH=Join-Path (Get-Location) '.local/immutable-oidc/browsers'; $env:NODE_OPTIONS='--use-system-ca'; node node_modules/@playwright/test/cli.js install chromium",
+        "exit_code": 0,
+        "result": "browser installation using normal system certificate trust"
+      },
+      {
+        "command": "$env:PLAYWRIGHT_BROWSERS_PATH=Join-Path (Get-Location) '.local/immutable-oidc/browsers'; npm.cmd test",
+        "exit_code": 0,
+        "cases": 6,
+        "result": "desktop/mobile, keyboard, reduced-motion, metadata, accessibility and local smoke"
+      },
+      {
+        "command": "python tests/independent_checks.py --immutable-source-fixtures-only",
+        "exit_code": 0,
+        "cases": 9,
+        "result": "source invariants and legacy/missing-ID/default/validation mutations; not rendered IAM proof"
+      },
+      {
+        "command": "python tests/independent_checks.py --workflow-fixtures-only",
+        "exit_code": 0,
+        "result": "five valid workflow roles and 72 unsafe semantic mutations"
+      },
+      {
+        "command": "python scripts/security.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python scripts/check-repository.py",
+        "exit_code": 0
+      }
+    ],
+    "fresh_complete_ubuntu_ci": "NOT RUN: pending explicit reviewed-source push authorization",
+    "rendered_terraform_trust_tests": {
+      "status": "NOT RUN: canonical Linux execution pending authorization",
+      "integration": "existing independent IAM check; all 22 mandatory aggregate records retained",
+      "mocked_plan_runs": 31,
+      "denied_claim_combinations": 50,
+      "required_null_missing_negative_runs": 4,
+      "provider_paths": [
+        "explicit existing GitHub provider",
+        "Terraform-managed GitHub provider"
+      ],
+      "isolation": "six explicitly tracked public files copied into ignored temporary fixture; no backend/state/private input copied; inherited AWS_/TF_ environment stripped; all AWS providers mocked and runs plan-only; readonly original provider lock"
+    },
+    "native_windows_terraform": "OUT OF SCOPE",
+    "live_checks": {
+      "production_plan": "NOT RUN; expected exactly three in-place assume_role_policy updates, zero additions/destructions/other changes",
+      "iam_update": "NOT RUN; not authorized",
+      "sts_all_four_environments": "NOT RUN",
+      "content_deployment": "NOT RUN",
+      "apply_or_destroy": "NOT RUN"
+    },
+    "privacy": "No ignored deployment/backend/state/plan/CloudTrail payload read, copied or published; no actual owner/repository/account identifiers added",
+    "readiness": "Local source contract approved; final exact-index/privacy binding required before local commit. Merge/live NO-GO until fresh complete Ubuntu verification; live additionally requires separately authorized operator plan, IAM update and STS evidence.",
+    "authentication_path_review": [
+      {
+        "path": ".github/workflows/infrastructure.yml plan",
+        "role": "plan",
+        "environment": "production-plan"
+      },
+      {
+        "path": ".github/workflows/infrastructure.yml apply",
+        "role": "apply",
+        "environment": "production-apply"
+      },
+      {
+        "path": ".github/workflows/content.yml deployment and rollback",
+        "role": "content",
+        "environment": "production-content"
+      },
+      {
+        "path": ".github/workflows/drift.yml",
+        "role": "plan",
+        "environment": "production-drift"
+      },
+      {
+        "path": ".github/workflows/preflight.yml",
+        "aws_authentication": false
+      },
+      {
+        "path": "private bootstrap operator",
+        "authentication": "separately authorized short-lived operator federation, not GitHub OIDC"
+      }
+    ],
+    "remote_main_observed": "764e1511303529845765a217437c96bc9c491bd0",
+    "existing_remediation_prs_observed": 0,
+    "review_findings": [
+      {
+        "finding": "generated temporary fixture filename was mistaken for a missing tracked dependency",
+        "resolution": "construct generated temporary path from directory and basename operands; repository dependency checker unchanged",
+        "verification": "independent reviewer and orchestrator graph checks exited0 after correction"
+      },
+      {
+        "finding": "documentation described rendered CI in present tense before execution",
+        "resolution": "corrected to required pending fresh CI; no rendered test pass claimed"
+      },
+      {
+        "finding": "required-input diagnostic matcher redundantly required the word required in missing-value detail",
+        "resolution": "preserve nonzero/error/expected required-input summary/exact variable checks; require null detail only for null cases; accept documented missing-value detail",
+        "verification": "independent reviewer approved predicate; actual four negative executions remain NOT RUN pending Linux"
+      }
+    ],
+    "independent_review": {
+      "source_contract": "approved for local commit subject to exact-index/privacy binding",
+      "existing_security_regressions": "PASS focused6 Node, API/crypto negatives, integrity19, provenance26, workflow5+72, immutable source9",
+      "browser": "PASS6 using existing tools browser cache; initial missing default-browser attempt exit1 retained in local reviewer evidence",
+      "preserved_controls": "IAM permission policies, provider locks/versions, site/modules, workflows, action/tool/package pins and 15 exception rationales unchanged",
+      "actual_terraform_or_complete_ubuntu": "NOT RUN",
+      "live_identity_or_iam_update": "NOT RUN"
+    },
+    "public_source_scan": {
+      "command": ".tools/gitleaks.exe dir <isolated intended-public-source snapshot> --redact --no-banner",
+      "exit_code": 0,
+      "files": 71,
+      "ignored_private_payload_read": false
+    }
   }
 }

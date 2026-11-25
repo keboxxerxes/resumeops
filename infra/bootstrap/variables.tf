@@ -18,6 +18,24 @@ variable "repository" {
 
   }
 }
+variable "repository_owner_id" {
+  type        = string
+  nullable    = false
+  description = "Immutable GitHub repository owner ID; canonical positive decimal string from verified repository metadata."
+  validation {
+    condition     = can(regex("^[1-9][0-9]*$", var.repository_owner_id))
+    error_message = "Provide a canonical positive decimal GitHub ID with no sign, whitespace, leading zero, exponent or wildcard."
+  }
+}
+variable "repository_id" {
+  type        = string
+  nullable    = false
+  description = "Immutable GitHub repository ID; canonical positive decimal string from verified repository metadata."
+  validation {
+    condition     = can(regex("^[1-9][0-9]*$", var.repository_id))
+    error_message = "Provide a canonical positive decimal GitHub ID with no sign, whitespace, leading zero, exponent or wildcard."
+  }
+}
 variable "alert_email" {
   type      = string
   sensitive = true

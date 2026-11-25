@@ -1,6 +1,17 @@
 # Verification and repository cleanup
 
+## Current immutable OIDC remediation
+
+Baseline is merged activation main `764e151`. Independently inspected job139555262450 from [content run45713987991](https://github.com/keboxxerxes/resumeops/actions/runs/45713987991): protection step succeeded,12OIDC assumptions were denied with `sts:AssumeRoleWithWebIdentity`, and asset preparation/upload were skipped. CloudTrail subject contents are maintainer-reported and remain private; none were read or published. GitHub's official immutable subject documentation corroborates the required `@` ID format. The legacy shared bootstrap subject expression affects all three roles/four environments.
+
+The correction requires verified private owner/repository IDs, exact immutable subjects, unchanged permission/resource boundaries and [rendered-policy adversarial tests](../infra/bootstrap/tests/immutable_oidc.tftest.hcl). Fresh complete Ubuntu verification for this correction is **NOT RUN** until separately authorized publication; earlier green CI is historical only. Native Windows Terraform remains **OUT OF SCOPE**. Actual production trust-only plan, IAM remediation, STS, content, apply and drift verification are **NOT RUN** here; no live success or three-change plan is inferred from mocks/source. The expected future plan must modify only the three trust policies in place, zero additions/destructions; see [operator instructions](DEPLOYMENT.md#existing-production-immutable-oidc-trust-correction).
+
+
 Canonical environment: GitHub-hosted Ubuntu 24.04, Terraform 1.17.2, AWS provider 6.74.0. Native Windows Terraform is **OUT OF SCOPE**. Website development/browser tests remain supported on Windows. There are no production Node dependencies; both locked devDependencies are used by Playwright and axe. Checkov is installed fresh for Linux verification only.
+
+Local observed results for this correction: six selected Windows-compatible Node security cases, independent API/plan negatives,19repository-integrity cases,26provenance resolver fixtures and all6desktop/mobile browser/accessibility tests passed. The initial browser run could not launch missing Chromium; download initially failed Node CA validation, then succeeded using normal system trust without disabling TLS. PowerShell blocked the npm.ps1 entry, so the successful browser command used `npm.cmd test`. These results do not replace complete Ubuntu verification. Exact commands/outcomes are retained in [structured history](evidence/verification-history.json).
+
+The new local immutable-source guard rejected9unsafe mutations, while5validworkflow roles/72unsafe mutations and source/security/graph checks passed. The independent AI reviewer repeated preservation checks and browser6; it closed a generated temporary-fixture dependency reference issue without relaxing the graph check. The prepared rendered suite has31mocked plan runs,50denied claim combinations and4required-null/missing cases, covering both existing and Terraform-managed provider paths. These Terraform tests remain **NOT RUN**; source inspection and mocks not yet executed do not establish a pass. All22mandatory aggregate CI checks remain required.
 
 ## Current operational workflow activation preparation
 

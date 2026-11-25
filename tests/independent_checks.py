@@ -118,8 +118,93 @@ def workflow_activation_fixtures():
     print('PASS: five valid workflow roles and',count,'semantic trigger/secret/token/order/approval/artifact negative mutations')
 
 
+def immutable_oidc_source_fixtures():
+    import importlib.util
+    root=pathlib.Path(__file__).resolve().parents[1]
+    specification=importlib.util.spec_from_file_location('immutable_policy_guard',root/'scripts/security.py')
+    policy=importlib.util.module_from_spec(specification);specification.loader.exec_module(policy)
+    main=(root/'infra/bootstrap/main.tf').read_text();variables=(root/'infra/bootstrap/variables.tf').read_text()
+    assert not policy.immutable_trust_errors(main,variables)
+    for changed in [main.replace('@${var.repository_owner_id}',''),main.replace('@${var.repository_id}',''),main.replace('repo:${local.oidc_repository}:environment:${env}','repo:${var.repository}:environment:${env}')]:
+        assert policy.immutable_trust_errors(changed,variables)
+    for name in ['repository_owner_id','repository_id']:
+        block=policy.immutable_id_block(variables,name)
+        for changed in [block.replace('nullable    = false','nullable    = true'),block.replace('  type        = string','  default     = "1"\n  type        = string'),block.replace('^[1-9][0-9]*$','^[0-9]+$')]:
+            assert policy.immutable_trust_errors(main,variables.replace(block.strip(),changed.strip()))
+    print('PASS: immutable subject source invariants and nine legacy/missing-ID/default/validation mutations')
+
+
+def rendered_immutable_oidc_tests():
+    """Evaluate actual trust JSON in an isolated public-source, all-mocked plan suite."""
+    import importlib.util,os,shutil
+    root=pathlib.Path.cwd()
+    (root/'.local/reviewer').mkdir(parents=True,exist_ok=True)
+    test_path=pathlib.Path('infra/bootstrap/tests/immutable_oidc.tftest.hcl')
+    public=['infra/bootstrap/main.tf','infra/bootstrap/variables.tf','infra/bootstrap/iam.tf','infra/bootstrap/versions.tf','infra/bootstrap/.terraform.lock.hcl',test_path.as_posix()]
+    tracked=set(subprocess.run(['git','ls-files','-z','--',*public],check=True,capture_output=True,text=True).stdout.split('\0'))
+    assert set(public)<=tracked, 'Mock runner may copy only the explicitly tracked public fixture inventory'
+    suite=hcl2.loads(test_path.read_text())
+    assert len(suite.get('mock_provider',[]))==1 and set(suite['mock_provider'][0])=={'aws'} and 'alias' not in suite['mock_provider'][0]['aws']
+    assert not suite.get('provider') and not suite.get('override_module'), 'No live provider or external module in mocked trust tests'
+    runs={name:body for item in suite['run'] for name,body in item.items()}
+    assert len(runs)==31 and all(body.get('command') in ['plan','${plan}'] and not body.get('providers') and not body.get('module') for body in runs.values())
+    assert all(body.get('assert') for name,body in runs.items() if '_invalid_' not in name), 'Rendered trust assertions may not be removed'
+    environment={key:value for key,value in os.environ.items() if not key.startswith(('AWS_','TF_'))}
+    environment.update(AWS_EC2_METADATA_DISABLED='true',TF_INPUT='false',CHECKPOINT_DISABLE='1')
+    terraform=environment.get('RESUMEOPS_TERRAFORM','terraform')
+    specification=importlib.util.spec_from_file_location('immutable_input_guard',root/'scripts/security.py')
+    policy=importlib.util.module_from_spec(specification);specification.loader.exec_module(policy)
+    def execute(command,cwd):
+        print('MOCK CHECK:', ' '.join(command).replace(str(cwd),'<isolated-public-fixture>'),flush=True)
+        result=subprocess.run(command,cwd=cwd,env=environment,capture_output=True,text=True,timeout=240)
+        print('MOCK EXIT:',result.returncode,flush=True)
+        return result
+    def events(result):
+        records=[json.loads(line) for line in result.stdout.splitlines() if line.strip()]
+        return records
+    with tempfile.TemporaryDirectory(prefix='immutable-oidc-',dir=root/'.local/reviewer') as location:
+        directory=pathlib.Path(location)
+        (directory/'empty.tfrc').write_text('')
+        environment.update(AWS_CONFIG_FILE=str(directory/'no-aws-config'),AWS_SHARED_CREDENTIALS_FILE=str(directory/'no-aws-credentials'),TF_CLI_CONFIG_FILE=str(directory/'empty.tfrc'))
+        for name in public:
+            target=directory/pathlib.Path(name).relative_to('infra/bootstrap');target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(root/name,target)
+        lock=(directory/'.terraform.lock.hcl').read_bytes()
+        init=execute([terraform,'init','-backend=false','-input=false','-lockfile=readonly','-no-color'],directory)
+        if init.returncode!=0:print(init.stdout,init.stderr)
+        assert init.returncode==0, 'Mock fixture readonly provider initialization failed'
+        result=execute([terraform,'test','-json','-no-color','-filter='+str(test_path.relative_to('infra/bootstrap'))],directory)
+        records=events(result);summaries=[r['test_summary'] for r in records if r.get('type')=='test_summary']
+        completed=[r['test_run'] for r in records if r.get('type')=='test_run' and r['test_run'].get('progress')=='complete']
+        if result.returncode!=0:
+            for record in records:
+                diagnostic=record.get('diagnostic')
+                if diagnostic:print('MOCK DIAGNOSTIC:',diagnostic.get('summary',''),diagnostic.get('detail',''))
+        for record in completed:print('MOCK RUN:',record.get('run'),record.get('status'))
+        print('MOCK SUMMARY:',json.dumps(summaries))
+        assert result.returncode==0 and len(summaries)==1 and summaries[0]=={'status':'pass','passed':31,'failed':0,'errored':0,'skipped':0}, 'Rendered mocked trust test did not fully pass'
+        assert len(completed)==31 and {r['run'] for r in completed}==set(runs) and all(r.get('status')=='pass' for r in completed), 'No mocked run may be skipped'
+        assert (directory/'.terraform.lock.hcl').read_bytes()==lock, 'Mock initialization must not mutate the committed lock'
+        print('MOCK LOCK: unchanged')
+        variable_source=(root/'infra/bootstrap/variables.tf').read_text()
+        declarations=''.join(policy.immutable_id_block(variable_source,name) for name in ['repository_owner_id','repository_id'])
+        for invalid in ['repository_owner_id','repository_id']:
+            for mode in ['null','missing']:
+                isolated=directory/(mode+'-'+invalid);isolated.mkdir();(isolated/'tests').mkdir()
+                (isolated/'main.tf').write_text(declarations+'output "required_ids" { value = [var.repository_owner_id, var.repository_id] }\n')
+                values='\n'.join('    '+name+' = '+('null' if name==invalid else '"12345"') for name in ['repository_owner_id','repository_id'] if not(mode=='missing' and name==invalid))
+                (isolated/'tests'/'invalid.tftest.hcl').write_text('run "reject_required_input" {\n  command = plan\n  variables {\n'+values+'\n  }\n}\n')
+                failed=execute([terraform,'test','-json','-no-color'],isolated)
+                diagnostics=[r.get('diagnostic',{}) for r in events(failed) if r.get('type')=='diagnostic']
+                assert failed.returncode!=0 and any(d.get('severity')=='error' and d.get('summary') in ['Required variable not set','No value for required variable'] and invalid in d.get('detail','') and (mode!='null' or 'null' in d.get('detail','').lower()) for d in diagnostics), 'Required-null/missing input must fail the actual Terraform type boundary'
+                print('MOCK REQUIRED INPUT:',invalid,mode,'rejected')
+    print('PASS: actual rendered mocked trust policies: 31 runs, 50 denied claims, four required-null/missing negatives; no AWS calls')
+
+
 # Explicit unit-only selection for hosts outside the supported Linux integration environment.
 # Credential-free CI invokes this file without arguments and still runs every integration check.
+if sys.argv[1:]==['--immutable-source-fixtures-only']:
+    immutable_oidc_source_fixtures()
+    raise SystemExit(0)
 if sys.argv[1:]==['--workflow-fixtures-only']:
     workflow_activation_fixtures()
     raise SystemExit(0)
@@ -138,7 +223,8 @@ def iam_invariants(main,iam):
     subjects=next(x['subjects'][0] for x in parsed['locals'] if 'subjects' in x)
     assert subjects=={'plan':['production-plan','production-drift'],'apply':['production-apply'],'content':['production-content']},'exact environment trust'
     assert '"token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"' in main,'STS audience'
-    assert 'StringEquals' in main and 'repo:${var.repository}:environment:${env}' in main,'exact repository subject'
+    assert 'StringEquals' in main and 'repo:${local.oidc_repository}:environment:${env}' in main,'exact immutable repository subject'
+    assert '${local.repository_owner}@${var.repository_owner_id}/${local.repository_name}@${var.repository_id}' in main,'immutable identity binding'
     data=hcl2.loads(iam); statements=data['locals'][0]['state_statements'][0]
     assert len(statements)==3
     assert statements[1]['Action']==['s3:GetObject'] and statements[1]['Resource']==['${local.state_arn}'],'plan state read only'
@@ -162,6 +248,8 @@ for name,m,i in mutations:
 print('PASS: independent IAM source invariants and five adversarial mutations (static source invariants; not rendered-policy or live IAM evaluation)')
 action_tag_fixtures()
 workflow_activation_fixtures()
+immutable_oidc_source_fixtures()
+rendered_immutable_oidc_tests()
 cli=ROOT/'.tools/venv'/'bin'/'checkov'
 with tempfile.TemporaryDirectory(prefix='unsafe-workflow-',dir=ROOT/'.local/reviewer') as temp:
     directory=pathlib.Path(temp); workflow=directory/'.github/workflows/unsafe.yml'; workflow.parent.mkdir(parents=True)
