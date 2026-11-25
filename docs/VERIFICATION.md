@@ -2,7 +2,19 @@
 
 Canonical environment: GitHub-hosted Ubuntu 24.04, Terraform 1.17.2, AWS provider 6.74.0. Native Windows Terraform is **OUT OF SCOPE**. Website development/browser tests remain supported on Windows. There are no production Node dependencies; both locked devDependencies are used by Playwright and axe. Checkov is installed fresh for Linux verification only.
 
-## Current single-maintainer governance revision
+## Current protection API compatibility correction
+
+The user authorized a reviewed correction on the existing `single-maintainer-governance` branch/PR1, followed by credential-free Ubuntu verification and a final merge recommendation. Do not merge or change repository visibility/protections, operational workflows, AWS resources/credentials or IAM.
+
+Current independent read-only API observations confirm exact repository ownership (`keboxxerxes/resumeops`, owner login `keboxxerxes`, owner type `User`), main required PR/strict verify/count0/stale false/no code-owner or last-push approval, absent bypass allowances, enforced administrators, disabled force pushes/deletion and required conversation resolution. All four production environment configurations are present with owner review, self-review permitted, administrator bypass false and exactly main/no tags. These are API configuration observations, not destructive bypass tests or live AWS/OIDC proofs.
+
+The correction permits only genuinely absent allowances after independent personal-ownership verification, with missing/unknown/mismatched repository metadata, explicit null/malformed/nonempty allowances and organization omission rejected. It accepts boolean false or true for stale dismissal only under the zero-approval policy. Sanitized actual-response fixtures and unsafe variants exercise the real gate; no feature absence is inferred from the missing field itself. See [security](SECURITY.md#personal-repository-api-compatibility) and [specification](../SPEC.md).
+
+Independent pure verification against fresh actual API responses passed all four environments, two compatible alternatives (present empty allowances and stale dismissal true) and rejected44unsafe variants. Local focused6Node tests, API/plan negatives, repository graph/19integrity cases and guardrails exited0. Exact current-observation semantics/results are retained in the existing [structured history](evidence/verification-history.json); raw API responses remain ignored.
+
+At source handoff, new-revision hosted CI remains to execute. Final merge acceptance requires actual latest remote PR head and the tested synthetic merge commit's parents/tree, complete full job logs/artifacts, all22exit codes0, both real Terraform root init/validate and unchanged locks. Commit-linked GitHub runs and the independent final proof record those post-push results; no prior successful revision is treated as current proof. The agent stops after successful verification and the recommendation; no report-only commit loop or merge is required.
+
+## Historical single-maintainer governance verification
 
 The owner approved the source-policy change to mandatory PRs and successful strict CI with zero mandatory human PR approvals, retained manual required deployment approval including owner self-approval, no administrator bypass and exact main-only/no-tag environments. Independent AI review remains distinct from independent human approval. Actual GitHub protection settings, cloud authority and operational activation are unchanged.
 

@@ -3916,5 +3916,126 @@
       "live_aws_release": "NO-GO mandatorylivechecksNOTRUN",
       "raw_logs_committed": false
     }
+  },
+  "protection_api_compatibility": {
+    "date": "2026-11-25",
+    "baseline_commit": "020ee1b38cbcf45d34d8680b5ec8eaed47c3d570",
+    "repository": "keboxxerxes/resumeops",
+    "api_version": "2022-11-28",
+    "official_sources": [
+      "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+      "https://docs.github.com/en/rest/branches/branch-protection"
+    ],
+    "semantics": "Bypass actors are organization-only; personal GET omission is not promised by REST schema. True omission may pass only for independently fetched exact-bound personal User metadata; explicit null/malformed/nonempty never pass. Stale dismissal must be Boolean at zero required approvals. Current gate supports only proven User metadata; Organization/unknown ownership is rejected even with empty allowances.",
+    "observed_main": {
+      "required_pull_requests": true,
+      "strict_verify": true,
+      "required_approving_review_count": 0,
+      "dismiss_stale_reviews": false,
+      "require_code_owner_reviews": false,
+      "require_last_push_approval": false,
+      "enforce_admins": true,
+      "bypass_allowances_property_present": false,
+      "allow_force_pushes": false,
+      "allow_deletions": false,
+      "required_conversation_resolution": true
+    },
+    "independent_actual_api_pure_verification": {
+      "reviewer": "Independent actual 2022-11-28 GitHub GET fixture, pure function only",
+      "repository_ownership_proven": "User",
+      "expected_full_name": "keboxxerxes/resumeops",
+      "actual_bypass_field_absent": true,
+      "actual_stale_reviews": false,
+      "actual_environments_pure_pass": [
+        "production-plan",
+        "production-apply",
+        "production-content",
+        "production-drift"
+      ],
+      "additional_positive_cases": 2,
+      "unsafe_variants_rejected": [
+        "metadataMissing",
+        "metadataNull",
+        "ownerTypeMissing",
+        "organizationAbsentBypass",
+        "organizationWithEmptyBypass",
+        "wrongRepository",
+        "wrongOwnerLogin",
+        "missingOwnerID",
+        "differentOwnerID",
+        "badRepoID",
+        "missingPR",
+        "nullPR",
+        "nullAllowances",
+        "undefinedAllowances",
+        "emptyObjectAllowances",
+        "arrayAllowances",
+        "inheritedAllowances",
+        "missingStale",
+        "stringStale",
+        "nullStale",
+        "forcePushEnabled",
+        "forcePushMissing",
+        "forcePushWrongType",
+        "deletionEnabled",
+        "deletionMissing",
+        "conversationDisabled",
+        "conversationMissing",
+        "adminsBypass",
+        "statusNotStrict",
+        "missingVerify",
+        "environmentBypass",
+        "environmentNoReviewer",
+        "environmentWrongOwnerID",
+        "tagPolicy",
+        "extraPolicy",
+        "nonemptyusers",
+        "nonemptyteams",
+        "nonemptyapps",
+        "invalidCountundefined",
+        "invalidCountnull",
+        "invalidCountStringZero",
+        "invalidCount-1",
+        "invalidCount0.5",
+        "invalidCount1"
+      ],
+      "unsafe_variant_count": 44,
+      "exit_code": 0,
+      "network_or_gate_invocation": false,
+      "ALLOW_AWS_OPERATIONS_set": false,
+      "role_or_settings_change": false,
+      "limits": "Observed protection configuration and pure compatibility only; not enforcement attempts, approval, OIDC, AWS or deployment proof",
+      "numeric_zero_actual_positive": "Actual GitHub count numeric0 accepted across4realenvs; rejectedstringzero case label clarified only"
+    },
+    "local_commands": [
+      {
+        "command": "node --test --test-name-pattern='single-maintainer protection|authenticated plan handoff|destroy requires|drift classifies|content accepts|verification stage' tests/security.test.mjs",
+        "exit_code": 0,
+        "tests": 6
+      },
+      {
+        "command": "node tests/additional-security.mjs",
+        "exit_code": 0
+      },
+      {
+        "command": "python scripts/check-repository.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python tests/repository-integrity.py",
+        "exit_code": 0,
+        "tests": 19
+      },
+      {
+        "command": "python scripts/security.py",
+        "exit_code": 0
+      }
+    ],
+    "hosted_ci_at_source_handoff": {
+      "status": "NOT RUN",
+      "required_records": 22,
+      "rule": "After reviewed push, independently verify latest branch head plus actual synthetic merge parents/tree, full logs/artifacts/all22zero/bothTFvalidations/lockimmutability; final evidence is attached to that exact commit and existingPR1. Do not substitute older results."
+    },
+    "authority": "User authorized this reviewed correction push and credential-free verification on existingbranch/PR1; no merge/visibility/protection/cloud/IAM/credential/operational change. Stop after successful verification and final recommendation."
   }
 }

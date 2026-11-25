@@ -8,16 +8,25 @@ import {validateRevision,ASSETS} from '../scripts/content.mjs';
 import {confirmDestroy} from '../scripts/confirm.mjs';
 import {driftStatus} from '../scripts/drift.mjs';
 const owner='owner';
+const repositoryName='owner/independent';
+const repositoryMetadata={id:2,name:'independent',full_name:repositoryName,owner:{id:1,login:owner,type:'User'}};
 const environment={can_admins_bypass:false,protection_rules:[{type:'required_reviewers',prevent_self_review:false,reviewers:[{type:'User',reviewer:{id:1,login:owner}}]}],deployment_branch_policy:{custom_branch_policies:true,protected_branches:false}};
 const policies={total_count:1,branch_policies:[{name:'main',type:'branch'}]};
-const branch={enforce_admins:{enabled:true},required_pull_request_reviews:{required_approving_review_count:0,dismiss_stale_reviews:true,require_last_push_approval:false,require_code_owner_reviews:false,bypass_pull_request_allowances:{users:[],teams:[],apps:[]}},required_status_checks:{strict:true,contexts:['verify']}};
-const verify=(env=environment,policy=policies,protection=branch,expectedOwner=owner)=>verifyProtection(env,policy,protection,expectedOwner);
+const branch={enforce_admins:{enabled:true},required_pull_request_reviews:{required_approving_review_count:0,dismiss_stale_reviews:false,require_last_push_approval:false,require_code_owner_reviews:false},required_status_checks:{strict:true,contexts:['verify']},allow_force_pushes:{enabled:false},allow_deletions:{enabled:false},required_conversation_resolution:{enabled:true}};
+const verify=(env=environment,policy=policies,protection=branch,metadata=repositoryMetadata,expectedRepository=repositoryName)=>verifyProtection(env,policy,protection,metadata,expectedRepository);
 
 test('single-maintainer protection accepts owner approval and rejects malformed or permissive settings',()=>{
  assert.doesNotThrow(()=>verify());
- assert.doesNotThrow(()=>verify(environment,policies,branch,'OWNER'));
+ const staleTrue=structuredClone(branch);staleTrue.required_pull_request_reviews.dismiss_stale_reviews=true;assert.doesNotThrow(()=>verify(environment,policies,staleTrue));
+ const explicitEmpty=structuredClone(branch);explicitEmpty.required_pull_request_reviews.bypass_pull_request_allowances={users:[],teams:[],apps:[]};assert.doesNotThrow(()=>verify(environment,policies,explicitEmpty));
+ for(const metadata of [undefined,null,{},[],{...repositoryMetadata,owner:undefined},{...repositoryMetadata,owner:null},{...repositoryMetadata,owner:{...repositoryMetadata.owner,type:'Organization'}},{...repositoryMetadata,owner:{...repositoryMetadata.owner,type:'Bot'}},{...repositoryMetadata,owner:{id:1,login:owner}},{...repositoryMetadata,owner:{...repositoryMetadata.owner,login:'different'}},{...repositoryMetadata,owner:{...repositoryMetadata.owner,id:2}},{...repositoryMetadata,full_name:'different/independent'},{...repositoryMetadata,name:'different'},{...repositoryMetadata,id:0}]) assert.throws(()=>verifyProtection(environment,policies,branch,metadata,repositoryName));
+ for(const edit of [b=>b.allow_force_pushes.enabled=true,b=>delete b.allow_force_pushes,b=>b.allow_force_pushes=null,b=>b.allow_deletions.enabled=true,b=>delete b.allow_deletions,b=>b.required_conversation_resolution.enabled=false,b=>delete b.required_conversation_resolution]) {
+  const protection=structuredClone(branch);edit(protection);assert.throws(()=>verify(environment,policies,protection));
+ }
+
+ assert.doesNotThrow(()=>verify(environment,policies,branch,repositoryMetadata,'OWNER/INDEPENDENT'));
  const extra=structuredClone(environment);extra.protection_rules[0].reviewers.push({type:'Team',reviewer:{id:2,slug:'operators'}});assert.doesNotThrow(()=>verify(extra));
- for(const expectedOwner of [undefined,null,'','bad/owner','-owner','owner--name','owner name',42]) assert.throws(()=>verifyProtection(environment,policies,branch,expectedOwner));
+ for(const expectedRepository of [undefined,null,'','bad/owner','-owner/independent','owner--name/independent','owner name/independent',42]) assert.throws(()=>verifyProtection(environment,policies,branch,repositoryMetadata,expectedRepository));
  for(const edit of [e=>e.can_admins_bypass=true,e=>delete e.can_admins_bypass,e=>e.protection_rules[0].prevent_self_review=true,e=>delete e.protection_rules[0].prevent_self_review,e=>e.protection_rules[0].prevent_self_review='false',e=>e.protection_rules[0].reviewers=[],e=>e.protection_rules[0].reviewers='owner',e=>e.protection_rules[0].reviewers=[{}],e=>e.protection_rules[0].reviewers=[{type:'User',reviewer:{id:1,login:'different'}}],e=>e.protection_rules[0].reviewers=[{type:'Team',reviewer:{id:2,slug:'owner'}}],e=>e.protection_rules[0].reviewers[0].reviewer.id='1',e=>e.protection_rules[0].reviewers[0].reviewer.id=1e20,e=>e.protection_rules[0].reviewers[0].reviewer.id=0,e=>e.protection_rules[0].reviewers[0].type='App',e=>e.deployment_branch_policy.protected_branches=true,e=>e.protection_rules=null,e=>e.protection_rules.push(e.protection_rules[0])]) {
   const env=structuredClone(environment);edit(env);assert.throws(()=>verify(env));
  }
@@ -25,13 +34,14 @@ test('single-maintainer protection accepts owner approval and rejects malformed 
  for(const count of [undefined,null,'0',-1,0.5,1]) {
   const protection=structuredClone(branch);if(count===undefined)delete protection.required_pull_request_reviews.required_approving_review_count;else protection.required_pull_request_reviews.required_approving_review_count=count;assert.throws(()=>verify(environment,policies,protection));
  }
- for(const edit of [b=>delete b.required_pull_request_reviews,b=>b.required_pull_request_reviews=null,b=>b.required_pull_request_reviews.require_last_push_approval=true,b=>delete b.required_pull_request_reviews.require_last_push_approval,b=>b.required_pull_request_reviews.require_code_owner_reviews=true,b=>delete b.required_pull_request_reviews.require_code_owner_reviews,b=>b.required_pull_request_reviews.dismiss_stale_reviews=false,b=>b.enforce_admins.enabled=false,b=>b.required_status_checks.strict=false,b=>b.required_status_checks.contexts=[],b=>b.required_status_checks.contexts='verify']) {
+ for(const edit of [b=>delete b.required_pull_request_reviews,b=>b.required_pull_request_reviews=null,b=>b.required_pull_request_reviews.require_last_push_approval=true,b=>delete b.required_pull_request_reviews.require_last_push_approval,b=>b.required_pull_request_reviews.require_code_owner_reviews=true,b=>delete b.required_pull_request_reviews.require_code_owner_reviews,b=>delete b.required_pull_request_reviews.dismiss_stale_reviews,b=>b.required_pull_request_reviews.dismiss_stale_reviews=null,b=>b.required_pull_request_reviews.dismiss_stale_reviews='false',b=>b.enforce_admins.enabled=false,b=>b.required_status_checks.strict=false,b=>b.required_status_checks.contexts=[],b=>b.required_status_checks.contexts='verify']) {
   const protection=structuredClone(branch);edit(protection);assert.throws(()=>verify(environment,policies,protection));
  }
  for(const kind of ['users','teams','apps']) {
-  const protection=structuredClone(branch);protection.required_pull_request_reviews.bypass_pull_request_allowances[kind]=[{}];assert.throws(()=>verify(environment,policies,protection));
+  const protection=structuredClone(branch);protection.required_pull_request_reviews.bypass_pull_request_allowances={users:[],teams:[],apps:[]};protection.required_pull_request_reviews.bypass_pull_request_allowances[kind]=[{}];assert.throws(()=>verify(environment,policies,protection));
   protection.required_pull_request_reviews.bypass_pull_request_allowances[kind]=false;assert.throws(()=>verify(environment,policies,protection));
  }
+ const inherited=structuredClone(branch);inherited.required_pull_request_reviews=Object.assign(Object.create({bypass_pull_request_allowances:{users:[],teams:[],apps:[]}}),inherited.required_pull_request_reviews);assert.throws(()=>verify(environment,policies,inherited));
  for(const allowances of [undefined,null,{},[],{users:[],teams:[],apps:[],unknown:[]}]) {
   const protection=structuredClone(branch);protection.required_pull_request_reviews.bypass_pull_request_allowances=allowances;assert.throws(()=>verify(environment,policies,protection));
  }
