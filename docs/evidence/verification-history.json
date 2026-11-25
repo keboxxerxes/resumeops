@@ -4187,7 +4187,7 @@
   "immutable_oidc_remediation": {
     "baseline_commit": "764e1511303529845765a217437c96bc9c491bd0",
     "branch": "fix/immutable-oidc-subjects",
-    "status": "local source preparation; publication authorization and fresh complete Ubuntu CI pending",
+    "status": "PR3 exists; initial reviewed be34382 hosted CI passed20/22 but failed overall. Corrected source has local Linux fmt/parser/render PASS; reviewed correction commit and explicit push authorization remain pending.",
     "confirmed_incident": {
       "run_url": "https://github.com/keboxxerxes/resumeops/actions/runs/45713987991",
       "job": 139555262450,
@@ -4352,6 +4352,384 @@
       "exit_code": 0,
       "files": 71,
       "ignored_private_payload_read": false
-    }
+    },
+    "pr3_verification_corrections": {
+      "baseline_head": "be343828f3de3feaaf754ae0ddb95548740ca036",
+      "pr_url": "https://github.com/keboxxerxes/resumeops/pull/3",
+      "failed_runs": [
+        {
+          "run_id": 45718687082,
+          "job_id": 139571191758,
+          "source_sha": "be343828f3de3feaaf754ae0ddb95548740ca036",
+          "runner_os": "Linux",
+          "check_count": 22,
+          "nonzero": [
+            {
+              "name": "Terraform format",
+              "command": [
+                "terraform",
+                "fmt",
+                "-check",
+                "-recursive",
+                "infra"
+              ],
+              "exit_code": 3,
+              "seconds": 0.06
+            },
+            {
+              "name": "Independent IAM and unsafe workflow scanner tests",
+              "command": [
+                "./.tools/venv/bin/python",
+                "tests/independent_checks.py"
+              ],
+              "exit_code": 1,
+              "seconds": 0.87
+            }
+          ],
+          "logs_sha256": "d925186a60dbad9facba90d8f375816170b9253ccd3bd9f893a61de90c614bd8",
+          "artifact": {
+            "id": 15070872489,
+            "name": "verification-evidence",
+            "digest": "sha256:cbb32149080dd116cce97545deabaecccfc0106ef23f53975c83af11dd3b0366",
+            "size_in_bytes": 1196,
+            "expired": false
+          },
+          "results_sha256": "07db2f0c61dd2e7402c8424bd6eb713a0fd641b90da43552ceda35a4dac239a5",
+          "actual_checkout_commit": {
+            "sha": "be343828f3de3feaaf754ae0ddb95548740ca036",
+            "tree": "b900b151f32ac592f7a15a6843220c178d8a1996",
+            "parents": [
+              "764e1511303529845765a217437c96bc9c491bd0"
+            ]
+          }
+        },
+        {
+          "run_id": 45718797649,
+          "job_id": 139571571604,
+          "source_sha": "94f567354acbd2777e8e8215fa6e57a4261a7886",
+          "runner_os": "Linux",
+          "check_count": 22,
+          "nonzero": [
+            {
+              "name": "Terraform format",
+              "command": [
+                "terraform",
+                "fmt",
+                "-check",
+                "-recursive",
+                "infra"
+              ],
+              "exit_code": 3,
+              "seconds": 0.06
+            },
+            {
+              "name": "Independent IAM and unsafe workflow scanner tests",
+              "command": [
+                "./.tools/venv/bin/python",
+                "tests/independent_checks.py"
+              ],
+              "exit_code": 1,
+              "seconds": 1.42
+            }
+          ],
+          "logs_sha256": "2f194d0c2bcb5a62d6a77150073ee41e8138b861f81e93e7b92b8354620efb2e",
+          "artifact": {
+            "id": 15071700768,
+            "name": "verification-evidence",
+            "digest": "sha256:38ea24efcecb52fa9d5d81b260e5a13a14aac7e6e4dc5edada43faeec8ee8493",
+            "size_in_bytes": 1196,
+            "expired": false
+          },
+          "results_sha256": "c708039ec5a231859527902fa376b28ed79c67a8f1a7dacbc0ee6caa6aab5807",
+          "actual_checkout_commit": {
+            "sha": "94f567354acbd2777e8e8215fa6e57a4261a7886",
+            "tree": "b900b151f32ac592f7a15a6843220c178d8a1996",
+            "parents": [
+              "764e1511303529845765a217437c96bc9c491bd0",
+              "be343828f3de3feaaf754ae0ddb95548740ca036"
+            ]
+          }
+        }
+      ],
+      "prior_result": "20 of 22 checks passed on both actual source identities; rendered tests stopped before Terraform execution",
+      "F01": {
+        "cause": "Three multiline assertion assignments did not match canonical Terraform formatting",
+        "tool": "Terraform 1.17.2 linux_amd64 on isolated Ubuntu 24.04",
+        "commands": [
+          {
+            "command": [
+              "terraform",
+              "version",
+              "-json"
+            ],
+            "exit_code": 0
+          },
+          {
+            "command": [
+              "terraform",
+              "fmt",
+              "-check",
+              "-recursive",
+              "infra"
+            ],
+            "exit_code": 3,
+            "phase": "before correction"
+          },
+          {
+            "command": [
+              "terraform",
+              "fmt",
+              "infra/bootstrap/tests/immutable_oidc.tftest.hcl"
+            ],
+            "exit_code": 0
+          },
+          {
+            "command": [
+              "terraform",
+              "fmt",
+              "-check",
+              "-recursive",
+              "infra"
+            ],
+            "exit_code": 0,
+            "phase": "after correction"
+          }
+        ],
+        "preservation": "Only three unquoted-whitespace changes; all strings, 31 runs, 50 claims and assertion bodies preserved"
+      },
+      "F02": {
+        "cause": "Checkov 3.4.11 requires bc-python-hcl2 0.4.5, whose transformer wraps scalar attributes in lists. All 31 parsed commands are [${plan}], not either scalar accepted by the old guard. Count/providers/module conditions were valid; only command shape failed.",
+        "observed_ast_command": [
+          "${plan}"
+        ],
+        "old_predicate_conditions": {
+          "count_is_31": true,
+          "all_scalar_command_allowed": false,
+          "no_provider_override": true,
+          "no_external_module": true
+        },
+        "observed_dependencies": {
+          "bc-python-hcl2": "0.4.5",
+          "lark": "1.3.1",
+          "PyYAML": "6.0.4",
+          "Python": "3.12.3"
+        },
+        "fix": "Require exact pinned-parser plan list and valid assertion expression lists; reject apply, malformed/quoted/list/missing commands, duplicate runs, live providers, external modules and overrides. No broad truthiness or arbitrary unwrapping.",
+        "regression": {
+          "command": "python tests/independent_checks.py --immutable-parser-fixtures-only",
+          "exit_code": 0,
+          "actual_parsed_plan_runs": 31,
+          "unsafe_mutations": 11,
+          "additional_reviewer_mutations": 8
+        },
+        "format_interaction": "Made missing-condition negative mutation whitespace-independent; it must still change the fixture and be rejected"
+      },
+      "local_linux_render": {
+        "status": "PASS; local isolated mocked execution, not hosted CI or deployed IAM",
+        "ubuntu": "24.04",
+        "tool_image": "resumeops-f02-verification:local",
+        "base_image_digest": "sha256:562111b88caa79c71391c0c4d3c2114a7d5c35915c20561fd893cb1e07929e6b",
+        "terraform_zip_sha256": "e6f16b2f0b137ee5729caa8c4e79a3bae4ee261acd198a1fcfa8584a6296605b",
+        "provider_zip_sha256": "2ede1946c7da024987f949000b07c274f81b387f994ab694f788721f338dd345",
+        "parser_wheel_sha256": "b5df1c92ec504f8964e7123fa79eda23f6f1a4d025ea1b964d304f162a3154cb",
+        "network": "disabled for fmt and final mocked execution",
+        "source": "71 intended-public files copied; no ignored backend/state/credentials mounted",
+        "actual_augmented_init": [
+          "terraform",
+          "init",
+          "-plugin-dir=/providers",
+          "-backend=false",
+          "-input=false",
+          "-lockfile=readonly",
+          "-no-color"
+        ],
+        "init_exit_code": 0,
+        "actual_test": [
+          "terraform",
+          "test",
+          "-json",
+          "-no-color",
+          "-filter=tests/immutable_oidc.tftest.hcl"
+        ],
+        "test_exit_code": 0,
+        "summary": {
+          "status": "pass",
+          "passed": 31,
+          "failed": 0,
+          "errored": 0,
+          "skipped": 0
+        },
+        "adversarial_claims": 50,
+        "lockfile": "unchanged",
+        "required_input_negatives": [
+          {
+            "variable": "repository_owner_id",
+            "input": "null",
+            "terraform_test_exit_code": 1,
+            "expected_rejection": true
+          },
+          {
+            "variable": "repository_owner_id",
+            "input": "missing",
+            "terraform_test_exit_code": 1,
+            "expected_rejection": true
+          },
+          {
+            "variable": "repository_id",
+            "input": "null",
+            "terraform_test_exit_code": 1,
+            "expected_rejection": true
+          },
+          {
+            "variable": "repository_id",
+            "input": "missing",
+            "terraform_test_exit_code": 1,
+            "expected_rejection": true
+          }
+        ],
+        "aggregate_exit_code": 0,
+        "execution_method": "Local helper loaded actual source function definitions unchanged and called parser/source/render checks; documented shim delegates to exact Terraform and adds only plugin-dir on init",
+        "environment_failures": [
+          {
+            "operation": "online container package installation",
+            "result": "certificate verification failed; switched to official SHA-verified offline artifacts without disabling TLS"
+          },
+          {
+            "operation": "default-registry mocked init",
+            "exit_code": 1,
+            "result": "container registry CA verification failed; no TLS change; final offline provider archive SHA matched registry and committed original zh"
+          },
+          {
+            "operation": "initial local helper invocation",
+            "exit_code": 1,
+            "result": "Windows CRLF shebang corrected in ignored local shim only"
+          }
+        ]
+      },
+      "preserved": "Exact immutable trust implementation, three roles/four environments, all permission policies, workflows/security gates, both locks/provider versions, all 15 Checkov rationales and cost/budget controls unchanged",
+      "fresh_hosted_branch_and_pr_ci": "NOT RUN for corrected HEAD: requires explicit push authorization",
+      "merge_recommendation": "NO-GO until final exact-head branch and PR CI each pass all 22 checks and independent logs/source reconciliation",
+      "live_operations": "NOT RUN; no AWS/IAM/flag/content/merge actions",
+      "local_regressions": [
+        {
+          "command": "python tests/independent_checks.py --immutable-source-fixtures-only",
+          "exit_code": 0,
+          "cases": 9
+        },
+        {
+          "command": "python tests/independent_checks.py --workflow-fixtures-only",
+          "exit_code": 0,
+          "valid_roles": 5,
+          "negative_cases": 72
+        },
+        {
+          "command": "python tests/repository-integrity.py",
+          "exit_code": 0,
+          "cases": 19
+        },
+        {
+          "command": "python scripts/check-repository.py",
+          "exit_code": 0
+        },
+        {
+          "command": "python scripts/security.py",
+          "exit_code": 0
+        }
+      ],
+      "observed_pr": {
+        "number": 3,
+        "state": "OPEN",
+        "draft": false,
+        "head": "be343828f3de3feaaf754ae0ddb95548740ca036",
+        "branch": "fix/immutable-oidc-subjects",
+        "base": "764e1511303529845765a217437c96bc9c491bd0",
+        "new_pr_created": false
+      },
+      "independent_local_verification": {
+        "process_exit": 0,
+        "platform": "isolated Ubuntu24.04 Linux container",
+        "terraform": "1.17.2",
+        "parser": "bc-python-hcl2==0.4.5",
+        "lark": "1.3.1",
+        "fmt_check_exit": 0,
+        "network": "none",
+        "source_scope": "explicit71-public-source snapshot; no ignored deployment files or AWS credentials mounted",
+        "local_init_difference": "readonly packed provider mirror; shim inserts only -plugin-dir=/providers on init",
+        "provider_archive_sha256": "2ede1946c7da024987f949000b07c274f81b387f994ab694f788721f338dd345",
+        "mock_summary": [
+          {
+            "status": "pass",
+            "passed": 31,
+            "failed": 0,
+            "errored": 0,
+            "skipped": 0
+          }
+        ],
+        "actual_command_exit_codes": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "denied_claims": 50,
+        "required_input_rejections": [
+          {
+            "variable": "repository_owner_id",
+            "case": "null"
+          },
+          {
+            "variable": "repository_owner_id",
+            "case": "missing"
+          },
+          {
+            "variable": "repository_id",
+            "case": "null"
+          },
+          {
+            "variable": "repository_id",
+            "case": "missing"
+          }
+        ],
+        "mock_lock_unchanged": true,
+        "log_sha256": "d8ebf3ff3b7a1e3582515ef56402d734153a8a87bf02e761841fea305243128a",
+        "passed_run_names": [
+          "exact_rendered_role_policies",
+          "reject_adversarial_rendered_claims",
+          "owner_id_changes_subject",
+          "repository_id_changes_subject",
+          "terraform_numeric_string_coercion",
+          "large_opaque_string_ids",
+          "managed_provider_immutable_trust",
+          "repository_owner_id_invalid_0",
+          "repository_owner_id_invalid_1",
+          "repository_owner_id_invalid_2",
+          "repository_owner_id_invalid_3",
+          "repository_owner_id_invalid_4",
+          "repository_owner_id_invalid_5",
+          "repository_owner_id_invalid_6",
+          "repository_owner_id_invalid_7",
+          "repository_owner_id_invalid_8",
+          "repository_owner_id_invalid_9",
+          "repository_owner_id_invalid_10",
+          "repository_owner_id_invalid_11",
+          "repository_id_invalid_0",
+          "repository_id_invalid_1",
+          "repository_id_invalid_2",
+          "repository_id_invalid_3",
+          "repository_id_invalid_4",
+          "repository_id_invalid_5",
+          "repository_id_invalid_6",
+          "repository_id_invalid_7",
+          "repository_id_invalid_8",
+          "repository_id_invalid_9",
+          "repository_id_invalid_10",
+          "repository_id_invalid_11"
+        ],
+        "findings": "F01 and F02 independently closed locally; final exact-index audit and fresh hosted branch/PR22 checks still required"
+      }
+    },
+    "scope_note": "Original handoff fields retain their historical NOT RUN outcomes; pr3_verification_corrections contains the latest observed failed hosted and successful local Linux results."
   }
 }

@@ -134,6 +134,56 @@ def immutable_oidc_source_fixtures():
     print('PASS: immutable subject source invariants and nine legacy/missing-ID/default/validation mutations')
 
 
+def mocked_suite_invariants(source):
+    """Validate the exact bc-python-hcl2 0.4.5 AST before any Terraform process."""
+    import hcl2
+    assert hcl2.__version__=='0.4.5', 'Use Checkov 3.4.11 pinned bc-python-hcl2 parser'
+    suite=hcl2.loads(source)
+    mocks=suite.get('mock_provider',[])
+    assert len(mocks)==1 and set(mocks[0])=={'aws'} and 'alias' not in mocks[0]['aws'], 'Only one unaliased AWS mock is permitted'
+    assert not any(key in suite for key in ['provider','override_module','override_resource','override_data']), 'No live provider or external override in mocked trust tests'
+    runs={}
+    for item in suite.get('run',[]):
+        assert len(item)==1
+        name,body=next(iter(item.items()))
+        assert name not in runs, 'Duplicate mocked run name'
+        # This pinned parser wraps scalar attributes in lists; accept exactly its
+        # unquoted plan expression, never a truthy list or arbitrary first item.
+        assert body.get('command')==['${plan}'], 'Every mocked run must be plan-only'
+        assert not any(key in body for key in ['providers','module','override_module','override_resource','override_data']), 'No provider/module redirection'
+        if '_invalid_' not in name:
+            assertions=body.get('assert',[])
+            assert assertions, 'Rendered trust assertions may not be removed'
+            for assertion in assertions:
+                condition=assertion.get('condition')
+                assert isinstance(condition,list) and len(condition)==1 and isinstance(condition[0],str) and condition[0].startswith('${') and condition[0].endswith('}'), 'Actual parsed assertion expression required'
+        runs[name]=body
+    assert len(runs)==31, 'All rendered trust runs must remain present'
+    return runs
+
+
+def immutable_parser_fixtures():
+    source=pathlib.Path('infra/bootstrap/tests/immutable_oidc.tftest.hcl').read_text()
+    runs=mocked_suite_invariants(source)
+    changes=[('apply',source.replace('command = plan','command = apply',1)),
+             ('missing command',source.replace('command = plan','',1)),
+             ('quoted command',source.replace('command = plan','command = "plan"',1)),
+             ('list command',source.replace('command = plan','command = [plan]',1)),
+             ('duplicate run',source.replace('run "reject_adversarial_rendered_claims"','run "exact_rendered_role_policies"',1)),
+             ('live provider',source+'\nprovider "aws" {}\n'),
+             ('aliased mock',source.replace('mock_provider "aws" {','mock_provider "aws" { alias = "live"',1)),
+             ('module override',source+'\noverride_module { target = module.live }\n'),
+             ('run module',source.replace('command = plan','command = plan\n  module { source = "./live" }',1)),
+             ('run provider',source.replace('command = plan','command = plan\n  providers = {}',1)),
+             ('missing assertion condition',re.sub(r'(?m)^(\s*)condition\s*=', r'\1missing_condition =',source,count=1))]
+    for label,mutated in changes:
+        assert mutated!=source, label
+        try:mocked_suite_invariants(mutated)
+        except (AssertionError,ValueError):pass
+        else:raise AssertionError('Unsafe mocked suite accepted: '+label)
+    print('PASS: pinned bc-python-hcl2 0.4.5 parsed 31 plan runs and assertion expressions; 11 unsafe AST mutations rejected')
+
+
 def rendered_immutable_oidc_tests():
     """Evaluate actual trust JSON in an isolated public-source, all-mocked plan suite."""
     import importlib.util,os,shutil
@@ -143,12 +193,7 @@ def rendered_immutable_oidc_tests():
     public=['infra/bootstrap/main.tf','infra/bootstrap/variables.tf','infra/bootstrap/iam.tf','infra/bootstrap/versions.tf','infra/bootstrap/.terraform.lock.hcl',test_path.as_posix()]
     tracked=set(subprocess.run(['git','ls-files','-z','--',*public],check=True,capture_output=True,text=True).stdout.split('\0'))
     assert set(public)<=tracked, 'Mock runner may copy only the explicitly tracked public fixture inventory'
-    suite=hcl2.loads(test_path.read_text())
-    assert len(suite.get('mock_provider',[]))==1 and set(suite['mock_provider'][0])=={'aws'} and 'alias' not in suite['mock_provider'][0]['aws']
-    assert not suite.get('provider') and not suite.get('override_module'), 'No live provider or external module in mocked trust tests'
-    runs={name:body for item in suite['run'] for name,body in item.items()}
-    assert len(runs)==31 and all(body.get('command') in ['plan','${plan}'] and not body.get('providers') and not body.get('module') for body in runs.values())
-    assert all(body.get('assert') for name,body in runs.items() if '_invalid_' not in name), 'Rendered trust assertions may not be removed'
+    runs=mocked_suite_invariants(test_path.read_text())
     environment={key:value for key,value in os.environ.items() if not key.startswith(('AWS_','TF_'))}
     environment.update(AWS_EC2_METADATA_DISABLED='true',TF_INPUT='false',CHECKPOINT_DISABLE='1')
     terraform=environment.get('RESUMEOPS_TERRAFORM','terraform')
@@ -202,6 +247,9 @@ def rendered_immutable_oidc_tests():
 
 # Explicit unit-only selection for hosts outside the supported Linux integration environment.
 # Credential-free CI invokes this file without arguments and still runs every integration check.
+if sys.argv[1:]==['--immutable-parser-fixtures-only']:
+    immutable_parser_fixtures()
+    raise SystemExit(0)
 if sys.argv[1:]==['--immutable-source-fixtures-only']:
     immutable_oidc_source_fixtures()
     raise SystemExit(0)
@@ -249,6 +297,7 @@ print('PASS: independent IAM source invariants and five adversarial mutations (s
 action_tag_fixtures()
 workflow_activation_fixtures()
 immutable_oidc_source_fixtures()
+immutable_parser_fixtures()
 rendered_immutable_oidc_tests()
 cli=ROOT/'.tools/venv'/'bin'/'checkov'
 with tempfile.TemporaryDirectory(prefix='unsafe-workflow-',dir=ROOT/'.local/reviewer') as temp:

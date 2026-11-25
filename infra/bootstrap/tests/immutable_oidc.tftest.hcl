@@ -32,7 +32,7 @@ run "exact_rendered_role_policies" {
   command = plan
 
   assert {
-    condition     = jsonencode({ for name, role in aws_iam_role.github : name => jsondecode(role.assume_role_policy).Statement[0].Condition.StringEquals["token.actions.githubusercontent.com:sub"] }) == jsonencode({
+    condition = jsonencode({ for name, role in aws_iam_role.github : name => jsondecode(role.assume_role_policy).Statement[0].Condition.StringEquals["token.actions.githubusercontent.com:sub"] }) == jsonencode({
       plan    = ["repo:synthetic-owner@12345/synthetic-repo@67890:environment:production-plan", "repo:synthetic-owner@12345/synthetic-repo@67890:environment:production-drift"]
       apply   = ["repo:synthetic-owner@12345/synthetic-repo@67890:environment:production-apply"]
       content = ["repo:synthetic-owner@12345/synthetic-repo@67890:environment:production-content"]
@@ -44,7 +44,7 @@ run "exact_rendered_role_policies" {
     error_message = "Rendered trust must have only the exact Allow/Federated/STS action and StringEquals audience/subject conditions."
   }
   assert {
-    condition     = jsonencode({ for name, role in aws_iam_role.github : name => jsondecode(role.assume_role_policy) }) == jsonencode({
+    condition = jsonencode({ for name, role in aws_iam_role.github : name => jsondecode(role.assume_role_policy) }) == jsonencode({
       plan    = { Version = "2012-10-17", Statement = [{ Effect = "Allow", Principal = { Federated = "arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com" }, Action = "sts:AssumeRoleWithWebIdentity", Condition = { StringEquals = { "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com", "token.actions.githubusercontent.com:sub" = ["repo:synthetic-owner@12345/synthetic-repo@67890:environment:production-plan", "repo:synthetic-owner@12345/synthetic-repo@67890:environment:production-drift"] } } }] }
       apply   = { Version = "2012-10-17", Statement = [{ Effect = "Allow", Principal = { Federated = "arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com" }, Action = "sts:AssumeRoleWithWebIdentity", Condition = { StringEquals = { "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com", "token.actions.githubusercontent.com:sub" = ["repo:synthetic-owner@12345/synthetic-repo@67890:environment:production-apply"] } } }] }
       content = { Version = "2012-10-17", Statement = [{ Effect = "Allow", Principal = { Federated = "arn:aws:iam::000000000000:oidc-provider/token.actions.githubusercontent.com" }, Action = "sts:AssumeRoleWithWebIdentity", Condition = { StringEquals = { "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com", "token.actions.githubusercontent.com:sub" = ["repo:synthetic-owner@12345/synthetic-repo@67890:environment:production-content"] } } }] }
@@ -57,7 +57,7 @@ run "reject_adversarial_rendered_claims" {
   command = plan
 
   assert {
-    condition     = alltrue([for claim in [
+    condition = alltrue([for claim in [
       { role = "plan", audience = "sts.amazonaws.com", subject = "repo:synthetic-owner@12346/synthetic-repo@67890:environment:production-plan" },
       { role = "plan", audience = "sts.amazonaws.com", subject = "repo:synthetic-owner@12345/synthetic-repo@67891:environment:production-plan" },
       { role = "plan", audience = "sts.amazonaws.com", subject = "repo:other-owner@12345/synthetic-repo@67890:environment:production-plan" },

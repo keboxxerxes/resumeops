@@ -1,6 +1,19 @@
 # Verification and repository cleanup
 
-## Current immutable OIDC remediation
+## Current PR3 formatting and parser correction
+
+Both actual Ubuntu runs at the reviewed immutable-remediation source passed20/22checks and failed overall: [branch45718687082](https://github.com/keboxxerxes/resumeops/actions/runs/45718687082), source `be343828f3de3feaaf754ae0ddb95548740ca036`, and [PR45718797649](https://github.com/keboxxerxes/resumeops/actions/runs/45718797649), actual synthetic checkout `94f567354acbd2777e8e8215fa6e57a4261a7886`. Their trees match; the PR parents are merged main `764e151` and reviewed head `be34382`. The independent reviewer checked actual artifacts/full logs/all22exits: formatting3, independent runner1, other20zero. No rendered Terraform test ran in either failed job.
+
+**F01:** checksum-verified Terraform1.17.2linux_amd64 on isolated Ubuntu24.04 reproduced recursive fmt exit3, formatted the test file (exit0), then passed `terraform fmt -check -recursive infra` (exit0). Only three multiline-assignment spacing changes were copied back; no subject, assertion or test case changed.
+
+**F02 exact cause:** Checkov3.4.11 pins **bc-python-hcl2==0.4.5**, not a separately selected current python-hcl2 release. Its transformer wraps scalar attributes in lists: each actual parsed command is `['${plan}']`. There were31runs and no provider/module redirection; the old scalar membership test alone was false. The corrected safety guard requires exactly that pinned AST, preserves all31runs, and rejects apply, missing/quoted/list/duplicate commands, live providers, module/provider redirection and overrides. Parser regressions passed31parsed positives/11unsafe mutations; the reviewer rejected8additional unsafe forms. The missing-assertion mutation now tolerates canonical whitespace while still requiring a real change and rejection.
+
+Actual local Ubuntu24.04/Python3.12.3 execution now passed the real mocked Terraform suite: **31passed,0failed,0errored,0skipped**,50denied identity claims, unchanged lockfile and all4required-null/missing negative cases (each actual Terraform exit1 as expected). Source9mutations also passed. No live Plan/Apply/Destroy or AWS call occurred. Registry TLS validation in the local container blocked default online init; no TLS controls were disabled. The local-only init shim added `-plugin-dir=/providers` for a read-only packed provider mirror whose official SHA256 matches the original committed lock. All test commands otherwise delegated unchanged to pinned Terraform; networking was disabled. This offline reproduction is distinct from default-registry hosted verification. The independent reviewer repeated pinned Linux formatting and the actual offline mocked execution:31/50/4 outcomes matched, all31unique runs passed without skips, and the lockfile stayed unchanged.
+
+The immutable trust implementation, IAM permissions, workflows, both provider locks and security/cost controls remain unchanged. Complete fresh branch and PR hosted **22/22** verification for the corrected final HEAD is **NOT RUN pending explicit push authorization**. Merge and live remediation remain **NO-GO** until their respective evidence/authorization gates. Exact failed run/job/artifact/digest identities, commands and local outcomes are retained in [structured history](evidence/verification-history.json).
+
+
+## Initial immutable OIDC source preparation (historical)
 
 Baseline is merged activation main `764e151`. Independently inspected job139555262450 from [content run45713987991](https://github.com/keboxxerxes/resumeops/actions/runs/45713987991): protection step succeeded,12OIDC assumptions were denied with `sts:AssumeRoleWithWebIdentity`, and asset preparation/upload were skipped. CloudTrail subject contents are maintainer-reported and remain private; none were read or published. GitHub's official immutable subject documentation corroborates the required `@` ID format. The legacy shared bootstrap subject expression affects all three roles/four environments.
 
