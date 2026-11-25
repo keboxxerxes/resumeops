@@ -73,5 +73,15 @@ test('verification stage has exactly one credential-free executable workflow',()
  const ci=readFileSync('.github/workflows/ci.yml','utf8');
  assert.doesNotMatch(ci,/id-token:|secrets\.|configure-aws-credentials|environment:|terraform (apply|destroy)/);
  assert.match(ci,/scripts\/run-checks\.py/);
+ const triggers=ci.match(/^on:\r?\n([\s\S]*?)(?=^[^\s])/m)?.[1];
+ assert.ok(triggers);
+ assert.match(triggers,/^  pull_request:\s*$/m);
+ assert.match(triggers,/^  workflow_dispatch:\s*$/m);
+ assert.match(triggers,/^  push:\r?\n    branches: \['\*\*'\]\s*$/m);
+ assert.doesNotMatch(triggers,/^\s*(?:tags|tags-ignore|branches-ignore):/m);
+ const permissions=ci.match(/^permissions:\r?\n([\s\S]*?)(?=^[^\s])/m)?.[1];
+ assert.equal(permissions?.trim(),'contents: read');
+ assert.equal([...ci.matchAll(/^\s*permissions:/gm)].length,1);
+
  assert.deepEqual(readdirSync('workflow-templates').filter(name=>/\.ya?ml$/.test(name)).sort(),['content.yml','drift.yml','infrastructure.yml']);
 });

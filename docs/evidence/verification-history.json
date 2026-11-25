@@ -1298,7 +1298,7 @@
   },
   "complete_legacy_records": "Each retired tracked file remains at immutable baseline Git commit/blob recorded in cleanup-inventory.json; no history rewriting",
   "single_maintainer_governance": {
-    "status": "GO_VERIFIED_IMPLEMENTATION_B63_BRANCH_AND_PR_22_OF_22",
+    "status": "BRANCH_PUSH_FALLBACK_CANDIDATE_CI_NOT_RUN",
     "reason": "Independent actual hosted Ubuntu branch and PR runs both22/22; exact six anonymous Git action pins and26resolverfixtures passed. Original PR API-quota failures preserved, no waiver.",
     "historical_baseline": "ad9ef1095bbcbcde8b7bf93f1e173dd6f162f52c",
     "policy": {
@@ -2887,6 +2887,356 @@
         "tree": "4de2ad88b1a172569fa1de0a7fd7fcd79570652d"
       }
     },
-    "evidence_followup_rule": "Reports record actual b63 implementation proof; each later evidence-only branch HEAD must run and independently pass its own complete branch/PR CI. No future self-SHA pass is inferred."
+    "evidence_followup_rule": "Reports record actual b63 implementation proof; each later evidence-only branch HEAD must run and independently pass its own complete branch/PR CI. No future self-SHA pass is inferred.",
+    "evidence_head_3e_pr_verification": {
+      "reviewer": "Independent actual final PR full-log/artifact/job/source-tree reconciliation",
+      "source_sha": "3e03b165982eb90178b6839f8b0b6c1e8339c655",
+      "source_tree": "2054608133fb1e462837c0c3da2ace7d2c1e40a3",
+      "repository": {
+        "default_branch": "main",
+        "full_name": "keboxxerxes/resumeops",
+        "private": false,
+        "visibility": "public"
+      },
+      "draft_pr": {
+        "base": {
+          "ref": "main",
+          "sha": "ad9ef1095bbcbcde8b7bf93f1e173dd6f162f52c"
+        },
+        "draft": true,
+        "head": {
+          "ref": "single-maintainer-governance",
+          "sha": "3e03b165982eb90178b6839f8b0b6c1e8339c655"
+        },
+        "merge_commit_sha": "2b2d7a332bd610f88faafc2b3ef18deb6c5d056e",
+        "merged": false,
+        "number": 1,
+        "state": "open"
+      },
+      "synthetic_pr_checked_commit": {
+        "parents": [
+          "ad9ef1095bbcbcde8b7bf93f1e173dd6f162f52c",
+          "3e03b165982eb90178b6839f8b0b6c1e8339c655"
+        ],
+        "sha": "2b2d7a332bd610f88faafc2b3ef18deb6c5d056e",
+        "tree": "2054608133fb1e462837c0c3da2ace7d2c1e40a3"
+      },
+      "main_unchanged": "ad9ef1095bbcbcde8b7bf93f1e173dd6f162f52c",
+      "runs": {
+        "pr": {
+          "run_id": 45650899789,
+          "run_url": "https://github.com/keboxxerxes/resumeops/actions/runs/45650899789",
+          "job_id": 139334788835,
+          "status": "completed",
+          "conclusion": "success",
+          "run_reported_head_sha": "3e03b165982eb90178b6839f8b0b6c1e8339c655",
+          "artifact_source_sha": "2b2d7a332bd610f88faafc2b3ef18deb6c5d056e",
+          "actual_checks": [
+            {
+              "name": "Terraform exact version",
+              "command": [
+                "terraform",
+                "version",
+                "-json"
+              ],
+              "exit_code": 0,
+              "seconds": 0.02
+            },
+            {
+              "name": "Terraform format",
+              "command": [
+                "terraform",
+                "fmt",
+                "-check",
+                "-recursive",
+                "infra"
+              ],
+              "exit_code": 0,
+              "seconds": 0.03
+            },
+            {
+              "name": "infra/bootstrap readonly init",
+              "command": [
+                "terraform",
+                "-chdir=infra/bootstrap",
+                "init",
+                "-backend=false",
+                "-input=false",
+                "-lockfile=readonly"
+              ],
+              "exit_code": 0,
+              "seconds": 6.53
+            },
+            {
+              "name": "infra/bootstrap validate",
+              "command": [
+                "terraform",
+                "-chdir=infra/bootstrap",
+                "validate",
+                "-no-color"
+              ],
+              "exit_code": 0,
+              "seconds": 1.92
+            },
+            {
+              "name": "infra/bootstrap TFLint",
+              "command": [
+                "./.tools/tflint",
+                "--chdir=infra/bootstrap",
+                "--config=./.tflint.hcl"
+              ],
+              "exit_code": 0,
+              "seconds": 0.06
+            },
+            {
+              "name": "infra/site readonly init",
+              "command": [
+                "terraform",
+                "-chdir=infra/site",
+                "init",
+                "-backend=false",
+                "-input=false",
+                "-lockfile=readonly"
+              ],
+              "exit_code": 0,
+              "seconds": 6.48
+            },
+            {
+              "name": "infra/site validate",
+              "command": [
+                "terraform",
+                "-chdir=infra/site",
+                "validate",
+                "-no-color"
+              ],
+              "exit_code": 0,
+              "seconds": 1.98
+            },
+            {
+              "name": "infra/site TFLint",
+              "command": [
+                "./.tools/tflint",
+                "--chdir=infra/site",
+                "--config=./.tflint.hcl"
+              ],
+              "exit_code": 0,
+              "seconds": 0.06
+            },
+            {
+              "name": "Checkov IaC",
+              "command": [
+                "./.tools/venv/bin/python",
+                "./.tools/venv/bin/checkov",
+                "-d",
+                "infra",
+                "--framework",
+                "terraform",
+                "--compact",
+                "--quiet",
+                "--skip-download"
+              ],
+              "exit_code": 0,
+              "seconds": 2.47
+            },
+            {
+              "name": "Active and archived workflow syntax",
+              "command": [
+                "./.tools/actionlint",
+                "./.github/workflows/ci.yml",
+                "./workflow-templates/content.yml",
+                "./workflow-templates/drift.yml",
+                "./workflow-templates/infrastructure.yml"
+              ],
+              "exit_code": 0,
+              "seconds": 1.02
+            },
+            {
+              "name": "Source secret scan",
+              "command": [
+                "./.tools/gitleaks",
+                "dir",
+                ".",
+                "--redact",
+                "--no-banner"
+              ],
+              "exit_code": 0,
+              "seconds": 0.47
+            },
+            {
+              "name": "Workflow and IaC guardrails",
+              "command": [
+                "./.tools/venv/bin/python",
+                "scripts/security.py"
+              ],
+              "exit_code": 0,
+              "seconds": 0.03
+            },
+            {
+              "name": "Repository links and dependency integrity",
+              "command": [
+                "./.tools/venv/bin/python",
+                "scripts/check-repository.py"
+              ],
+              "exit_code": 0,
+              "seconds": 0.06
+            },
+            {
+              "name": "Repository-integrity negative controls",
+              "command": [
+                "./.tools/venv/bin/python",
+                "tests/repository-integrity.py"
+              ],
+              "exit_code": 0,
+              "seconds": 0.16
+            },
+            {
+              "name": "Official dependency and cross-platform lock provenance",
+              "command": [
+                "./.tools/venv/bin/python",
+                "scripts/verify-provenance.py"
+              ],
+              "exit_code": 0,
+              "seconds": 2.77
+            },
+            {
+              "name": "Actual negative IaC scanner",
+              "command": [
+                "./.tools/venv/bin/python",
+                "tests/negative-scans.py"
+              ],
+              "exit_code": 0,
+              "seconds": 1.52
+            },
+            {
+              "name": "Independent IAM and unsafe workflow scanner tests",
+              "command": [
+                "./.tools/venv/bin/python",
+                "tests/independent_checks.py"
+              ],
+              "exit_code": 0,
+              "seconds": 1.67
+            },
+            {
+              "name": "Security unit and negative tests",
+              "command": [
+                "node",
+                "--test",
+                "tests/security.test.mjs"
+              ],
+              "exit_code": 0,
+              "seconds": 0.11
+            },
+            {
+              "name": "Independent API and plan tests",
+              "command": [
+                "node",
+                "tests/additional-security.mjs"
+              ],
+              "exit_code": 0,
+              "seconds": 0.03
+            },
+            {
+              "name": "Actual drift runner-shell tests",
+              "command": [
+                "./.tools/venv/bin/python",
+                "tests/drift-execution.py"
+              ],
+              "exit_code": 0,
+              "seconds": 0.11
+            },
+            {
+              "name": "Browser, accessibility and local smoke tests",
+              "command": [
+                "npm",
+                "test"
+              ],
+              "exit_code": 0,
+              "seconds": 5.99
+            },
+            {
+              "name": "Provider lockfiles unchanged",
+              "command": [
+                "internal SHA256 comparison of both committed provider locks before/after all checks"
+              ],
+              "exit_code": 0
+            }
+          ],
+          "actual_git_https_pins": [
+            {
+              "repository": "actions/checkout",
+              "version": "v7.0.1",
+              "commit_sha": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "observed_line": "actions/checkout v7.0.1 3d3c42e5aac5ba805825da76410c181273ba90b1 VERIFIED via anonymous Git HTTPS"
+            },
+            {
+              "repository": "actions/setup-node",
+              "version": "v7.1.0",
+              "commit_sha": "949feb2413d6458794dcd2491c4babbbce0c15c1",
+              "observed_line": "actions/setup-node v7.1.0 949feb2413d6458794dcd2491c4babbbce0c15c1 VERIFIED via anonymous Git HTTPS"
+            },
+            {
+              "repository": "hashicorp/setup-terraform",
+              "version": "v4.0.1",
+              "commit_sha": "dfe3c3f87815947d99a8997f908cb6525fc44e9e",
+              "observed_line": "hashicorp/setup-terraform v4.0.1 dfe3c3f87815947d99a8997f908cb6525fc44e9e VERIFIED via anonymous Git HTTPS"
+            },
+            {
+              "repository": "aws-actions/configure-aws-credentials",
+              "version": "v6.3.0",
+              "commit_sha": "e1253824e5c10ff9df46874f81ed3ec929e19cfd",
+              "observed_line": "aws-actions/configure-aws-credentials v6.3.0 e1253824e5c10ff9df46874f81ed3ec929e19cfd VERIFIED via anonymous Git HTTPS"
+            },
+            {
+              "repository": "actions/upload-artifact",
+              "version": "v7.0.2",
+              "commit_sha": "cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+              "observed_line": "actions/upload-artifact v7.0.2 cf430e030ddbb5b0abf93d22962f4752f3646cd9 VERIFIED via anonymous Git HTTPS"
+            },
+            {
+              "repository": "actions/download-artifact",
+              "version": "v8.0.2",
+              "commit_sha": "9000827ccba6bdab643e8b6fd33ac0654aef8333",
+              "observed_line": "actions/download-artifact v8.0.2 9000827ccba6bdab643e8b6fd33ac0654aef8333 VERIFIED via anonymous Git HTTPS"
+            }
+          ],
+          "resolver_fixtures": 26,
+          "integrity_cases": 19,
+          "node_security_cases": 7,
+          "browser_cases": 6,
+          "checkov": {
+            "passed": 67,
+            "failed": 0,
+            "reviewed_skips": 15
+          },
+          "artifact": {
+            "id": 15041555214,
+            "digest": "sha256:cfb02309bd137fe99822c0d45ad79bb15f5f4208daffb8381b2fe9f28b7dce85",
+            "results_sha256": "27dc80f630a9bbeea7ea17d364525f543749ecb4576f7687a2faaa6897972a96"
+          },
+          "ignored_raw_log_sha256": "87abcc6ba5b4dc6e9beccf88ef346e310e41ad0037e7834a19e169a1cc1b6ed6"
+        }
+      },
+      "direct_branch_run": {
+        "status": "NOT RUN",
+        "observed_inventory": "OnlyPRrun45650899789 exists atread",
+        "reason": "Workflow-dispatch endpoint HTTP500 preventscreation; endpointfailureisnotatestfailure"
+      },
+      "final_acceptance": "WITHHELD untilagreedfreshdirectbranchCI alsoexistsandpasses; actualPRsourcebytesverifiedPASS",
+      "history_privacy": {
+        "commits": 9,
+        "gitleaks_exit": 0,
+        "findings": 0,
+        "actualapprovednoreplyidentity": true,
+        "cleanworktree_observed": true
+      },
+      "limits": "No merge/main/visibility/protection settings change, AWS/IAM/resources/operations/deploy. No sourcewrites. Oldfailedattempts remain historical failures. NativeWindowsTerraformOUTOFSCOPE; liveAWSNO-GO."
+    },
+    "branch_push_trigger_remediation": {
+      "reason": "Final3e PR22/22passed, but directworkflowdispatchcreation failed with serverHTTP500 through CLI and verifiedHTTPS; no fictitious dispatch run/test pass",
+      "change": "Existing credential-freeCI push.branches:['**']; allbranches, tagpushesexcluded; pull_request+workflow_dispatch retained",
+      "security": "Same contentsread/pins/jobs/full22checks; no AWS/customsecrets/OIDC/environments/operations/privilege changes; productionenvmain-only/no-tags unchanged",
+      "tradeoff": "OpenPR branch pushes may run both direct-head and synthetic-merge verification, increasing GitHub runner usage separately from AWS budget",
+      "acceptance": "New changed revision requires its own complete direct-push+PR22/22 and independent actual identities/logs/artifacts; NOT RUN at this commit"
+    }
   }
 }
