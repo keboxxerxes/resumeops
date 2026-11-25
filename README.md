@@ -6,7 +6,7 @@ The website is intentionally simple. Infrastructure uses a private S3 origin, Cl
 
 ## Verification and deployment
 
-**Terraform runs on GitHub-hosted Ubuntu.** Native Windows Terraform is out of scope. Windows supports website development, VS Code and Codex. The repository is private; AWS is not deployed. Only credential-free verification CI is active. Operational workflows are retained as inert templates and require separate authorization before enabling.
+**Terraform runs on GitHub-hosted Ubuntu.** Native Windows Terraform is out of scope. Windows supports website development, VS Code and Codex. The repository is public; AWS is not deployed. Only credential-free verification CI is active. Operational workflows are retained as inert templates and require separate authorization before enabling.
 
 The previous Linux-first implementation passed all 22 verification checks on Ubuntu. The single-maintainer governance update requires its own fresh CI; previous results are not accepted as proof of this change. See [verification and readiness](docs/VERIFICATION.md) for exact commit/run evidence, cleanup counts and current gates.
 

@@ -1299,7 +1299,7 @@
   "complete_legacy_records": "Each retired tracked file remains at immutable baseline Git commit/blob recorded in cleanup-inventory.json; no history rewriting",
   "single_maintainer_governance": {
     "status": "NOT RUN",
-    "reason": "Current governance source change requires independent local review and separately authorized private feature-branch push before fresh exact-revision Ubuntu CI",
+    "reason": "Local implementation independently reviewed; public branch/draft PR/credential-free Ubuntu CI explicitly authorized after private-only preflight stopped; actual fresh run not yet started",
     "historical_baseline": "ad9ef1095bbcbcde8b7bf93f1e173dd6f162f52c",
     "policy": {
       "required_pull_requests": true,
@@ -1353,6 +1353,17 @@
       "failed": 1,
       "reason": "A negative-name selection attempt ran all seven cases; .tools/venv/bin/python is Linux-only and unavailable on Windows. No full-suite local PASS claimed; full Ubuntu run remains mandatory.",
       "command": "node --test --test-name-pattern=\"^(?!repository policy rejects).*\" tests/security.test.mjs"
+    },
+    "publication_authorization": {
+      "date": "2026-11-25",
+      "repository": "keboxxerxes/resumeops",
+      "observed_visibility": "public",
+      "allowed_branch": "single-maintainer-governance",
+      "draft_pull_request": true,
+      "credential_free_ubuntu_ci": true,
+      "reviewed_evidence_followups": true,
+      "main_visibility_protection_settings": "UNCHANGED",
+      "cloud_iam_operational_activation_merge": "NOT AUTHORIZED"
     }
   }
 }
