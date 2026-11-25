@@ -2,6 +2,64 @@
 No AWS calls; fixtures are ephemeral ignored local files.
 """
 import json,pathlib,re,subprocess,sys,tempfile
+
+
+def action_tag_fixtures():
+    """Exercise the real resolver with process fixtures; no network or credentials."""
+    import importlib.util,os
+    from unittest import mock
+    module_path=pathlib.Path(__file__).resolve().parents[1]/'scripts/verify-provenance.py'
+    specification=importlib.util.spec_from_file_location('upstream_provenance',module_path)
+    module=importlib.util.module_from_spec(specification)
+    with mock.patch('urllib.request.urlopen',side_effect=AssertionError('Import must not use network')):
+        specification.loader.exec_module(module)
+    expected='a'*40;tag='v1.2.3';literal='refs/tags/'+tag
+    valid=expected+'\t'+literal+'\n'
+    observed=[]
+    def process(output=valid,code=0):
+        def run(command,**kwargs):
+            observed.append((command,kwargs))
+            assert command[-3:]==['https://github.com/actions/checkout.git',literal,literal+'^{}']
+            assert '--refs' not in command and '--tags' in command and '--exit-code' in command
+            assert kwargs['shell'] is False and kwargs['timeout']==60
+            assert kwargs['env']['GIT_TERMINAL_PROMPT']=='0' and kwargs['env']['GIT_CONFIG_NOSYSTEM']=='1'
+            assert kwargs['env']['GIT_CONFIG_GLOBAL']==os.devnull and kwargs['env']['GIT_CONFIG_COUNT']=='0'
+            assert kwargs['env']['HOME']==kwargs['cwd'] and kwargs['env']['USERPROFILE']==kwargs['cwd']
+            assert 'GH_TOKEN' not in kwargs['env'] and 'GITHUB_TOKEN' not in kwargs['env'] and 'GIT_SSL_NO_VERIFY' not in kwargs['env']
+            assert 'credential.helper=' in command and 'http.extraHeader=' in command
+            return subprocess.CompletedProcess(command,code,output,'')
+        return run
+    def rejected(output=valid,code=0):
+        with mock.patch.object(module.subprocess,'run',side_effect=process(output,code)):
+            try:module.verify_action_tag('actions/checkout',tag,expected)
+            except (ValueError,RuntimeError):return
+            raise AssertionError('Unsafe upstream lookup fixture was accepted')
+    with mock.patch.dict(os.environ,{'GH_TOKEN':'dummy-not-for-child','GITHUB_TOKEN':'dummy-not-for-child','GIT_SSL_NO_VERIFY':'1'}):
+        for output in [valid,'b'*40+'\t'+literal+'\n'+expected+'\t'+literal+'^{}\n']:
+            with mock.patch.object(module.subprocess,'run',side_effect=process(output)):
+                module.verify_action_tag('actions/checkout',tag,expected)
+    for output in ['',expected+'\t'+literal+'^{}\n',valid+valid,valid+expected+'\trefs/heads/main\n',valid+expected+'\trefs/tags/v9.9.9\n','bad\t'+literal+'\n','A'*40+'\t'+literal+'\n',expected+' '+literal+'\n','b'*40+'\t'+literal+'\n',valid+'b'*40+'\t'+literal+'^{}\n',valid+'\n']:
+        rejected(output)
+    for code in [1,2,128]:rejected(code=code)
+    for error in [subprocess.TimeoutExpired('git',60),OSError('Dummy missing Git')]:
+        with mock.patch.object(module.subprocess,'run',side_effect=error):
+            try:module.verify_action_tag('actions/checkout',tag,expected)
+            except RuntimeError:pass
+            else:raise AssertionError('Failed process accepted')
+    for repo,release,sha in [('https://github.com/actions/checkout',tag,expected),('actions/checkout;id',tag,expected),('actions/checkout','--help',expected),('actions/checkout','v1.2.3*',expected),('actions/checkout','v1.2.3^{}',expected),('actions/checkout','v1.2.3\nother',expected),('actions/checkout',tag,'a'*39),('actions/checkout',tag,'A'*40)]:
+        with mock.patch.object(module.subprocess,'run',side_effect=AssertionError('Invalid input must not launch Git')):
+            try:module.verify_action_tag(repo,release,sha)
+            except ValueError:pass
+            else:raise AssertionError('Invalid input accepted')
+    print('PASS: anonymous Git action tag lightweight/peeled resolution and malformed/missing/duplicate/wrong/process/input negatives')
+
+
+# Explicit unit-only selection for hosts outside the supported Linux integration environment.
+# Credential-free CI invokes this file without arguments and still runs every integration check.
+if sys.argv[1:]==['--action-tag-fixtures-only']:
+    action_tag_fixtures()
+    raise SystemExit(0)
+
 if sys.platform != 'linux':
     raise SystemExit('Infrastructure/security scanner integration tests require Linux; use Ubuntu CI.')
 import hcl2
@@ -35,6 +93,7 @@ for name,m,i in mutations:
     except AssertionError: pass
     else: raise AssertionError('Mutation not rejected: '+name)
 print('PASS: independent IAM source invariants and five adversarial mutations (static source invariants; not rendered-policy or live IAM evaluation)')
+action_tag_fixtures()
 cli=ROOT/'.tools/venv'/'bin'/'checkov'
 with tempfile.TemporaryDirectory(prefix='unsafe-workflow-',dir=ROOT/'.local/reviewer') as temp:
     directory=pathlib.Path(temp); workflow=directory/'.github/workflows/unsafe.yml'; workflow.parent.mkdir(parents=True)
