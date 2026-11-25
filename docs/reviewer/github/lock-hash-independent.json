@@ -1,0 +1,31 @@
+{
+  "provider": "hashicorp/aws",
+  "version": "6.74.0",
+  "source_manifest": "https://releases.hashicorp.com/terraform-provider-aws/6.74.0/terraform-provider-aws_6.74.0_SHA256SUMS",
+  "algorithm_source": "https://github.com/golang/mod/blob/master/sumdb/dirhash/hash.go",
+  "computed": [
+    {
+      "target": "windows_amd64",
+      "archive_sha256": "97b47a55644fc2ca4f53d0e277f6d8d3a3bb7279734185740580aba7de28ff29",
+      "official_archive_checksum_matches": true,
+      "files": [
+        "LICENSE.txt",
+        "terraform-provider-aws_v6.74.0_x5.exe"
+      ],
+      "computed_hash1": "h1:BT+sqgXa/XnH4zgVgG2ZEda3WVr6wSJyJbcv64hBTtg="
+    },
+    {
+      "target": "linux_amd64",
+      "archive_sha256": "2ede1946c7da024987f949000b07c274f81b387f994ab694f788721f338dd345",
+      "official_archive_checksum_matches": true,
+      "files": [
+        "LICENSE.txt",
+        "terraform-provider-aws_v6.74.0_x5"
+      ],
+      "computed_hash1": "h1:GX7SKlV247NJ8PMuI3qvO//dcXb6UZYTXxJhLB4Yx/g="
+    }
+  ],
+  "windows_matches_original_lock_h1": true,
+  "linux_missing_from_original_lock": true,
+  "proposed_change": "Add only verified Linux h1 to each existing lock; preserve all original hashes and pins; no project write performed"
+}

@@ -99,4 +99,12 @@ Ubuntu CI must use the final reviewed immutable revision and pinned tools/provid
 | Public publication readiness | Separate explicit publication authorization, final privacy/content/security review and all applicable publication prerequisites; until authorization/evidence exist NO-GO. Private verification is insufficient. |
 | Live AWS release readiness | Separate explicit AWS/IAM/deployment authorization, reviewed workflow-enabling change, actual protected-environment availability, and every original mandatory live check; absent evidence remains NOT RUN and live release NO-GO. |
 
+## Cross-platform lockfile compatibility decision
+
+The first Ubuntu run reportedly completed both readonly initializations but failed both validations on cached-package checksum matching; the other 18 checks reportedly passed. These are orchestrator-reported results pending independent run inspection, not a successful implementation verdict. Preserve the failed run and distinguish its package-integrity failure from the earlier Windows provider mTLS limitation.
+
+Within the user's expressly requested cross-platform investigation and review, adding a Linux `h1` for the already pinned provider package is a routine compatibility repair only if all integrity gates below pass. This preserves the existing dependency selection, constraints and every original checksum; it does not permit lockfile replacement/regeneration, version changes or relaxed verification. Before any lockfile edit or push, the independent reviewer must verify the exact Linux archive against an already-present official `zh`, independently compute its canonical package `h1`, and confirm the hashing algorithm reproduces the existing Windows `h1` from the verified Windows archive. Review the proposed diff: only the same additive Linux `h1` in each root's lockfile is allowed. Record exact provenance/digests and reviewer disposition without claiming publisher-signature checks that were not performed.
+
+If those gates pass, the orchestrator may coordinate the narrowly reviewed additive repair under the authorized private-verification continuation, then rerun the complete credential-free CI with readonly lockfiles and both-root validation. If any gate fails, leave existing locks intact, report the blocker and do not disable integrity checks, enable mutable CI lockfiles or infer a pass from unrelated successful checks. All source/security/cost and AWS/publication authorization boundaries remain unchanged.
+
 

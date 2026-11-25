@@ -1,0 +1,231 @@
+{
+  "run_id": 45611385516,
+  "url": "https://github.com/keboxxerxes/resumeops/actions/runs/45611385516",
+  "job_id": 139195512737,
+  "job_url": "https://github.com/keboxxerxes/resumeops/actions/runs/45611385516/job/139195512737",
+  "status": "completed",
+  "conclusion": "failure",
+  "artifact_sha256": "cbe0aeb4fdc876b782bfe0fcffcd9a8036ba418445fc65f7601bd8c22a714a9f",
+  "artifact": {
+    "schema_version": 1,
+    "source_sha": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+    "runner_os": "Linux",
+    "python_version": "3.12.3",
+    "working_directory": "repository root",
+    "checks": [
+      {
+        "name": "Terraform exact version",
+        "command": [
+          "terraform",
+          "version",
+          "-json"
+        ],
+        "exit_code": 0,
+        "seconds": 0.02
+      },
+      {
+        "name": "Terraform format",
+        "command": [
+          "terraform",
+          "fmt",
+          "-check",
+          "-recursive",
+          "infra"
+        ],
+        "exit_code": 0,
+        "seconds": 0.03
+      },
+      {
+        "name": "infra/bootstrap readonly init",
+        "command": [
+          "terraform",
+          "-chdir=infra/bootstrap",
+          "init",
+          "-backend=false",
+          "-input=false",
+          "-lockfile=readonly"
+        ],
+        "exit_code": 0,
+        "seconds": 9.08
+      },
+      {
+        "name": "infra/bootstrap validate",
+        "command": [
+          "terraform",
+          "-chdir=infra/bootstrap",
+          "validate",
+          "-no-color"
+        ],
+        "exit_code": 1,
+        "seconds": 0.62
+      },
+      {
+        "name": "infra/bootstrap TFLint",
+        "command": [
+          "./.tools/tflint",
+          "--chdir=infra/bootstrap",
+          "--config=./.tflint.hcl"
+        ],
+        "exit_code": 0,
+        "seconds": 0.11
+      },
+      {
+        "name": "infra/site readonly init",
+        "command": [
+          "terraform",
+          "-chdir=infra/site",
+          "init",
+          "-backend=false",
+          "-input=false",
+          "-lockfile=readonly"
+        ],
+        "exit_code": 0,
+        "seconds": 7.38
+      },
+      {
+        "name": "infra/site validate",
+        "command": [
+          "terraform",
+          "-chdir=infra/site",
+          "validate",
+          "-no-color"
+        ],
+        "exit_code": 1,
+        "seconds": 0.62
+      },
+      {
+        "name": "infra/site TFLint",
+        "command": [
+          "./.tools/tflint",
+          "--chdir=infra/site",
+          "--config=./.tflint.hcl"
+        ],
+        "exit_code": 0,
+        "seconds": 0.06
+      },
+      {
+        "name": "Checkov IaC",
+        "command": [
+          "./.tools/venv/bin/python",
+          "./.tools/venv/bin/checkov",
+          "-d",
+          "infra",
+          "--framework",
+          "terraform",
+          "--compact",
+          "--quiet",
+          "--skip-download"
+        ],
+        "exit_code": 0,
+        "seconds": 2.57
+      },
+      {
+        "name": "Active and archived workflow syntax",
+        "command": [
+          "./.tools/actionlint",
+          "./.github/workflows/ci.yml",
+          "./workflow-templates/drift.yml",
+          "./workflow-templates/infrastructure.yml",
+          "./workflow-templates/content.yml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.87
+      },
+      {
+        "name": "Source secret scan",
+        "command": [
+          "./.tools/gitleaks",
+          "dir",
+          ".",
+          "--redact",
+          "--no-banner"
+        ],
+        "exit_code": 0,
+        "seconds": 0.47
+      },
+      {
+        "name": "Workflow and IaC guardrails",
+        "command": [
+          "./.tools/venv/bin/python",
+          "scripts/security.py"
+        ],
+        "exit_code": 0,
+        "seconds": 0.03
+      },
+      {
+        "name": "Official dependency and cross-platform lock provenance",
+        "command": [
+          "./.tools/venv/bin/python",
+          "scripts/verify-provenance.py"
+        ],
+        "exit_code": 0,
+        "seconds": 2.12
+      },
+      {
+        "name": "Actual negative IaC scanner",
+        "command": [
+          "./.tools/venv/bin/python",
+          "tests/negative-scans.py"
+        ],
+        "exit_code": 0,
+        "seconds": 1.47
+      },
+      {
+        "name": "Independent IAM and unsafe workflow scanner tests",
+        "command": [
+          "./.tools/venv/bin/python",
+          "tests/independent_checks.py"
+        ],
+        "exit_code": 0,
+        "seconds": 1.67
+      },
+      {
+        "name": "Security unit and negative tests",
+        "command": [
+          "node",
+          "--test",
+          "tests/security.test.mjs"
+        ],
+        "exit_code": 0,
+        "seconds": 0.17
+      },
+      {
+        "name": "Independent API and plan tests",
+        "command": [
+          "node",
+          "tests/additional-security.mjs"
+        ],
+        "exit_code": 0,
+        "seconds": 0.06
+      },
+      {
+        "name": "Actual drift runner-shell tests",
+        "command": [
+          "./.tools/venv/bin/python",
+          "tests/drift-execution.py"
+        ],
+        "exit_code": 0,
+        "seconds": 0.11
+      },
+      {
+        "name": "Browser, accessibility and local smoke tests",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exit_code": 0,
+        "seconds": 5.35
+      },
+      {
+        "name": "Provider lockfiles unchanged",
+        "command": [
+          "internal SHA256 comparison of both committed provider locks before/after all checks"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  "validation_error_category": "Unpacked Linux cached provider lacks matching h1 in committed cross-platform lock; distinct from Windows certificate substitution",
+  "raw_job_logs": "Inspected privately under ignored .local/github; not committed",
+  "security_boundary": "No AWS credentials/OIDC/configuration/backend/plan/apply/destroy/deploy path; only CI executable"
+}

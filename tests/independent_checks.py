@@ -32,7 +32,7 @@ for name,m,i in mutations:
     try: iam_invariants(m,i)
     except AssertionError: pass
     else: raise AssertionError('Mutation not rejected: '+name)
-print('PASS: independent IAM source invariants and five adversarial mutations (static; provider rendering unavailable)')
+print('PASS: independent IAM source invariants and five adversarial mutations (static source invariants; not rendered-policy or live IAM evaluation)')
 cli=ROOT/'.tools/venv'/('Scripts' if os.name=='nt' else 'bin')/'checkov'
 with tempfile.TemporaryDirectory(prefix='unsafe-workflow-',dir=ROOT/'.local/reviewer') as temp:
     directory=pathlib.Path(temp); workflow=directory/'.github/workflows/unsafe.yml'; workflow.parent.mkdir(parents=True)

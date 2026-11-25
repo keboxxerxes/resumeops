@@ -1,0 +1,13 @@
+{
+  "command": "Terraform 1.17.2 providers lock -fs-mirror=<official-checksum-verified archives> -platform=linux_amd64 -platform=windows_amd64",
+  "execution": "ignored copied configuration only, no project lock mutation",
+  "exit_code": 0,
+  "new_hashes": [
+    "h1:GX7SKlV247NJ8PMuI3qvO//dcXb6UZYTXxJhLB4Yx/g="
+  ],
+  "removed_hashes": [],
+  "canonical_h1": [
+    "h1:BT+sqgXa/XnH4zgVgG2ZEda3WVr6wSJyJbcv64hBTtg=",
+    "h1:GX7SKlV247NJ8PMuI3qvO//dcXb6UZYTXxJhLB4Yx/g="
+  ]
+}

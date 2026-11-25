@@ -7,8 +7,8 @@ Private verification preparation, 2026-11-25:
 | Gate | Current verdict |
 |---|---|
 | Local Windows environment | **NO-GO** — provider TLS certificate substitution persists. |
-| Implementation based on independent CI | **NO-GO / pending** — both-root hosted validation has not executed yet. |
-| Private repository verification | **NO-GO / pending** — the private repository has been created and verified; reviewed source push and actual hosted results are pending. |
+| Implementation based on independent CI | **NO-GO / pending** — first Ubuntu run executed; validation failed on unpacked Linux provider hash compatibility. A narrowly reviewed additive platform hash repair is pending rerun. |
+| Private repository verification | **NO-GO / pending** — the private repository has been created and verified; reviewed source was pushed; the first run failed only the two validations on cross-platform lock compatibility; repair and rerun are pending. |
 | Public repository publication | **NO-GO** — not authorized. |
 | Live AWS release | **NO-GO** — not authorized; mandatory live proofs absent. |
 

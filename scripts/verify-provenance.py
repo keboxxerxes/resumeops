@@ -22,12 +22,14 @@ print('Provider, scanner and browser dependencies VERIFIED against official regi
 # Cross-platform readonly init must be able to authenticate the Linux archive.
 manifest=urllib.request.urlopen('https://releases.hashicorp.com/terraform-provider-aws/6.74.0/terraform-provider-aws_6.74.0_SHA256SUMS',timeout=30).read().decode()
 checksums={line.split()[-1].lstrip('*'):line.split()[0] for line in manifest.splitlines() if len(line.split())==2}
-allowed=set(checksums.values())
+allowed={digest for filename,digest in checksums.items() if filename.endswith('.zip')}
 for root in ['infra/bootstrap','infra/site']:
     text=(pathlib.Path(root)/'.terraform.lock.hcl').read_text()
     assert re.search(r'version\s*=\s*"6\.74\.0"',text), 'Provider version changed'
+    content_hashes=set(re.findall(r'"(h1:[^"\n]+)"',text))
+    assert content_hashes == {'h1:BT+sqgXa/XnH4zgVgG2ZEda3WVr6wSJyJbcv64hBTtg=','h1:GX7SKlV247NJ8PMuI3qvO//dcXb6UZYTXxJhLB4Yx/g='}, 'Missing or unreviewed platform content hash'
     archived=set(re.findall(r'"zh:([a-f0-9]{64})"',text))
-    assert archived and archived <= allowed, 'Unknown provider archive checksum'
+    assert archived == allowed and len(archived) == 15, 'Original official archive checksums must all be retained'
     for target in ['linux_amd64','windows_amd64']:
         assert checksums['terraform-provider-aws_6.74.0_'+target+'.zip'] in archived, 'Missing readonly target archive checksum'
-print('Both readonly lockfiles authenticate official Linux/Windows AWS 6.74.0 archives VERIFIED')
+print('Both readonly lockfiles retain all15official archive hashes and both reviewed Linux/Windows AWS 6.74.0 content hashes VERIFIED')
