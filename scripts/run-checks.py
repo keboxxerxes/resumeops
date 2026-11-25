@@ -5,13 +5,16 @@ Failures do not hide later checks, and any failure makes the final result nonzer
 """
 import hashlib,json,os,pathlib,platform,re,shlex,subprocess,sys,time
 
+if sys.platform != 'linux':
+ print('Full Terraform verification is supported on Linux only. Use the credential-free Ubuntu CI workflow; Windows supports npm test and npm run preview for the website.',file=sys.stderr)
+ raise SystemExit(2)
+
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
 TOOLS=ROOT/'.tools'
 PYTHON=pathlib.Path(sys.executable)
 TF=os.environ.get('RESUMEOPS_TERRAFORM','terraform')
-SUFFIX='.exe' if os.name=='nt' else ''
-CHECKOV=TOOLS/'venv'/('Scripts' if os.name=='nt' else 'bin')/'checkov'
+CHECKOV=TOOLS/'venv'/'bin'/'checkov'
 workflows=[ROOT/'.github/workflows/ci.yml',*(ROOT/'workflow-templates').glob('*.yml')]
 locks=[ROOT/p/'.terraform.lock.hcl' for p in ['infra/bootstrap','infra/site']]
 original={str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in locks}
@@ -21,19 +24,21 @@ checks=[('Terraform exact version',[TF,'version','-json']),('Terraform format',[
 for root in ['infra/bootstrap','infra/site']:
  checks += [(root+' readonly init',[TF,'-chdir='+root,'init','-backend=false','-input=false','-lockfile=readonly']),
             (root+' validate',[TF,'-chdir='+root,'validate','-no-color']),
-            (root+' TFLint',[str(TOOLS/('tflint'+SUFFIX)),'--chdir='+root,'--config='+str(ROOT/'.tflint.hcl')])]
+            (root+' TFLint',[str(TOOLS/'tflint'),'--chdir='+root,'--config='+str(ROOT/'.tflint.hcl')])]
 checks += [
  ('Checkov IaC',[str(PYTHON),str(CHECKOV),'-d','infra','--framework','terraform','--compact','--quiet','--skip-download']),
- ('Active and archived workflow syntax',[str(TOOLS/('actionlint'+SUFFIX)),*[str(path) for path in workflows]]),
- ('Source secret scan',[str(TOOLS/('gitleaks'+SUFFIX)),'dir','.','--redact','--no-banner']),
+ ('Active and archived workflow syntax',[str(TOOLS/'actionlint'),*[str(path) for path in workflows]]),
+ ('Source secret scan',[str(TOOLS/'gitleaks'),'dir','.','--redact','--no-banner']),
  ('Workflow and IaC guardrails',[str(PYTHON),'scripts/security.py']),
+ ('Repository links and dependency integrity',[str(PYTHON),'scripts/check-repository.py']),
+ ('Repository-integrity negative controls',[str(PYTHON),'tests/repository-integrity.py']),
  ('Official dependency and cross-platform lock provenance',[str(PYTHON),'scripts/verify-provenance.py']),
  ('Actual negative IaC scanner',[str(PYTHON),'tests/negative-scans.py']),
  ('Independent IAM and unsafe workflow scanner tests',[str(PYTHON),'tests/independent_checks.py']),
  ('Security unit and negative tests',['node','--test','tests/security.test.mjs']),
  ('Independent API and plan tests',['node','tests/additional-security.mjs']),
  ('Actual drift runner-shell tests',[str(PYTHON),'tests/drift-execution.py']),
- ('Browser, accessibility and local smoke tests',['npm.cmd' if os.name=='nt' else 'npm','test'])]
+ ('Browser, accessibility and local smoke tests',['npm','test'])]
 results=[]
 for name,command in checks:
  print('\nCHECK:',name,flush=True)

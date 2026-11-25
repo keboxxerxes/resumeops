@@ -1,0 +1,999 @@
+{
+  "schema_version": 1,
+  "purpose": "Essential historical observed evidence, not a claim that the new Linux-first cleanup revision passed CI",
+  "baseline_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+  "historical_ci_runs": [
+    {
+      "id": 45611385516,
+      "url": "https://github.com/keboxxerxes/resumeops/actions/runs/45611385516",
+      "source_sha": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+      "branch": "main",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "attempt": 1,
+      "workflow": ".github/workflows/ci.yml",
+      "independent_review": true,
+      "jobs": [
+        {
+          "id": 139195512737,
+          "name": "verify",
+          "conclusion": "failure",
+          "labels": [
+            "ubuntu-24.04"
+          ],
+          "runner_name": "GitHub Actions 1000000021",
+          "runner_group_name": null
+        }
+      ],
+      "artifact": {
+        "schema_version": 1,
+        "source_sha": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+        "runner_os": "Linux",
+        "python_version": "3.12.3",
+        "working_directory": "repository root",
+        "checks": [
+          {
+            "name": "Terraform exact version",
+            "command": [
+              "terraform",
+              "version",
+              "-json"
+            ],
+            "exit_code": 0,
+            "seconds": 0.02
+          },
+          {
+            "name": "Terraform format",
+            "command": [
+              "terraform",
+              "fmt",
+              "-check",
+              "-recursive",
+              "infra"
+            ],
+            "exit_code": 0,
+            "seconds": 0.03
+          },
+          {
+            "name": "infra/bootstrap readonly init",
+            "command": [
+              "terraform",
+              "-chdir=infra/bootstrap",
+              "init",
+              "-backend=false",
+              "-input=false",
+              "-lockfile=readonly"
+            ],
+            "exit_code": 0,
+            "seconds": 9.08
+          },
+          {
+            "name": "infra/bootstrap validate",
+            "command": [
+              "terraform",
+              "-chdir=infra/bootstrap",
+              "validate",
+              "-no-color"
+            ],
+            "exit_code": 1,
+            "seconds": 0.62
+          },
+          {
+            "name": "infra/bootstrap TFLint",
+            "command": [
+              "./.tools/tflint",
+              "--chdir=infra/bootstrap",
+              "--config=./.tflint.hcl"
+            ],
+            "exit_code": 0,
+            "seconds": 0.11
+          },
+          {
+            "name": "infra/site readonly init",
+            "command": [
+              "terraform",
+              "-chdir=infra/site",
+              "init",
+              "-backend=false",
+              "-input=false",
+              "-lockfile=readonly"
+            ],
+            "exit_code": 0,
+            "seconds": 7.38
+          },
+          {
+            "name": "infra/site validate",
+            "command": [
+              "terraform",
+              "-chdir=infra/site",
+              "validate",
+              "-no-color"
+            ],
+            "exit_code": 1,
+            "seconds": 0.62
+          },
+          {
+            "name": "infra/site TFLint",
+            "command": [
+              "./.tools/tflint",
+              "--chdir=infra/site",
+              "--config=./.tflint.hcl"
+            ],
+            "exit_code": 0,
+            "seconds": 0.06
+          },
+          {
+            "name": "Checkov IaC",
+            "command": [
+              "./.tools/venv/bin/python",
+              "./.tools/venv/bin/checkov",
+              "-d",
+              "infra",
+              "--framework",
+              "terraform",
+              "--compact",
+              "--quiet",
+              "--skip-download"
+            ],
+            "exit_code": 0,
+            "seconds": 2.57
+          },
+          {
+            "name": "Active and archived workflow syntax",
+            "command": [
+              "./.tools/actionlint",
+              "./.github/workflows/ci.yml",
+              "./workflow-templates/drift.yml",
+              "./workflow-templates/infrastructure.yml",
+              "./workflow-templates/content.yml"
+            ],
+            "exit_code": 0,
+            "seconds": 0.87
+          },
+          {
+            "name": "Source secret scan",
+            "command": [
+              "./.tools/gitleaks",
+              "dir",
+              ".",
+              "--redact",
+              "--no-banner"
+            ],
+            "exit_code": 0,
+            "seconds": 0.47
+          },
+          {
+            "name": "Workflow and IaC guardrails",
+            "command": [
+              "./.tools/venv/bin/python",
+              "scripts/security.py"
+            ],
+            "exit_code": 0,
+            "seconds": 0.03
+          },
+          {
+            "name": "Official dependency and cross-platform lock provenance",
+            "command": [
+              "./.tools/venv/bin/python",
+              "scripts/verify-provenance.py"
+            ],
+            "exit_code": 0,
+            "seconds": 2.12
+          },
+          {
+            "name": "Actual negative IaC scanner",
+            "command": [
+              "./.tools/venv/bin/python",
+              "tests/negative-scans.py"
+            ],
+            "exit_code": 0,
+            "seconds": 1.47
+          },
+          {
+            "name": "Independent IAM and unsafe workflow scanner tests",
+            "command": [
+              "./.tools/venv/bin/python",
+              "tests/independent_checks.py"
+            ],
+            "exit_code": 0,
+            "seconds": 1.67
+          },
+          {
+            "name": "Security unit and negative tests",
+            "command": [
+              "node",
+              "--test",
+              "tests/security.test.mjs"
+            ],
+            "exit_code": 0,
+            "seconds": 0.17
+          },
+          {
+            "name": "Independent API and plan tests",
+            "command": [
+              "node",
+              "tests/additional-security.mjs"
+            ],
+            "exit_code": 0,
+            "seconds": 0.06
+          },
+          {
+            "name": "Actual drift runner-shell tests",
+            "command": [
+              "./.tools/venv/bin/python",
+              "tests/drift-execution.py"
+            ],
+            "exit_code": 0,
+            "seconds": 0.11
+          },
+          {
+            "name": "Browser, accessibility and local smoke tests",
+            "command": [
+              "npm",
+              "test"
+            ],
+            "exit_code": 0,
+            "seconds": 5.35
+          },
+          {
+            "name": "Provider lockfiles unchanged",
+            "command": [
+              "internal SHA256 comparison of both committed provider locks before/after all checks"
+            ],
+            "exit_code": 0
+          }
+        ]
+      },
+      "actual_log_findings": {
+        "validation_error_count": 2,
+        "sanitized_error": "the cached package for registry.terraform.io/hashicorp/aws 6.74.0 (in .terraform/providers) does not match any of the checksums recorded in the dependency lock file",
+        "not_windows_mtls_error": true,
+        "all_later_required_checks_recorded": true
+      },
+      "raw_logs_committed": false
+    },
+    {
+      "id": 45613932613,
+      "url": "https://github.com/keboxxerxes/resumeops/actions/runs/45613932613",
+      "source_sha": "48f21a8f78f8d968dbf87d451b050492558bb4e4",
+      "branch": "main",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "workflow": ".github/workflows/ci.yml",
+      "independent_review": true,
+      "jobs": [
+        {
+          "id": 139204326432,
+          "name": "verify",
+          "conclusion": "success",
+          "labels": [
+            "ubuntu-24.04"
+          ],
+          "runner_name": "GitHub Actions 1000000022",
+          "runner_group_name": null
+        }
+      ],
+      "artifact": {
+        "schema_version": 1,
+        "source_sha": "48f21a8f78f8d968dbf87d451b050492558bb4e4",
+        "runner_os": "Linux",
+        "python_version": "3.12.3",
+        "working_directory": "repository root",
+        "checks": [
+          {
+            "name": "Terraform exact version",
+            "command": [
+              "terraform",
+              "version",
+              "-json"
+            ],
+            "exit_code": 0,
+            "seconds": 0.02
+          },
+          {
+            "name": "Terraform format",
+            "command": [
+              "terraform",
+              "fmt",
+              "-check",
+              "-recursive",
+              "infra"
+            ],
+            "exit_code": 0,
+            "seconds": 0.03
+          },
+          {
+            "name": "infra/bootstrap readonly init",
+            "command": [
+              "terraform",
+              "-chdir=infra/bootstrap",
+              "init",
+              "-backend=false",
+              "-input=false",
+              "-lockfile=readonly"
+            ],
+            "exit_code": 0,
+            "seconds": 6.93
+          },
+          {
+            "name": "infra/bootstrap validate",
+            "command": [
+              "terraform",
+              "-chdir=infra/bootstrap",
+              "validate",
+              "-no-color"
+            ],
+            "exit_code": 0,
+            "seconds": 3.03
+          },
+          {
+            "name": "infra/bootstrap TFLint",
+            "command": [
+              "./.tools/tflint",
+              "--chdir=infra/bootstrap",
+              "--config=./.tflint.hcl"
+            ],
+            "exit_code": 0,
+            "seconds": 0.12
+          },
+          {
+            "name": "infra/site readonly init",
+            "command": [
+              "terraform",
+              "-chdir=infra/site",
+              "init",
+              "-backend=false",
+              "-input=false",
+              "-lockfile=readonly"
+            ],
+            "exit_code": 0,
+            "seconds": 6.53
+          },
+          {
+            "name": "infra/site validate",
+            "command": [
+              "terraform",
+              "-chdir=infra/site",
+              "validate",
+              "-no-color"
+            ],
+            "exit_code": 0,
+            "seconds": 2.03
+          },
+          {
+            "name": "infra/site TFLint",
+            "command": [
+              "./.tools/tflint",
+              "--chdir=infra/site",
+              "--config=./.tflint.hcl"
+            ],
+            "exit_code": 0,
+            "seconds": 0.06
+          },
+          {
+            "name": "Checkov IaC",
+            "command": [
+              "./.tools/venv/bin/python",
+              "./.tools/venv/bin/checkov",
+              "-d",
+              "infra",
+              "--framework",
+              "terraform",
+              "--compact",
+              "--quiet",
+              "--skip-download"
+            ],
+            "exit_code": 0,
+            "seconds": 2.62
+          },
+          {
+            "name": "Active and archived workflow syntax",
+            "command": [
+              "./.tools/actionlint",
+              "./.github/workflows/ci.yml",
+              "./workflow-templates/drift.yml",
+              "./workflow-templates/infrastructure.yml",
+              "./workflow-templates/content.yml"
+            ],
+            "exit_code": 0,
+            "seconds": 0.16
+          },
+          {
+            "name": "Source secret scan",
+            "command": [
+              "./.tools/gitleaks",
+              "dir",
+              ".",
+              "--redact",
+              "--no-banner"
+            ],
+            "exit_code": 0,
+            "seconds": 0.37
+          },
+          {
+            "name": "Workflow and IaC guardrails",
+            "command": [
+              "./.tools/venv/bin/python",
+              "scripts/security.py"
+            ],
+            "exit_code": 0,
+            "seconds": 0.03
+          },
+          {
+            "name": "Official dependency and cross-platform lock provenance",
+            "command": [
+              "./.tools/venv/bin/python",
+              "scripts/verify-provenance.py"
+            ],
+            "exit_code": 0,
+            "seconds": 1.97
+          },
+          {
+            "name": "Actual negative IaC scanner",
+            "command": [
+              "./.tools/venv/bin/python",
+              "tests/negative-scans.py"
+            ],
+            "exit_code": 0,
+            "seconds": 1.67
+          },
+          {
+            "name": "Independent IAM and unsafe workflow scanner tests",
+            "command": [
+              "./.tools/venv/bin/python",
+              "tests/independent_checks.py"
+            ],
+            "exit_code": 0,
+            "seconds": 1.92
+          },
+          {
+            "name": "Security unit and negative tests",
+            "command": [
+              "node",
+              "--test",
+              "tests/security.test.mjs"
+            ],
+            "exit_code": 0,
+            "seconds": 0.12
+          },
+          {
+            "name": "Independent API and plan tests",
+            "command": [
+              "node",
+              "tests/additional-security.mjs"
+            ],
+            "exit_code": 0,
+            "seconds": 0.03
+          },
+          {
+            "name": "Actual drift runner-shell tests",
+            "command": [
+              "./.tools/venv/bin/python",
+              "tests/drift-execution.py"
+            ],
+            "exit_code": 0,
+            "seconds": 0.12
+          },
+          {
+            "name": "Browser, accessibility and local smoke tests",
+            "command": [
+              "npm",
+              "test"
+            ],
+            "exit_code": 0,
+            "seconds": 4.14
+          },
+          {
+            "name": "Provider lockfiles unchanged",
+            "command": [
+              "internal SHA256 comparison of both committed provider locks before/after all checks"
+            ],
+            "exit_code": 0
+          }
+        ]
+      },
+      "actual_log_findings": {
+        "actual_pinned_terraform_version": "1.17.2",
+        "successful_root_validation_messages": 2,
+        "ordered_individual_command_exit_records": 19,
+        "every_command_exit_zero": true,
+        "lock_immutability_exit_zero": true,
+        "no_checksum_or_provider_schema_error": true,
+        "github_token_permissions": {
+          "contents": "read",
+          "metadata": "read"
+        },
+        "runner_image": "ubuntu-24.04",
+        "observed_ubuntu_version": "24.04.5",
+        "private_raw_job_log_sha256": "684f6ca2803e657254252c954bb36c946fc9b5293ed479e32f0a6b401c1e3e21"
+      },
+      "raw_logs_committed": false
+    },
+    {
+      "id": 45622176904,
+      "url": "https://github.com/keboxxerxes/resumeops/actions/runs/45622176904",
+      "source_sha": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "branch": "main",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "workflow": ".github/workflows/ci.yml",
+      "independent_review": true,
+      "jobs": [
+        {
+          "id": 139232923058,
+          "name": "verify",
+          "conclusion": "success",
+          "labels": [
+            "ubuntu-24.04"
+          ],
+          "runner_name": "GitHub Actions 1000000023",
+          "runner_group_name": null
+        }
+      ],
+      "artifact": {
+        "schema_version": 1,
+        "source_sha": "61967de46dd5845c82853d07736f02545bd71ffb",
+        "runner_os": "Linux",
+        "python_version": "3.12.3",
+        "working_directory": "repository root",
+        "checks": [
+          {
+            "name": "Terraform exact version",
+            "command": [
+              "terraform",
+              "version",
+              "-json"
+            ],
+            "exit_code": 0,
+            "seconds": 0.03
+          },
+          {
+            "name": "Terraform format",
+            "command": [
+              "terraform",
+              "fmt",
+              "-check",
+              "-recursive",
+              "infra"
+            ],
+            "exit_code": 0,
+            "seconds": 0.06
+          },
+          {
+            "name": "infra/bootstrap readonly init",
+            "command": [
+              "terraform",
+              "-chdir=infra/bootstrap",
+              "init",
+              "-backend=false",
+              "-input=false",
+              "-lockfile=readonly"
+            ],
+            "exit_code": 0,
+            "seconds": 10.54
+          },
+          {
+            "name": "infra/bootstrap validate",
+            "command": [
+              "terraform",
+              "-chdir=infra/bootstrap",
+              "validate",
+              "-no-color"
+            ],
+            "exit_code": 0,
+            "seconds": 3.53
+          },
+          {
+            "name": "infra/bootstrap TFLint",
+            "command": [
+              "./.tools/tflint",
+              "--chdir=infra/bootstrap",
+              "--config=./.tflint.hcl"
+            ],
+            "exit_code": 0,
+            "seconds": 0.11
+          },
+          {
+            "name": "infra/site readonly init",
+            "command": [
+              "terraform",
+              "-chdir=infra/site",
+              "init",
+              "-backend=false",
+              "-input=false",
+              "-lockfile=readonly"
+            ],
+            "exit_code": 0,
+            "seconds": 9.49
+          },
+          {
+            "name": "infra/site validate",
+            "command": [
+              "terraform",
+              "-chdir=infra/site",
+              "validate",
+              "-no-color"
+            ],
+            "exit_code": 0,
+            "seconds": 3.13
+          },
+          {
+            "name": "infra/site TFLint",
+            "command": [
+              "./.tools/tflint",
+              "--chdir=infra/site",
+              "--config=./.tflint.hcl"
+            ],
+            "exit_code": 0,
+            "seconds": 0.06
+          },
+          {
+            "name": "Checkov IaC",
+            "command": [
+              "./.tools/venv/bin/python",
+              "./.tools/venv/bin/checkov",
+              "-d",
+              "infra",
+              "--framework",
+              "terraform",
+              "--compact",
+              "--quiet",
+              "--skip-download"
+            ],
+            "exit_code": 0,
+            "seconds": 3.92
+          },
+          {
+            "name": "Active and archived workflow syntax",
+            "command": [
+              "./.tools/actionlint",
+              "./.github/workflows/ci.yml",
+              "./workflow-templates/drift.yml",
+              "./workflow-templates/infrastructure.yml",
+              "./workflow-templates/content.yml"
+            ],
+            "exit_code": 0,
+            "seconds": 0.57
+          },
+          {
+            "name": "Source secret scan",
+            "command": [
+              "./.tools/gitleaks",
+              "dir",
+              ".",
+              "--redact",
+              "--no-banner"
+            ],
+            "exit_code": 0,
+            "seconds": 0.62
+          },
+          {
+            "name": "Workflow and IaC guardrails",
+            "command": [
+              "./.tools/venv/bin/python",
+              "scripts/security.py"
+            ],
+            "exit_code": 0,
+            "seconds": 0.03
+          },
+          {
+            "name": "Official dependency and cross-platform lock provenance",
+            "command": [
+              "./.tools/venv/bin/python",
+              "scripts/verify-provenance.py"
+            ],
+            "exit_code": 0,
+            "seconds": 2.57
+          },
+          {
+            "name": "Actual negative IaC scanner",
+            "command": [
+              "./.tools/venv/bin/python",
+              "tests/negative-scans.py"
+            ],
+            "exit_code": 0,
+            "seconds": 2.27
+          },
+          {
+            "name": "Independent IAM and unsafe workflow scanner tests",
+            "command": [
+              "./.tools/venv/bin/python",
+              "tests/independent_checks.py"
+            ],
+            "exit_code": 0,
+            "seconds": 2.47
+          },
+          {
+            "name": "Security unit and negative tests",
+            "command": [
+              "node",
+              "--test",
+              "tests/security.test.mjs"
+            ],
+            "exit_code": 0,
+            "seconds": 0.17
+          },
+          {
+            "name": "Independent API and plan tests",
+            "command": [
+              "node",
+              "tests/additional-security.mjs"
+            ],
+            "exit_code": 0,
+            "seconds": 0.06
+          },
+          {
+            "name": "Actual drift runner-shell tests",
+            "command": [
+              "./.tools/venv/bin/python",
+              "tests/drift-execution.py"
+            ],
+            "exit_code": 0,
+            "seconds": 0.16
+          },
+          {
+            "name": "Browser, accessibility and local smoke tests",
+            "command": [
+              "npm",
+              "test"
+            ],
+            "exit_code": 0,
+            "seconds": 7.56
+          },
+          {
+            "name": "Provider lockfiles unchanged",
+            "command": [
+              "internal SHA256 comparison of both committed provider locks before/after all checks"
+            ],
+            "exit_code": 0
+          }
+        ]
+      },
+      "actual_log_findings": {
+        "actual_pinned_terraform_version": "1.17.2",
+        "successful_root_validation_messages": 2,
+        "ordered_individual_command_exit_records": 19,
+        "every_command_exit_zero": true,
+        "lock_immutability_exit_zero": true,
+        "no_checksum_or_provider_schema_error": true
+      },
+      "raw_logs_committed": false
+    }
+  ],
+  "native_windows_history": {
+    "current_classification": "OUT OF SCOPE",
+    "diagnosis_closed_by_policy_not_fixed": true,
+    "observations": {
+      "date": "2026-11-25",
+      "authorization": "Explicit human reply authorized local diagnostics outside sandbox; no AWS/publishing/control weakening",
+      "commands": [
+        {
+          "command": ".tools/terraform.exe -chdir=infra/bootstrap init -backend=false -input=false -lockfile=readonly -no-color",
+          "exit_code": 0,
+          "execution": "user-authorized require_escalated local diagnostic",
+          "environment": {
+            "TF_CLI_CONFIG_FILE": "$WORKSPACE/.tools/mirror.tfrc",
+            "AWS_EC2_METADATA_DISABLED": "true",
+            "CHECKPOINT_DISABLE": "1"
+          },
+          "result": "backend-disabled initialization succeeded with readonly lockfile warning"
+        },
+        {
+          "command": ".tools/terraform.exe -chdir=infra/bootstrap validate -no-color",
+          "exit_code": 1,
+          "execution": "user-authorized require_escalated local diagnostic",
+          "environment": {
+            "TF_CLI_CONFIG_FILE": "$WORKSPACE/.tools/mirror.tfrc",
+            "AWS_EC2_METADATA_DISABLED": "true",
+            "CHECKPOINT_DISABLE": "1"
+          },
+          "result": "provider schema unavailable: plugin did not respond; no source schema validation completed"
+        },
+        {
+          "command": ".tools/terraform.exe -chdir=infra/site init -backend=false -input=false -lockfile=readonly -no-color",
+          "exit_code": 0,
+          "execution": "user-authorized require_escalated local diagnostic",
+          "environment": {
+            "TF_CLI_CONFIG_FILE": "$WORKSPACE/.tools/mirror.tfrc",
+            "AWS_EC2_METADATA_DISABLED": "true",
+            "CHECKPOINT_DISABLE": "1"
+          },
+          "result": "backend-disabled initialization succeeded with readonly lockfile warning"
+        },
+        {
+          "command": ".tools/terraform.exe -chdir=infra/site validate -no-color",
+          "exit_code": 1,
+          "execution": "user-authorized require_escalated local diagnostic",
+          "environment": {
+            "TF_CLI_CONFIG_FILE": "$WORKSPACE/.tools/mirror.tfrc",
+            "AWS_EC2_METADATA_DISABLED": "true",
+            "CHECKPOINT_DISABLE": "1"
+          },
+          "result": "provider schema unavailable: plugin did not respond; no source schema validation completed"
+        },
+        {
+          "command": ".tools/terraform.exe -chdir=.tools/continuation/core-control init -backend=false -input=false -no-color",
+          "argument_note": "Passed as quoted argument in PowerShell",
+          "exit_code": 0,
+          "execution": "sandbox",
+          "result": "Terraform builtin provider only, no AWS plugin/backend"
+        },
+        {
+          "command": ".tools/terraform.exe -chdir=.tools/continuation/core-control validate -no-color",
+          "argument_note": "Passed as quoted argument in PowerShell",
+          "exit_code": 0,
+          "execution": "sandbox",
+          "result": "Core/builtin-only evaluator control passed; does not validate ResumeOps configurations"
+        },
+        {
+          "command": "wsl.exe --list --quiet",
+          "exit_code": 0,
+          "execution": "authorized require_escalated read-only environment availability",
+          "result": "Existing Ubuntu available; no new environment installed"
+        },
+        {
+          "command": "wsl.exe -d Ubuntu --exec /bin/bash $WORKSPACE_WSL/.tools/continuation/linux-validate.sh",
+          "exit_code": 1,
+          "execution": "user-authorized require_escalated local Terraform diagnostics",
+          "result": "Wsl/Service/WSAETIMEDOUT before script execution; both Linux target validations NOT RUN"
+        }
+      ],
+      "lockfile_fingerprints_after": {
+        "infra/bootstrap/.terraform.lock.hcl": "68a32465876f8a19742c2a00fca6d62ab488d232430496c5efd6a0fc7d271fc6",
+        "infra/site/.terraform.lock.hcl": "68a32465876f8a19742c2a00fca6d62ab488d232430496c5efd6a0fc7d271fc6"
+      },
+      "causality_limit": "Requested outside-sandbox run also failed. Do not infer root cause solely from execution flag; compare minimal/direct mutual TLS experiments.",
+      "initial_core_shell_error": {
+        "exit_code": 1,
+        "detail": "Unquoted PowerShell -chdir=.tools argument parsed incorrectly; repeated with quoted argument successfully. Not a Terraform configuration failure."
+      },
+      "linux_binary_provisioning": {
+        "command": "python .tools/continuation/get-linux-pins.py",
+        "exit_code": 0,
+        "pins": [
+          "Terraform 1.17.2 linux_amd64",
+          "AWS provider 6.74.0 linux_amd64"
+        ],
+        "integrity": "Both archives compared with official release SHA256SUMS; no project lock or version changes"
+      }
+    },
+    "certificate_evidence": {
+      "command": "python .tools/diagnose-direct-mtls.py",
+      "cwd": ".",
+      "sandbox": "default",
+      "process_exit": 0,
+      "diagnostic_not_validation": true,
+      "result": {
+        "provider_archive_binary_match": true,
+        "mutual_tls_required": true,
+        "system_ca_used": false,
+        "openssl_exit": 1,
+        "pyopenssl_verified_handshake": false,
+        "peer_validation_callbacks": [
+          {
+            "depth": 0,
+            "validation_error": 20,
+            "validation_ok": false,
+            "matches_pinned": false,
+            "self_issued": false,
+            "issuer_matches_pinned": false
+          }
+        ],
+        "offered_certificate_count": 0,
+        "verified_handshake": false,
+        "error_type": "SSLCertVerificationError",
+        "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:997)"
+      }
+    },
+    "raw_certificates_keys_logs_retained_in_source": false
+  },
+  "material_findings": [
+    {
+      "id": "cloudfront-iam",
+      "finding": "Broad/invalid creation and retag permissions could target unrelated resources",
+      "remediation": "Operator-first exact saved-plan creation; runtime exact distribution/OAC/header IDs, no runtime creation or wildcard retag",
+      "verified_in_commit": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+      "status": "CLOSED in historical verified implementation"
+    },
+    {
+      "id": "drift-errexit",
+      "finding": "Inherited runner errexit bypassed exit1/2 classification",
+      "remediation": "Conditional capture, actual shell stub tests distinguish0/1/2",
+      "verified_in_commit": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+      "status": "CLOSED in historical verified implementation"
+    },
+    {
+      "id": "subprocess-privacy",
+      "finding": "Uncaught AWS subprocess output could expose identifiers",
+      "remediation": "Capture output and sanitize failure handlers; no raw plan/state logs",
+      "verified_in_commit": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+      "status": "CLOSED in historical verified implementation"
+    },
+    {
+      "id": "approval-bypass",
+      "finding": "PR bypass allowances and missing approval count could pass",
+      "remediation": "Reject users/teams/apps bypass, strict booleans/integer counts and current reviewed main",
+      "verified_in_commit": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+      "status": "CLOSED in historical verified implementation"
+    },
+    {
+      "id": "artifact-hidden-path",
+      "finding": "Hidden ciphertext file could be omitted",
+      "remediation": "Exact single ciphertext path with explicit hidden-file inclusion and bounded retention",
+      "verified_in_commit": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+      "status": "CLOSED in historical verified implementation"
+    },
+    {
+      "id": "provider-reads",
+      "finding": "Provider refresh needed additional scoped S3 read operations",
+      "remediation": "Exact-site-bucket read actions verified against official provider/service metadata",
+      "verified_in_commit": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+      "status": "CLOSED in historical verified implementation"
+    },
+    {
+      "id": "invalid-iam-action",
+      "finding": "DeleteBucketOwnershipControls is an API operation, not a valid IAM action",
+      "remediation": "Removed invalid action; valid PutBucketOwnershipControls retained; all30S3/15CF names verified",
+      "verified_in_commit": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+      "status": "CLOSED in historical verified implementation"
+    },
+    {
+      "id": "text-encoding",
+      "finding": "README CP1252 could fail UTF8 tools",
+      "remediation": "Converted UTF8 before initial source commit; exactindex review strictUTF8",
+      "verified_in_commit": "ce7394c1e1e4df2378558adc36bbbda9af1256da",
+      "status": "CLOSED in historical verified implementation"
+    },
+    {
+      "id": "linux-content-hash",
+      "finding": "Readonly init could authenticateZIP but cachedLinuxvalidate lacked h1",
+      "remediation": "Independently verified additive Linuxh1, all16 original hashes retained; actual both-rootCI success",
+      "verified_in_commit": "48f21a8f78f8d968dbf87d451b050492558bb4e4",
+      "status": "CLOSED in historical verified implementation"
+    },
+    {
+      "id": "exception-rationales",
+      "finding": "Earlier waiver text overstated audit/DR/control equivalence and some costs",
+      "remediation": "All15resource/check pairs reassessed; explicit absent controls/residuals, precise current pricing",
+      "verified_in_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "status": "CLOSED in historical verified implementation"
+    }
+  ],
+  "pricing_observation": {
+    "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/us-east-1/index.json",
+    "publication_date": "2026-11-21T17:29:19Z",
+    "entries": [
+      {
+        "usage_type": "Requests-Tier2",
+        "description": "$0.004 per 10,000 GET and all other requests",
+        "unit": "Requests",
+        "usd": "0.0000004000",
+        "begin_range": "0"
+      },
+      {
+        "usage_type": "Requests-Tier1",
+        "description": "$0.005 per 1,000 PUT, COPY, POST, or LIST requests",
+        "unit": "Requests",
+        "usd": "0.0000050000",
+        "begin_range": "0"
+      },
+      {
+        "usage_type": "TimedStorage-ByteHrs",
+        "description": "$0.023 per GB - first 50 TB / month of storage used",
+        "unit": "GB-Mo",
+        "usd": "0.0230000000",
+        "begin_range": "0"
+      }
+    ]
+  },
+  "new_cleanup_ci": {
+    "status": "NOT RUN",
+    "reason": "Current cleanup requires independent review and separately authorized private push before fresh hosted CI"
+  },
+  "complete_legacy_records": "Each retired tracked file remains at immutable baseline Git commit/blob recorded in cleanup-inventory.json; no history rewriting"
+}

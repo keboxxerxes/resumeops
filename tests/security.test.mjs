@@ -1,6 +1,5 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {readFileSync,readdirSync} from 'node:fs';
 import {seal,open,validatePlan} from '../scripts/plan-crypto.mjs';
@@ -45,7 +44,7 @@ test('content accepts exact commit only and fixed asset allowlist',()=>{
  assert.equal(validateRevision('a'.repeat(40)),'a'.repeat(40));assert.deepEqual(ASSETS,['index.html','styles.css','app.js','deployment.json']);
 });
 test('repository policy rejects negative unsafe workflow and insecure IaC mutations',()=>{
- const python=process.platform==='win32'?'.tools/venv/Scripts/python':'.tools/venv/bin/python';
+ const python='.tools/venv/bin/python';
  const code=`from scripts.security import inspect\nassert inspect({'bad.yml':'on: pull_request_target\\npermissions: write-all\\nsteps:\\n - uses: actions/checkout@main'})\nassert inspect({'bad.tf':'block_public_acls = false'})\nassert inspect({'bad.tf':'"token.actions.githubusercontent.com:sub" = "repo:org/*"'})\nassert inspect({'bad.yml':'permissions:\\n  id-token: write\\non:\\n  pull_request:'})\nprint('negative unsafe workflow and IaC fixtures rejected')`;
  const result=execFileSync(python,['-c',code],{encoding:'utf8'});assert.match(result,/fixtures rejected/);
 });

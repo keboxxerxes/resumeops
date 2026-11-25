@@ -1,7 +1,9 @@
 """Independent reviewer invariants and real unsafe-workflow scanner checks.
 No AWS calls; fixtures are ephemeral ignored local files.
 """
-import copy,json,os,pathlib,re,subprocess,sys,tempfile
+import json,pathlib,re,subprocess,sys,tempfile
+if sys.platform != 'linux':
+    raise SystemExit('Infrastructure/security scanner integration tests require Linux; use Ubuntu CI.')
 import hcl2
 ROOT=pathlib.Path.cwd()
 (ROOT/'.local/reviewer').mkdir(parents=True,exist_ok=True)
@@ -33,7 +35,7 @@ for name,m,i in mutations:
     except AssertionError: pass
     else: raise AssertionError('Mutation not rejected: '+name)
 print('PASS: independent IAM source invariants and five adversarial mutations (static source invariants; not rendered-policy or live IAM evaluation)')
-cli=ROOT/'.tools/venv'/('Scripts' if os.name=='nt' else 'bin')/'checkov'
+cli=ROOT/'.tools/venv'/'bin'/'checkov'
 with tempfile.TemporaryDirectory(prefix='unsafe-workflow-',dir=ROOT/'.local/reviewer') as temp:
     directory=pathlib.Path(temp); workflow=directory/'.github/workflows/unsafe.yml'; workflow.parent.mkdir(parents=True)
     workflow.write_text('name: Unsafe generated fixture\non: pull_request_target\npermissions: write-all\njobs:\n  unsafe:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@main\n      - run: echo "${{ github.event.pull_request.title }}"\n')
@@ -42,7 +44,7 @@ with tempfile.TemporaryDirectory(prefix='unsafe-workflow-',dir=ROOT/'.local/revi
     assert result.returncode==1 and any(x['check_id']=='CKV_GHA_2' for x in report['results']['failed_checks']), 'actual workflow scanner failed to reject injection'
     print('PASS: actual Checkov unsafe workflow injection rejected (scanner exit 1 CKV_GHA_2)')
     workflow.write_text('name: Invalid generated fixture\non: pull_request\njobs:\n  invalid:\n    runs-on: ubuntu-latest\n    forbidden: value\n    steps:\n      - run: echo safe\n')
-    result=subprocess.run([str(ROOT/'.tools'/('actionlint.exe' if os.name=='nt' else 'actionlint')),str(workflow)],capture_output=True,text=True,timeout=30)
+    result=subprocess.run([str(ROOT/'.tools'/'actionlint'),str(workflow)],capture_output=True,text=True,timeout=30)
     assert result.returncode!=0 and 'unexpected key' in result.stdout+result.stderr,'actual actionlint did not reject invalid workflow'
     print('PASS: actual actionlint invalid workflow rejected (expected nonzero)')
 

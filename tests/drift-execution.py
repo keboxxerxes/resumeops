@@ -1,10 +1,12 @@
 """Execute the actual drift step under runner-equivalent bash -e, stubbing Terraform.
 The shell function returns synthetic exit codes; no Terraform or AWS call runs.
 """
-import os,pathlib,shutil,subprocess,tempfile,yaml
+import os,pathlib,shutil,subprocess,sys,tempfile,yaml
+if sys.platform != "linux":
+    raise SystemExit("Drift runner-shell integration tests require Linux; use Ubuntu CI.")
 root=pathlib.Path.cwd(); bash=shutil.which('bash')
 (root/'.local/reviewer').mkdir(parents=True,exist_ok=True)
-if os.name=='nt': bash='C:/Program Files/Git/bin/bash.exe'
+if not bash: raise SystemExit('Bash is required for runner-shell integration tests')
 workflow=yaml.safe_load((root/'workflow-templates/drift.yml').read_text())
 block=next(s['run'] for s in workflow['jobs']['drift']['steps'] if s.get('name')=='Detect without applying')
 with tempfile.TemporaryDirectory(dir=root/'.local/reviewer') as directory:

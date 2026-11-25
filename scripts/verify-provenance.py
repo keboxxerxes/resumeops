@@ -33,3 +33,12 @@ for root in ['infra/bootstrap','infra/site']:
     for target in ['linux_amd64','windows_amd64']:
         assert checksums['terraform-provider-aws_6.74.0_'+target+'.zip'] in archived, 'Missing readonly target archive checksum'
 print('Both readonly lockfiles retain all15official archive hashes and both reviewed Linux/Windows AWS 6.74.0 content hashes VERIFIED')
+
+# Public service documentation only; this makes no account/IAM API request.
+iam=pathlib.Path('infra/bootstrap/iam.tf').read_text()
+for service in ['s3','cloudfront']:
+    metadata=get('https://servicereference.us-east-1.amazonaws.com/v1/'+service+'/'+service+'.json')
+    known={action['Name'] for action in metadata['Actions']}
+    actions=set(re.findall(r'"'+service+r':([A-Z][A-Za-z]+)"',iam))
+    assert actions and not actions-known, 'Unknown runtime IAM action name'
+    print(service,len(actions),'runtime IAM action names VERIFIED against public AWS metadata')

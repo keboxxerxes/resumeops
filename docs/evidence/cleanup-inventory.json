@@ -1,0 +1,3030 @@
+{
+  "schema_version": 1,
+  "status": "LOCAL_CLEANUP_COMPLETED_HOSTED_VERIFICATION_PENDING",
+  "baseline_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+  "before": {
+    "tracked_files": 100,
+    "physical_files_excluding_git": 19166,
+    "groups": {
+      ".local": {
+        "files": 402,
+        "bytes": 2690801
+      },
+      ".tools": {
+        "files": 18418,
+        "bytes": 2955861448
+      },
+      "Python bytecode": {
+        "files": 6,
+        "bytes": 27275
+      },
+      "Terraform cache": {
+        "files": 5,
+        "bytes": 1657130099
+      },
+      "node_modules": {
+        "files": 232,
+        "bytes": 22555866
+      },
+      "source": {
+        "files": 100,
+        "bytes": 371190
+      },
+      "test-results": {
+        "files": 3,
+        "bytes": 1635387
+      }
+    },
+    "full_private_inventory_sha256": "d1904ed56ceba5cff5d2bdaf5c13622621e156979224c1736364b03cb7fa701b",
+    "classified_private_inventory_sha256": "ac3a38278e5a19de0ba009254c57c9c1978d169fb4e1fd5800f6cd2dad3ea9a3",
+    "physical_classifications": {
+      "KEEP": 897,
+      "REMOVE": 18230,
+      "ARCHIVE": 25,
+      "CONSOLIDATE": 14
+    },
+    "empty_directories": [
+      ".tools/npm-cache/_cacache/tmp",
+      ".tools/venv/Include"
+    ],
+    "reparse_points": []
+  },
+  "tracked_inventory": [
+    {
+      "path": ".codex/agents/builder.toml",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        ".codex/agents/builder.toml"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "ac7561dd1782233f18e7aefbf808c3d74a90b09d"
+    },
+    {
+      "path": ".codex/agents/planner.toml",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        ".codex/agents/planner.toml"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "7326957ccef7d3905696e994c478454024d6a505"
+    },
+    {
+      "path": ".codex/agents/reviewer.toml",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        ".codex/agents/reviewer.toml"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "59ab78b7126889a094bb2def01ad33885f7bd736"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        ".github/workflows/ci.yml"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "8992668e7f3b169a6b3016104ac456402447c0bb"
+    },
+    {
+      "path": ".gitignore",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        ".gitignore"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "790347366d50491f4562cd0df03381caa6702bbb"
+    },
+    {
+      "path": ".gitleaks.toml",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        ".gitleaks.toml"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "0580613231d62fd4886f3b70b385be89085fada6"
+    },
+    {
+      "path": ".tflint.hcl",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        ".tflint.hcl"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "8482842ac9421764fe59ae36330b24711e786a45"
+    },
+    {
+      "path": "AGENTS.md",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "AGENTS.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "e33720c4e597ba21448cf500dceb940faa5834c1"
+    },
+    {
+      "path": "FINAL_ASSESSMENT.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/ARCHITECTURE.md",
+        "docs/DEPLOYMENT.md",
+        "docs/SDD_WORKFLOW.md",
+        "docs/VERIFICATION.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "ebffc2c169684060181fde6527289c71d914ba7a"
+    },
+    {
+      "path": "PROMPT.md",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "PROMPT.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "fbf98ddb3808fe1f0c353c85d441cc964c346753"
+    },
+    {
+      "path": "README.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": false,
+      "reason": "Keep concise recruiter-facing overview; detailed content moves to canonical documents",
+      "retained_or_consolidated_at": [
+        "README.md",
+        "docs/ARCHITECTURE.md",
+        "docs/DEPLOYMENT.md",
+        "docs/SECURITY.md",
+        "docs/SDD_WORKFLOW.md",
+        "docs/VERIFICATION.md",
+        "docs/decisions/001-linux-first-terraform.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "b277cfa0bcc6e3fb07e083db8700fa99974247c0"
+    },
+    {
+      "path": "SECURITY_REVIEW.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/SECURITY.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "a0a2b2ccb8fe5f447ddff2b9cb956751f9b1063a"
+    },
+    {
+      "path": "SPEC.md",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "SPEC.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "69838ccf93180c7a91e86a6879817b3794c60088"
+    },
+    {
+      "path": "TEST_RESULTS.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/ARCHITECTURE.md",
+        "docs/DEPLOYMENT.md",
+        "docs/SDD_WORKFLOW.md",
+        "docs/VERIFICATION.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "c5ab1a276b2d692f9378ac04ac0e72ff0698bf69"
+    },
+    {
+      "path": "docs/DEPENDENCIES.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/VERIFICATION.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "64be71a23a16d7e2a7a9661635683013ec08dcc6"
+    },
+    {
+      "path": "docs/EXCEPTION_REASSESSMENT.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/SECURITY.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "0ee6576a42c8ad2b048cf43928b2f9795b864182"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_REPORT.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/ARCHITECTURE.md",
+        "docs/DEPLOYMENT.md",
+        "docs/SDD_WORKFLOW.md",
+        "docs/VERIFICATION.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "c0eaf3a6050cba1b7f651dfc1ccb4d82b2d929f0"
+    },
+    {
+      "path": "docs/MTLS_DIAGNOSTICS.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/decisions/001-linux-first-terraform.md",
+        "docs/evidence/provider-integrity.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "75eda0f2f4a1f36bc01f94350c500deee07e8dca"
+    },
+    {
+      "path": "docs/ORCHESTRATION.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/SDD_WORKFLOW.md",
+        "docs/VERIFICATION.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "96cc60a2f2289456dd1e57dcc9b71591f1d53195"
+    },
+    {
+      "path": "docs/PLAN.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/SDD_WORKFLOW.md",
+        "docs/VERIFICATION.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "9bd057682c2e51e1ba624bec20fd1a69c65e5374"
+    },
+    {
+      "path": "docs/PRIVATE_PUBLICATION_REVIEW.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/ARCHITECTURE.md",
+        "docs/DEPLOYMENT.md",
+        "docs/SDD_WORKFLOW.md",
+        "docs/VERIFICATION.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "5d76794673964193ab01f8ad51a159e9768423e2"
+    },
+    {
+      "path": "docs/SCANNER_EXCEPTIONS.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/SECURITY.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "b5007b28ab205ed4bc155c2bdc3ef8e6182e5443"
+    },
+    {
+      "path": "docs/continuation/dependency-preservation.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/provider-integrity.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "bc97b73a39f98ca84b6e82db85f29617669fa87d"
+    },
+    {
+      "path": "docs/continuation/final-sanitization.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/cleanup-inventory.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "61e4d1b62413b138169db39d5d72db84d164bc1b"
+    },
+    {
+      "path": "docs/continuation/orchestrator-diagnostics.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "639e51f6ab1efce1dd01a1ec2fa62851af7982d9"
+    },
+    {
+      "path": "docs/continuation/verified-source-sha256.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/cleanup-inventory.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "cd1b2a67f2a10171ef2ecc3800dfebe0fe932b32"
+    },
+    {
+      "path": "docs/github/LOCKFILE_COMPATIBILITY.md",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Superseded overlapping narrative; consolidate material facts, decisions, controls, exact results and source/run references into canonical docs before removing donor",
+      "retained_or_consolidated_at": [
+        "docs/decisions/001-linux-first-terraform.md",
+        "docs/evidence/provider-integrity.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "ec67015bdf9d1ff7a7a4213db8dc27923673cf27"
+    },
+    {
+      "path": "docs/github/canonical-lock-verification.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/provider-integrity.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "d707a10b510a61e3b34ddd603174c91e07ad7a47"
+    },
+    {
+      "path": "docs/github/first-ci-run.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "1e36c405173d30edc487ed5d3835d771f99ebeaa"
+    },
+    {
+      "path": "docs/github/initial-push.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "1f99c683ca11bb7182c069908c2d5796cff41d29"
+    },
+    {
+      "path": "docs/github/repository-prepush.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "b76e96327125da60b83981686154ddda2ec0b075"
+    },
+    {
+      "path": "docs/github/successful-ci-run.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "c777111d064728f3fd24cc0f9e644258dc860f56"
+    },
+    {
+      "path": "docs/orchestrator-checks.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "65f5b1e7e2e1a5402206e731bddc458660bbf9c4"
+    },
+    {
+      "path": "docs/reviewer/action-names.py",
+      "classification": "CONSOLIDATE",
+      "remove_original_path": true,
+      "reason": "Official IAM action-name verification moved into active mandatory provenance check before removing ad-hoc helper",
+      "retained_or_consolidated_at": [
+        "scripts/verify-provenance.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "6f7453a3f8cc66da9e986235e7e98f84a829d5f4"
+    },
+    {
+      "path": "docs/reviewer/additional.mjs",
+      "classification": "REMOVE",
+      "remove_original_path": true,
+      "reason": "Redundant compatibility wrappers; canonical tests are invoked directly by mandatory CI",
+      "retained_or_consolidated_at": [
+        "tests/additional-security.mjs",
+        "tests/drift-execution.py",
+        "tests/independent_checks.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "353571b5ecef0c011a66962c4f7a885bde9c9237"
+    },
+    {
+      "path": "docs/reviewer/commands.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "67904cbe9c3a885971f65bd9ea002d5b5e91647a"
+    },
+    {
+      "path": "docs/reviewer/continuation-commands.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "d948528d10827ca13af2d27325da47939b9b58a4"
+    },
+    {
+      "path": "docs/reviewer/continuation-exceptions.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "6c5107af7264e94a72a6d5cb5de4ee395f03d8a3"
+    },
+    {
+      "path": "docs/reviewer/continuation-mtls.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "f05f8c39df48e32a18c6cc729b1933ed4d02df26"
+    },
+    {
+      "path": "docs/reviewer/continuation-pricing.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "8de6b5a862e69ab24c0dadb295c2b1c865a42855"
+    },
+    {
+      "path": "docs/reviewer/continuation-pricing.py",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "One-off price retrieval, not a CI/runtime dependency; preserve rates/source/date and immutable original Git blob",
+      "retained_or_consolidated_at": [
+        "docs/DEPLOYMENT.md",
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "74c5a63d09906dbf38edabf5b5a1616befcaa7fd"
+    },
+    {
+      "path": "docs/reviewer/drift-execution.py",
+      "classification": "REMOVE",
+      "remove_original_path": true,
+      "reason": "Redundant compatibility wrappers; canonical tests are invoked directly by mandatory CI",
+      "retained_or_consolidated_at": [
+        "tests/additional-security.mjs",
+        "tests/drift-execution.py",
+        "tests/independent_checks.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "ead553b4151583a1a97faabaddf6745e56b99248"
+    },
+    {
+      "path": "docs/reviewer/github/correction-commit-review.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "4671471c0b31659880e5110cba1dec128115f16e"
+    },
+    {
+      "path": "docs/reviewer/github/correction-lock-diff-review.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/provider-integrity.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "ad55c41b82de6afdcf0deaa5b88d52cce8c7b3b1"
+    },
+    {
+      "path": "docs/reviewer/github/initial-commit-review.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "4df0783b2ff39c698f0ca0b668084e44ceecf3ff"
+    },
+    {
+      "path": "docs/reviewer/github/lock-hash-independent.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/provider-integrity.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "7213f2223e5dd325cb75fb8f81380ed2556b24a1"
+    },
+    {
+      "path": "docs/reviewer/github/run-45611385516.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "3f91cf2a2bfdc81bae30b99ab39fe4306f4f78cb"
+    },
+    {
+      "path": "docs/reviewer/github/run-45613932613.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "afbe5e2fb891ebe09446e1f559f7e20aba1d7a18"
+    },
+    {
+      "path": "docs/reviewer/independent_checks.py",
+      "classification": "REMOVE",
+      "remove_original_path": true,
+      "reason": "Redundant compatibility wrappers; canonical tests are invoked directly by mandatory CI",
+      "retained_or_consolidated_at": [
+        "tests/additional-security.mjs",
+        "tests/drift-execution.py",
+        "tests/independent_checks.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "5c0cf9dc1aa2c8a194f87c408279b2bf0351294f"
+    },
+    {
+      "path": "docs/reviewer/private-prepush-working-audit.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/cleanup-inventory.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "572d7e440efe95efe32b36b7171f6de6c1a72b0f"
+    },
+    {
+      "path": "docs/reviewer/private-stage-windows-run.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/verification-history.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "ea98070a526e2c5f452ecc75d9913c7a9f1096ab"
+    },
+    {
+      "path": "docs/verified-source-sha256.json",
+      "classification": "ARCHIVE",
+      "remove_original_path": true,
+      "reason": "Intermediate duplicate snapshot; essential material evidence consolidated and complete original retained at immutable baseline Git blob, without history rewriting",
+      "retained_or_consolidated_at": [
+        "docs/evidence/cleanup-inventory.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "fc89fd3107d4e456280213a99bc6011372defc5d"
+    },
+    {
+      "path": "infra/bootstrap/.terraform.lock.hcl",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/bootstrap/.terraform.lock.hcl"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "ee8014a0a0d1d08cbe3bbe63afad91ed9a4f22ad"
+    },
+    {
+      "path": "infra/bootstrap/bootstrap.example.tfvars",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/bootstrap/bootstrap.example.tfvars"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "3176ffc79851ada6880852fff1af55ef64bc919b"
+    },
+    {
+      "path": "infra/bootstrap/bootstrap.s3.tfbackend.example",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/bootstrap/bootstrap.s3.tfbackend.example"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "b9bd4d93e01f07f3e014a4679728cf2d2c5609de"
+    },
+    {
+      "path": "infra/bootstrap/iam.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/bootstrap/iam.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "458a993f99b1081e6857836accc70fdc6e05e566"
+    },
+    {
+      "path": "infra/bootstrap/main.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/bootstrap/main.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "c1cedb8e773c60134f8f35f025bad8a3e199fc7e"
+    },
+    {
+      "path": "infra/bootstrap/variables.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/bootstrap/variables.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "b334e96583669d6b94d65c64b690700d77a01a20"
+    },
+    {
+      "path": "infra/bootstrap/versions.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/bootstrap/versions.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "760845c5ae1d223d2d03b89498febdf6476ad82c"
+    },
+    {
+      "path": "infra/modules/website/main.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/modules/website/main.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "8efa67777d0008d43627d10b6e1c97dd89668f77"
+    },
+    {
+      "path": "infra/modules/website/outputs.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/modules/website/outputs.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "361752a87ca8e22de1830974d3e17df5054ae98a"
+    },
+    {
+      "path": "infra/modules/website/variables.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/modules/website/variables.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "3cd66a7560039a8a0931384b34b137011ffcfaea"
+    },
+    {
+      "path": "infra/modules/website/versions.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/modules/website/versions.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "760845c5ae1d223d2d03b89498febdf6476ad82c"
+    },
+    {
+      "path": "infra/site/.terraform.lock.hcl",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/site/.terraform.lock.hcl"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "ee8014a0a0d1d08cbe3bbe63afad91ed9a4f22ad"
+    },
+    {
+      "path": "infra/site/main.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/site/main.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "21c03ec94c9aa466bb2b868caf157169333a4864"
+    },
+    {
+      "path": "infra/site/production.example.tfvars",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/site/production.example.tfvars"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "d5d8a9fa74bf0e99249d3560e11c04adc44f6409"
+    },
+    {
+      "path": "infra/site/production.s3.tfbackend.example",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/site/production.s3.tfbackend.example"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "69f59bf5d8917cacb29beb4bc86753fd8cf79f4f"
+    },
+    {
+      "path": "infra/site/versions.tf",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "infra/site/versions.tf"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "3c3c4321c887df17cc57974765a7c220b204d238"
+    },
+    {
+      "path": "package-lock.json",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "package-lock.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "143027589bf1471702a1c8e56b3a5a0797476fb4"
+    },
+    {
+      "path": "package.json",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "package.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "61bbface35b4633bc42b7d69652bf55cdeccfa4b"
+    },
+    {
+      "path": "playwright.config.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "playwright.config.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "8d6c2408685247cd71fdc4a3be8a91765c25d40f"
+    },
+    {
+      "path": "requirements-tools.txt",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "requirements-tools.txt"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "8ea7ae6a59f4bdf80b587a7f4de9056a3fa6e86d"
+    },
+    {
+      "path": "requirements/RESUME_CONTENT.md",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "requirements/RESUME_CONTENT.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "68a4a393dec5b17ab3f9a7c0033e6f114af8b445"
+    },
+    {
+      "path": "requirements/action-pins.json",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "requirements/action-pins.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "1fab2027300747cf195b3c47d963862078cbc75b"
+    },
+    {
+      "path": "scripts/confirm.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/confirm.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "483ec2c0f5ddcfebc09febd9f7e78b76604385b5"
+    },
+    {
+      "path": "scripts/content.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/content.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "5305372f45f50d9b18e5b2c54c3ebe7b054879f3"
+    },
+    {
+      "path": "scripts/deploy-content.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/deploy-content.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "9bfb4acbf051f68ed116264036c57f172a3da760"
+    },
+    {
+      "path": "scripts/diagnose-provider-mtls.py",
+      "classification": "REMOVE",
+      "remove_original_path": true,
+      "reason": "Retired native Windows Terraform diagnostic; no supported execution path or active caller",
+      "retained_or_consolidated_at": [
+        "docs/decisions/001-linux-first-terraform.md"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "d8709f774460a62d106e30ab4761e89b45c4772c"
+    },
+    {
+      "path": "scripts/drift.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/drift.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "dcf929bb8897c225055c6accb21f32ad7ba47a56"
+    },
+    {
+      "path": "scripts/gate.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/gate.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "d6eb92de0730a668d4ffe479ab3f3b2ea2c61493"
+    },
+    {
+      "path": "scripts/install-tools.py",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/install-tools.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "093c8ddac99e76a70465c8c2184f23370a345410"
+    },
+    {
+      "path": "scripts/plan-crypto.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/plan-crypto.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "1dab0172d021293e1c7f3e0ea7a82c6b05b76661"
+    },
+    {
+      "path": "scripts/run-checks.py",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/run-checks.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "c9cf8b93c18c4e8b86a77cc64966e766fa576282"
+    },
+    {
+      "path": "scripts/security.py",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/security.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "9983ea8aea7d160144396c28d7b4d622c2127c29"
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/smoke.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "1ea0d4cc97feffb03060476593d358d8252cd336"
+    },
+    {
+      "path": "scripts/verify-provenance.py",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "scripts/verify-provenance.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "36990955136d5a9ef23ab29d7a575d657bdf8f10"
+    },
+    {
+      "path": "site/app.js",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "site/app.js"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "5eea22746157b11f84d28cfa480d02215f806b83"
+    },
+    {
+      "path": "site/deployment.json",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "site/deployment.json"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "62285b86708ac2abe8929e4e85d55c6bc04ffb78"
+    },
+    {
+      "path": "site/index.html",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "site/index.html"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "2c4a4ca91add5698091fa1d09b9d6ac6bf0c6e19"
+    },
+    {
+      "path": "site/styles.css",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "site/styles.css"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "7430c990e02e60f62fd1ffaa40172119885798e9"
+    },
+    {
+      "path": "tests/additional-security.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "tests/additional-security.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "9cdeb9cdbdef1f65069dae5ce67a6a53bd2b3c0e"
+    },
+    {
+      "path": "tests/drift-execution.py",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "tests/drift-execution.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "38957cfaeedbb8b5bb2ea4dd30e2dc9a20d7e316"
+    },
+    {
+      "path": "tests/independent_checks.py",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "tests/independent_checks.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "04a3783a04692c75cf0b19b2fe51a2c016a7006e"
+    },
+    {
+      "path": "tests/negative-scans.py",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "tests/negative-scans.py"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "f655ff7550d44d134d028d83f1508cdc0e3d657e"
+    },
+    {
+      "path": "tests/security.test.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "tests/security.test.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "c85a313a1e991945b3ec483ba3f486d92a0d5868"
+    },
+    {
+      "path": "tests/serve.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "tests/serve.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "b1d804c1d82518bce966bb230b1a83c917c59314"
+    },
+    {
+      "path": "tests/site.spec.mjs",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "tests/site.spec.mjs"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "294e99e1de6c3fee7d31fa95ddcbb7c42a66ef88"
+    },
+    {
+      "path": "workflow-templates/content.yml",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "workflow-templates/content.yml"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "c6b95bb3d5a3e65c40eded93a976b6ef075cd707"
+    },
+    {
+      "path": "workflow-templates/drift.yml",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "workflow-templates/drift.yml"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "639ecf1803cd59236357c36c1eab56a72305551e"
+    },
+    {
+      "path": "workflow-templates/infrastructure.yml",
+      "classification": "KEEP",
+      "remove_original_path": false,
+      "reason": "Required source, configuration, pinned dependency, approved content or mandatory test/control",
+      "retained_or_consolidated_at": [
+        "workflow-templates/infrastructure.yml"
+      ],
+      "archive_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
+      "archive_blob": "e8816c7d487c8f63c73b995dfeab5e044da6b6cd"
+    }
+  ],
+  "generated_removal_targets": [
+    {
+      "path": ".tools/actionlint.exe",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 6432768,
+      "member_path_digest": "4c74a7f18426e4d0e5eaf3ee67eeeb6f0e9c6336bd6a6632eb70ec30f4b74d62",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/apply-reviewed-linux-h1.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1799,
+      "member_path_digest": "0a35af410988735006d2def6109fc212dda2fecf90feeafec27f7765c0bb6459",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/artifact-fix.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 212,
+      "member_path_digest": "5c8cb23379045df15e5a965b5df0fe45dae2c0fa825d39d475f8df8f7ff44210",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/capture-verified-peer.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1792,
+      "member_path_digest": "c0cfa7e45ccb7fa8fea8073ac72d613b12f22417e834d84cd3d8aefc09df3a05",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/checkov-final-builder.json",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 572,
+      "member_path_digest": "84cec970b47fe889b30afebfc5e13de86b56ac0cee5d448f0eb12290da4dd6c7",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/checkov-infra.json",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 86782,
+      "member_path_digest": "ee36f6146255b36e74241797053993b7ee8dd296d55f0e5bf4cdeda3e384ac37",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/checkov-initial.json",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 91118,
+      "member_path_digest": "06d85240235c4becdcb18c8594f5584ed56caf037e5ff20ee9b33c40fc57b04a",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/ci-summary-final.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1573,
+      "member_path_digest": "2901f13eb89cf56e339b491b5b5f1b49a87af1ae16de0aabca6e9881873e73ad",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/compare-canonical-lock.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 761,
+      "member_path_digest": "73d776daa71c638b216278913ec8838c79d42473deed1beface38e48a282ccc8",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/complete-lock.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 488,
+      "member_path_digest": "a85eebea296bb7c04284a5612f8e642efa7f1ccf6db6eab8d156b2a03961584f",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/consolidate-action-provenance.py",
+      "classification": "REMOVE",
+      "baseline_files": 0,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 683,
+      "member_path_digest": "cdb417add4d9b7d159bc1d1142015d9cf0236bb3baebb477ef659f6aa9768c5c",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/continuation",
+      "classification": "REMOVE",
+      "baseline_files": 11,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 11,
+      "current_bytes_before_approval": 24087,
+      "member_path_digest": "3fb2801fd098003a638dbf3472103a9ec1045ccb3e0fc0a44e06591d9d0a0783",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/derive-provider-h1.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2663,
+      "member_path_digest": "c8cfd5bad1905626b5b77119692f0630a2161948bca0f27a9b98148dc0c3d4f5",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/diagnose-direct-mtls.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 6504,
+      "member_path_digest": "32df442f831d62ef0b2ecb7ad3e3c5db8d0cfa8a3a0e2206347fca6ca905baf8",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/diagnose-minimal.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1271,
+      "member_path_digest": "14b57d1a59976cb11fc93c605c7dd6460bbbcab53dd1db68b8039debc2435cc8",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/doc-fix.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1503,
+      "member_path_digest": "2b9edc8fc2ecfa723c573cad6fd8a92ca5120357a4d8345c38eca4d4874ea2f5",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/drift-fix.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 411,
+      "member_path_digest": "84bed9a5c7ef6f0baf07f47f233320193568025e03ef1ac606f437d75804edbe",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/extend-direct.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1495,
+      "member_path_digest": "ec6146223c8aa14b03b445c91055763b909ae619e81c2253cccf49504387a683",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/final-ci-evidence-reports.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 23167,
+      "member_path_digest": "cff1cc82245b83f7cb8026221c50a00d3aa4558505df0b851f56c0ad16b3674e",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/final-ci-report-clarity.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1129,
+      "member_path_digest": "d1ad11ac6693497c8df55d0e510c9da68bc51040c7de67709d02e7d35633033d",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/final-reports.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2176,
+      "member_path_digest": "49a3a74b48d7fa767404d7c3938b08f73c2105936dca168c2ce92c1c7228f89f",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/final-sanitize.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1253,
+      "member_path_digest": "b79ee0fcb5fe33710d9cf01ca4927d189738950f20e6fb8b029e2775b0d116c7",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/finish-lock-doc.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2716,
+      "member_path_digest": "87b397d5ac14cec1dc8ef50cfc3e3e99444de91d6f74718b2f195122a3115ede",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/finish-mtls-doc.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 5188,
+      "member_path_digest": "5fa043b1c18605b8dcd3463ccb44c2f1a2a38c87cebe61ded400e35eac2a8821",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/fix.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1465,
+      "member_path_digest": "a42bae9791f203f75e9335fad5cb0ceb6fab24bfc9ef4c8ca1bd017c3394635a",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/git-hooks-path-private.txt",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "a549aaf2a03c71c0fe48d8c9115e75c7916de2d640a52e75648f377d906b7bc6",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/git-identity-private.txt",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 120,
+      "member_path_digest": "7525f18cec7f93763ba0a3bf9de230d48ad4553620f48027d45603039d1b6fff",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/gitleaks-source.json",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 3,
+      "member_path_digest": "1c6707a70a4c93b80a8da16d68ffcf3b69edf8216580bc0b8f149b0ecc0ea0bb",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/h1-official-checksums.txt",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1810,
+      "member_path_digest": "83e2e2dfc1f01a57ed6ad559f5fcc0b06ccd64c44b21cd1a45ebb036ad6bd5a4",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/harden-integrity-inventory.py",
+      "classification": "REMOVE",
+      "baseline_files": 0,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1836,
+      "member_path_digest": "99d3b491cf5c1082afe4a0c9d637570f33d1899e2273e75ebc86f74690a4c809",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/inspect.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 306,
+      "member_path_digest": "cc3462e13e3d4ccc560d53f3914c1a032e42e3e919f512cd6b906f9a2606855a",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/integrate-repository-check.py",
+      "classification": "REMOVE",
+      "baseline_files": 0,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 428,
+      "member_path_digest": "3b7a4189706ef040b90627b58703459c530b227c4cc13cbef35443aafefb0294",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/linux",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 129310882,
+      "member_path_digest": "3a7315f52318d9cdecf764b0029ecb22e9f9e17a321b50e37bef9b49c964a144",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/linux-first-code.py",
+      "classification": "REMOVE",
+      "baseline_files": 0,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2819,
+      "member_path_digest": "ad4442ec3b6da6e5192283bba4dcfe1791ed358b210313e8054db2e5cd9e2f29",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/linux-h1-proposal.json",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1694,
+      "member_path_digest": "d0fb42b1f64340baa106442c4055aa4b71746f5f0c0f3b6e722ac48a18deaa7b",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/linux.tfrc",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 251,
+      "member_path_digest": "08c1c5167effa6a2013766d402a34f22c6e8fdb2a422c98b7acaf4de8b257478",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/lock-doc-normalization.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 652,
+      "member_path_digest": "c457044514411dc900ccfd427f24a490a6f1298890719ffb3b74c282d9201708",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/lock-line-ending-evidence.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 344,
+      "member_path_digest": "78d104875d4c99f2256b006968a6c6006d64951942231ada4a2b0bd1e1977c41",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/lock-review",
+      "classification": "REMOVE",
+      "baseline_files": 2,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 2,
+      "current_bytes_before_approval": 1610,
+      "member_path_digest": "04e2e48f32e8e56abdf343e1faf0e72067321ad0decdce3d6bff8209f7c3a820",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/mirror",
+      "classification": "REMOVE",
+      "baseline_files": 2,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 2,
+      "current_bytes_before_approval": 356339899,
+      "member_path_digest": "22bb69dceead4caee6df66752b0b21d2eeebd5a13ea4e9b8c149a855d4220f10",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/mirror.tfrc",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 247,
+      "member_path_digest": "4311321c6a18e5b11b61836a3043e879848fdfac8ab1f6ff5a637b78343581be",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/mtls-direct",
+      "classification": "REMOVE",
+      "baseline_files": 8,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 8,
+      "current_bytes_before_approval": 4738,
+      "member_path_digest": "6b90855a93618a990358579f77d57d8b5c1306b58fdac0c72bdd8b455aa0798b",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/mtls-minimal",
+      "classification": "REMOVE",
+      "baseline_files": 12,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 12,
+      "current_bytes_before_approval": 828587453,
+      "member_path_digest": "2176b0a80556d2b4b8c5b99bb98c072e303f0ffbeec0c3a8b567c9668be7d0da",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/negative-ci.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 443,
+      "member_path_digest": "2d45fdd9b7a3e53e36ced433a568e8eba750702897f3a9ecd0e436ab72cb57e2",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/node-website-preview.py",
+      "classification": "REMOVE",
+      "baseline_files": 0,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 993,
+      "member_path_digest": "616893f5b5395fb45998b6b895ffb5ddf78f674fbcd7cd14e2d01869a6335c19",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/npm-cache",
+      "classification": "REMOVE",
+      "baseline_files": 24,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 24,
+      "current_bytes_before_approval": 62838857,
+      "member_path_digest": "c54fb230b3c14ad36f2dc633ea8bb51b4ec9747cae0f90878407a443a14c00ec",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-actionlint.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "8f21e936c4bbede4fb179a42c97b9091b313b7a84aab70d65d76ad84b3e26634",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-actionlint.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "396215d6550d37b82c9ad70c6b5a9637fd2da7ee85aa68bf0afddd9ba0a87bbc",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-bootstrap-init.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "addb88b78360539f8bccddacff716074d5e2515c91bf94759c8ac69965a00fc0",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-bootstrap-init.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 820,
+      "member_path_digest": "577b6d1d6c2fa3af9fbd4b74c8d73846da4b88a2c7d6e26a471a2dc079c4e05c",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-bootstrap-lint.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "57d2366856e93b2645d438cfe348285c5b2ae23040d4d64970994e9a164a901d",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-bootstrap-lint.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "30e70b18813fed07f9cb6e058e90fbcf4a19e9e77bac213085a8a6dc14a1ebe4",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-bootstrap-validate.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 456,
+      "member_path_digest": "1df482e7b540e5d61699133efe8e5d6db9d6e1f2be40b0d028a267fb20e32ea2",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-bootstrap-validate.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "9a3c125637f5014ac7a3b22d938492f7c15a96ab5e8d219abd466a5bb59d8c78",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-checkov.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "670e794384521ecfce92e65ae0ff48d5eefdfc9e1c858bcf7311780b50f703f4",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-checkov.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 270,
+      "member_path_digest": "0f3f84433137e525e05d7a10a797c653b92d298f0f3b6f33ed135ff814069a6b",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-actionlint.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "ff06c155805aad6d07d56932e178da61f10c634abe9dfe53faab4ebecea232fa",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-actionlint.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "a61e994d9f3b8a1ac57744c6edc53a5e6474955ae2e40928590db261a9412c26",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-bootstrap-lint.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "7652f443b1524bac08cc017728a700a6ec122e7ce1ac87d6620dc80b89325162",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-bootstrap-lint.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "87e8bb567031179143e194820b70be744453479d43b4a836e63a1ef9dab823e6",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-checkov.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "23a9c26ba5873593dce941ea83eb2a0cd0a993d41b54317ed13eb1df4cfe114d",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-checkov.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 270,
+      "member_path_digest": "d7132bedce74d663e4353b80d9bcaf7d7e5493effdd7e9d20d55fc9bdc2e87b7",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-fmt.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "f4c24e030c3c9298868d311868b5dba6894cb98b3a48b44696a36a97c89f0972",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-fmt.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "f1c7e36fcb03c3b2e9acc3e8846a7aec438de574749d9261e99c2e734ad9737a",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-gitleaks.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 80,
+      "member_path_digest": "9affe3fd4fb0ad28f3420c5c5c27588f61320cea9b6519b155d6622a7241809a",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-gitleaks.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "8e8c21fdc61d099b10e8c5a983bff5f52d8bcdf11657a1f0ab011c0ef0e41064",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-negative-scanner.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "b79ae247ae45d514a07b4645d1386a8d8da4e7616b937afe3952d672f26769bb",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-negative-scanner.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 82,
+      "member_path_digest": "5436b340f1733911d0cdfe890ac054b45de121c2bfa097b56ece4d22ae871e2c",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-security-tests.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "33db745618edb13389659860a555ca7929f8cd5ca9a79dce4a58562ab561e246",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final-security-tests.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 630,
+      "member_path_digest": "92950c5928d42f8ea8f805cda6f091c1fd64d34270ac8df7163ff82c295b6634",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-final.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1594,
+      "member_path_digest": "560d9cd9e8804f92aaea7b4450dd58da2841bc990260d742f2d67437f2648e69",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-fmt.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "81d9e279315224760b6e406190d7fdf4a24ed6cddbcf7c73d4ac45b544a36424",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-fmt.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "282c7c40589dfa9fe2ed84d0eeca208d6ed6b648a0b18496bd76f91c3583af68",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-gitleaks.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 81,
+      "member_path_digest": "a8b4ad6e9120cdf716930937619b6634931487d71a360a625932dbc6559bb476",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-gitleaks.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "9f544d139a15996739e6126d5543bd359e0813021f80cafd1303bd4a13d6245c",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-guardrails.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "b8aba225822cf228ef493a6ee467d74ad096a30becbc9b1a3e057691a4c57079",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-guardrails.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 43,
+      "member_path_digest": "208b74f3fd69948e30104ae0455698ed63c9ab07a88aca07b29c8510d6a2180b",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-provenance.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "238463c91c0c160c8a70d08bc188c021d81178681ac00478c0585831354ebc76",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-provenance.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 579,
+      "member_path_digest": "8072d018fc6732711bc794fd9f09e10a9d8511965dc171d2d2108d70d2ee9531",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-security-tests.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "b3a64d4f1b39fae9c436f8070f2b48609cd9dc633c48ba9146cd69de313d1f31",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-security-tests.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 630,
+      "member_path_digest": "ec3555f903d361cb591dabef19d455f0cf0c61fc2ecdba4dd0d542adcc29f6e8",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-site-init.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "9e96df5078d7b0db9f06059333de9bfe4878c25c77e12e51dbe3064b631277c9",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-site-init.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 845,
+      "member_path_digest": "7a7627417fbadf927d84132f82816a243e09467666881ed3e30a007dd55d1ef0",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-site-lint.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "2de84bbd1811c69e619f15f89dd23b36b18d5773f2e6d023b1789f271615ba17",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-site-lint.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "edbf1c974be0c519cba634df5990f2bfe3540f2877b8f2ec03d292e824a4fe82",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-site-validate.stderr",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 456,
+      "member_path_digest": "487a944e0a76800b670279b7d8385af679ca596e3d8f641cc3d02bbf5b81d9d0",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-site-validate.stdout",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 0,
+      "member_path_digest": "6ad5f946e6de38e5e7b83f1287e9d0855a8630ea55baf536dbf72b4a1e41320a",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/orch-verify.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2605,
+      "member_path_digest": "704fee049137163c0f3545ceb63a2b32c4f002ee92e685b8e12ed3c92d0b4dda",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/private-ci-encoding-and-metadata.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2420,
+      "member_path_digest": "027ae52f456afacc159a0a86594f602621e1ba6cebf3ce903e63fa3843118fc0",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/private-ci-report-preparation.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 5835,
+      "member_path_digest": "867289c4ffc9e7dc3144442226dcff5af539968352e94c68e7f1b0843aaa7a54",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/private-initial-commit.txt",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 278,
+      "member_path_digest": "a59bc0b6841b64202ca7ed64226be42642477f6c060d461b3a824a4fca5f983d",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/provider-checksums.txt",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1810,
+      "member_path_digest": "c7f6dc4ddd288f7332698fbbd308686c2b340d0c46ef340f15fcbbc790b327ab",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/read-ci-init-lock-warning.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 449,
+      "member_path_digest": "379e69295ae6be28f314ff59b4b953910614aa42068b147e9d5cda41a02999a4",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/read-ci-validation-errors.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 329,
+      "member_path_digest": "bdd0cefb4888fc910a6d4058fb3d2a4e3115bfa60a7a9111068ce1cae990a0d2",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/read-scope.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 546,
+      "member_path_digest": "e3a5a535d55216a60811547de50c5542594781e2cf804c4bb830b2c01e7768b3",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/reconcile-reports.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 3118,
+      "member_path_digest": "197fde3d06ea26cb7d335f652bc3943c0942ef67f5e68fd8de9c410116805bac",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/record-continuation.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1386,
+      "member_path_digest": "3a5ec513454ec9ab3899e0de005d0c9ca2f99261789a614fd77be1c03b7835a0",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/record-first-ci-failure.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2584,
+      "member_path_digest": "2a5e39311c108e6ab9bc36ba2640ce812220973efce445635b87ed8d4805fee7",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/record-initial-private-push.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1254,
+      "member_path_digest": "546b4015a5bb1886db7eb1d39a0634fd85454d69edfd534d219da246cb7d2562",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/record-successful-private-ci.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1680,
+      "member_path_digest": "c25f3bf3dba04ce03a8f2b6f4b51feb2da93f22d7eed7e42531601eca399f1c2",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/refine-archive-guard.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 315,
+      "member_path_digest": "6231001dadf0acb282bd9c929a02f33b36963062d039623529417c38a32bc104",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/refine-exception-comments.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2806,
+      "member_path_digest": "12481364b61c1d001af62602fc9180ed34f12abe984d8dc8733edf3d7a5d55ed",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/refine-exception-docs.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1202,
+      "member_path_digest": "b94d12a8372352e3fae5ad117c901d5626870ca030dc7cd0af42162d2fdb02ea",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/refine-integrity-fixture-handling.py",
+      "classification": "REMOVE",
+      "baseline_files": 0,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 550,
+      "member_path_digest": "af0c11c308bfd91dc0af72a87e8e916315b3b88729c8919711521796997f0c7c",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/report-update.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 827,
+      "member_path_digest": "ea75cf56768aa694daa37b40e6cf823800167eb9b403532632641e34098b856b",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/review-fixes.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1738,
+      "member_path_digest": "3a36e824988815c1cc1e7aad3fb43f0f4470a1c5238ea8338b927f6a339a416f",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/scan-fix.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2288,
+      "member_path_digest": "de1e844a019ca03ae2cf0317639623d5949abb89daf64e1231d793628101b8a4",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/source-manifest.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 874,
+      "member_path_digest": "b2f5374fbda7388c990e51c309504a64945d9422465dd381f0f74a614cb4cc7d",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/terraform.exe",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 132255368,
+      "member_path_digest": "caaf0b06e063254202eb97ea45091ad71da698c85d116aeaf72e2f7c8935b9e8",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/terraform.rc",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 2,
+      "member_path_digest": "b1c63b87fe9b8ce746427745a73412d9e54c212a15856765a9249c9639768d70",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/tflint.exe",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 58041856,
+      "member_path_digest": "f275669f0c7021b93183bc589f81133d5a46fd1a7bb44a98ac3775c55e7cb9e5",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/tmp",
+      "classification": "REMOVE",
+      "baseline_files": 2,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 2,
+      "current_bytes_before_approval": 357910416,
+      "member_path_digest": "8a9e1cdb3e69613c32761a0f722d5fd9e121f8ecfe06f116cc87008539cbd522",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/validate-debug.log",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 5231,
+      "member_path_digest": "841ad1032b12eff3da4986b22a1d848f35fd803d648d019ac8e428e9c0546713",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/venv",
+      "classification": "REMOVE",
+      "baseline_files": 17646,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 17646,
+      "current_bytes_before_approval": 222263111,
+      "member_path_digest": "be43a283ff02512fd44545f4b2c58933c28996cfc634093e0e5261411c68dde6",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/verification-evidence.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 1616,
+      "member_path_digest": "d2dcd0021e86fab2507776011728ed158efd7e1bc8d972974dc86e25fe4041bf",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/verification-stage.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 3586,
+      "member_path_digest": "2fe7087a987046e897d76dec67e9825d35070706c7d1c52cef921d0cb3d7e7b0",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/windows-ca.pem",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 161730,
+      "member_path_digest": "c6ee3674a498766b570315d13fb9f9cd41f1089c91c75968da38725b7c311b2e",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".tools/write-workflows.py",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-created obsolete Terraform/provider/diagnostic or rebuildable verification/cache artifact; Linux CI installs fresh tools, Windows website uses retained Node/browser dependencies",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 8737,
+      "member_path_digest": "60ee9650c584fc8b310dfe549a76dd7a43ddb4993340400de0da7446913e16c0",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".local/github",
+      "classification": "REMOVE",
+      "baseline_files": 6,
+      "reason": "Agent-generated raw/intermediate outputs; preserve essential sanitized evidence first; canonical tests regenerate temporary directories",
+      "current_files_before_approval": 6,
+      "current_bytes_before_approval": 471680,
+      "member_path_digest": "63cc1f54e996005dbb50c194cd2d6276d90a3f8ed17719158a5fb49ec11ba6ee",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".local/reviewer",
+      "classification": "REMOVE",
+      "baseline_files": 394,
+      "reason": "Agent-generated raw/intermediate outputs; preserve essential sanitized evidence first; canonical tests regenerate temporary directories",
+      "current_files_before_approval": 394,
+      "current_bytes_before_approval": 2211618,
+      "member_path_digest": "d66049b320b0d119cd7be24b1d09e9302ba2275e569efddd2bae96663f73e4fa",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": ".local/verification",
+      "classification": "REMOVE",
+      "baseline_files": 1,
+      "reason": "Agent-generated raw/intermediate outputs; preserve essential sanitized evidence first; canonical tests regenerate temporary directories",
+      "current_files_before_approval": 1,
+      "current_bytes_before_approval": 5127,
+      "member_path_digest": "98c8e9976886015048160f02e40df313a43bd5733df97463241284fc14e3a8f9",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": "infra/bootstrap/.terraform",
+      "classification": "REMOVE",
+      "baseline_files": 2,
+      "reason": "Generated cache or ephemeral test output; source, locks and mandatory tests retained; current CI reconstructs it",
+      "current_files_before_approval": 2,
+      "current_bytes_before_approval": 828564989,
+      "member_path_digest": "5f186e89e198c8cd6507e91fcf48c4b638738168d731c28d6247ccde642a514a",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": "infra/site/.terraform",
+      "classification": "REMOVE",
+      "baseline_files": 3,
+      "reason": "Generated cache or ephemeral test output; source, locks and mandatory tests retained; current CI reconstructs it",
+      "current_files_before_approval": 3,
+      "current_bytes_before_approval": 828565110,
+      "member_path_digest": "41d56dbac5c4e6b388e7df619552a2fac90533d68f5de3067279e886e3738e42",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": "test-results",
+      "classification": "REMOVE",
+      "baseline_files": 3,
+      "reason": "Generated cache or ephemeral test output; source, locks and mandatory tests retained; current CI reconstructs it",
+      "current_files_before_approval": 3,
+      "current_bytes_before_approval": 1635387,
+      "member_path_digest": "e1508ace5a6dbd082e5ce12c4c3f755efe1d331c4b4061bf4baa4410919c0a63",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": "scripts/__pycache__",
+      "classification": "REMOVE",
+      "baseline_files": 4,
+      "reason": "Generated cache or ephemeral test output; source, locks and mandatory tests retained; current CI reconstructs it",
+      "current_files_before_approval": 6,
+      "current_bytes_before_approval": 32781,
+      "member_path_digest": "294826bc78624203a3748e514eceb369faa6526555212be56b4b4d620ed4875b",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    },
+    {
+      "path": "tests/__pycache__",
+      "classification": "REMOVE",
+      "baseline_files": 2,
+      "reason": "Generated cache or ephemeral test output; source, locks and mandatory tests retained; current CI reconstructs it",
+      "current_files_before_approval": 4,
+      "current_bytes_before_approval": 18245,
+      "member_path_digest": "c7544f906c88474539c09ff2251bf499aaf35ac81d4429805bd75dd8871930cf",
+      "reparse_points": [],
+      "new_files_note": "Any delta from baseline is agent-generated tool/test housekeeping in this same approved generated target, not user-owned source"
+    }
+  ],
+  "retained_local_groups": [
+    {
+      "path": ".git",
+      "reason": "Entire Git metadata/history preserved; never traverse/remove"
+    },
+    {
+      "path": "node_modules",
+      "reason": "Installed pinned website development/test dependencies, both declared devDependencies used"
+    },
+    {
+      "path": ".tools/browsers",
+      "reason": "Exact pinned Playwright browser for supported Windows website tests/development"
+    },
+    {
+      "path": ".tools/gitleaks.exe",
+      "reason": "Verified local pre-push privacy/security auditor; no native Terraform execution"
+    },
+    {
+      "path": ".local/cleanup",
+      "reason": "Private exhaustive cleanup inventory and reviewer approval/deletion audit; contains no published raw logs/keys"
+    }
+  ],
+  "new_canonical_documents": [
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/DEPLOYMENT.md",
+    "docs/SECURITY.md",
+    "docs/SDD_WORKFLOW.md",
+    "docs/VERIFICATION.md",
+    "docs/decisions/001-linux-first-terraform.md"
+  ],
+  "essential_machine_evidence": [
+    "docs/evidence/verification-history.json",
+    "docs/evidence/provider-integrity.json",
+    "docs/evidence/cleanup-inventory.json"
+  ],
+  "approval_conditions": [
+    "Canonical destinations exist and preserve all material decisions/findings/15 exceptions/outcomes/SHAs/run links before donor removal",
+    "No active Terraform/workflow/script/test/asset dependency on a removal candidate remains",
+    "All source constraints and both lockfiles unchanged during cleanup",
+    "All delete paths resolve within repository and do not traverse reparse points; no .git or outside/user-owned originals",
+    "Review exact retained diff, privacy, links/module/dependency graph and fresh full Ubuntu CI after separately authorized private push"
+  ],
+  "empty_donor_directories": [
+    {
+      "path": "docs/continuation",
+      "classification": "REMOVE",
+      "condition": "Remove only after all approved donor files are removed and directory is verified empty; otherwise retain and report"
+    },
+    {
+      "path": "docs/github",
+      "classification": "REMOVE",
+      "condition": "Remove only after all approved donor files are removed and directory is verified empty; otherwise retain and report"
+    },
+    {
+      "path": "docs/reviewer/github",
+      "classification": "REMOVE",
+      "condition": "Remove only after all approved donor files are removed and directory is verified empty; otherwise retain and report"
+    },
+    {
+      "path": "docs/reviewer",
+      "classification": "REMOVE",
+      "condition": "Remove only after all approved donor files are removed and directory is verified empty; otherwise retain and report"
+    }
+  ],
+  "generated_writers_frozen": true,
+  "reviewer_approval": {
+    "approved": true,
+    "reviewer": "independent configured reviewer",
+    "review_date": "2026-11-25",
+    "bound_fields": [
+      "baseline_commit",
+      "before",
+      "tracked_inventory",
+      "generated_removal_targets",
+      "retained_local_groups",
+      "new_canonical_documents",
+      "essential_machine_evidence",
+      "approval_conditions",
+      "empty_donor_directories",
+      "generated_writers_frozen"
+    ],
+    "inventory_sha256": "1ed999f5f17fbe320aee5db5817a0c0ea6d75e6b2469de1be4150881aa981148",
+    "scope": {
+      "baseline_tracked_blobs_verified": 100,
+      "baseline_physical_files_classified": 19166,
+      "unchanged_archived_donors": 42,
+      "exact_generated_targets": 126,
+      "empty_only_donor_directories": 4,
+      "projected_retained_source_files": 69
+    },
+    "preservation_review": "Material decisions, actual failed/successful CI identities and all ordered exits, closed findings, all15 individual exceptions, official additive Linux hash proof and original immutable archive blobs preserved in canonical documents/3JSON; no history rewrite. Both locks and all19 IaC/example/inert-template files unchanged from baseline after line-ending normalization.",
+    "independent_checks": [
+      {
+        "check": "Refreshed168 targets, ancestor/subtree reparse containment, donor archive contents, generated member digests/counts/bytes",
+        "exit_code": 0
+      },
+      {
+        "check": "Projected69-source dependency/link/module/purpose graph",
+        "exit_code": 0
+      },
+      {
+        "check": "Repository-integrity final negative/positive tests",
+        "exit_code": 0,
+        "tests": 19
+      },
+      {
+        "check": "Repository guardrails",
+        "exit_code": 0
+      },
+      {
+        "check": "Gitleaks source scan",
+        "exit_code": 0,
+        "findings": 0
+      },
+      {
+        "check": "Desktop/mobile browser/accessibility/local smoke via npm.cmd test",
+        "exit_code": 0,
+        "tests": 6
+      },
+      {
+        "check": "Node security suite on Windows",
+        "exit_code": 1,
+        "passed": 6,
+        "failed": 1,
+        "reason": "Linux-only Python path missing on Windows; canonical Ubuntu suite NOT RUN"
+      }
+    ],
+    "conditions": [
+      "Re-run reviewed predelete.py immediately before mutation; abort on changed binding, target membership/bytes, donor content, unknown files, reparse point or containment failure.",
+      "Delete only42 listed donor files and126 generated targets using literal native paths; retain .git, installed Node/browser dependencies, local Gitleaks, .local/cleanup and all unknown unreviewed files.",
+      "Remove only the4 listed donor directories after they are verified empty; no generalized empty-directory sweep.",
+      "Preserve immutable baseline Git history and all7 canonical documents/3JSON; record actual execution/post-cleanup reconciliation and re-run full retained graph/privacy review.",
+      "This approves reversible local housekeeping only. No commit/push, publication, cloud/API/IAM/resource/deployment/plan/apply/destroy authority is granted.",
+      "Current cleanup Ubuntu22-check verification remains NOT RUN; no implementation/private-verification GO until actual exact-revision successful hosted CI after separately authorized private push. Native Windows Terraform remains OUT OF SCOPE."
+    ]
+  },
+  "execution": {
+    "date": "2026-11-25",
+    "predelete_exit_code": 0,
+    "native_literal_cleanup_exit_code": 0,
+    "removed_targets": [
+      "FINAL_ASSESSMENT.md",
+      "SECURITY_REVIEW.md",
+      "TEST_RESULTS.md",
+      "docs/DEPENDENCIES.md",
+      "docs/EXCEPTION_REASSESSMENT.md",
+      "docs/IMPLEMENTATION_REPORT.md",
+      "docs/MTLS_DIAGNOSTICS.md",
+      "docs/ORCHESTRATION.md",
+      "docs/PLAN.md",
+      "docs/PRIVATE_PUBLICATION_REVIEW.md",
+      "docs/SCANNER_EXCEPTIONS.md",
+      "docs/continuation/dependency-preservation.json",
+      "docs/continuation/final-sanitization.json",
+      "docs/continuation/orchestrator-diagnostics.json",
+      "docs/continuation/verified-source-sha256.json",
+      "docs/github/LOCKFILE_COMPATIBILITY.md",
+      "docs/github/canonical-lock-verification.json",
+      "docs/github/first-ci-run.json",
+      "docs/github/initial-push.json",
+      "docs/github/repository-prepush.json",
+      "docs/github/successful-ci-run.json",
+      "docs/orchestrator-checks.json",
+      "docs/reviewer/action-names.py",
+      "docs/reviewer/additional.mjs",
+      "docs/reviewer/commands.json",
+      "docs/reviewer/continuation-commands.json",
+      "docs/reviewer/continuation-exceptions.json",
+      "docs/reviewer/continuation-mtls.json",
+      "docs/reviewer/continuation-pricing.json",
+      "docs/reviewer/continuation-pricing.py",
+      "docs/reviewer/drift-execution.py",
+      "docs/reviewer/github/correction-commit-review.json",
+      "docs/reviewer/github/correction-lock-diff-review.json",
+      "docs/reviewer/github/initial-commit-review.json",
+      "docs/reviewer/github/lock-hash-independent.json",
+      "docs/reviewer/github/run-45611385516.json",
+      "docs/reviewer/github/run-45613932613.json",
+      "docs/reviewer/independent_checks.py",
+      "docs/reviewer/private-prepush-working-audit.json",
+      "docs/reviewer/private-stage-windows-run.json",
+      "docs/verified-source-sha256.json",
+      "scripts/diagnose-provider-mtls.py",
+      ".tools/actionlint.exe",
+      ".tools/apply-reviewed-linux-h1.py",
+      ".tools/artifact-fix.py",
+      ".tools/capture-verified-peer.py",
+      ".tools/checkov-final-builder.json",
+      ".tools/checkov-infra.json",
+      ".tools/checkov-initial.json",
+      ".tools/ci-summary-final.py",
+      ".tools/compare-canonical-lock.py",
+      ".tools/complete-lock.py",
+      ".tools/consolidate-action-provenance.py",
+      ".tools/continuation",
+      ".tools/derive-provider-h1.py",
+      ".tools/diagnose-direct-mtls.py",
+      ".tools/diagnose-minimal.py",
+      ".tools/doc-fix.py",
+      ".tools/drift-fix.py",
+      ".tools/extend-direct.py",
+      ".tools/final-ci-evidence-reports.py",
+      ".tools/final-ci-report-clarity.py",
+      ".tools/final-reports.py",
+      ".tools/final-sanitize.py",
+      ".tools/finish-lock-doc.py",
+      ".tools/finish-mtls-doc.py",
+      ".tools/fix.py",
+      ".tools/git-hooks-path-private.txt",
+      ".tools/git-identity-private.txt",
+      ".tools/gitleaks-source.json",
+      ".tools/h1-official-checksums.txt",
+      ".tools/harden-integrity-inventory.py",
+      ".tools/inspect.py",
+      ".tools/integrate-repository-check.py",
+      ".tools/linux",
+      ".tools/linux-first-code.py",
+      ".tools/linux-h1-proposal.json",
+      ".tools/linux.tfrc",
+      ".tools/lock-doc-normalization.py",
+      ".tools/lock-line-ending-evidence.py",
+      ".tools/lock-review",
+      ".tools/mirror",
+      ".tools/mirror.tfrc",
+      ".tools/mtls-direct",
+      ".tools/mtls-minimal",
+      ".tools/negative-ci.py",
+      ".tools/node-website-preview.py",
+      ".tools/npm-cache",
+      ".tools/orch-actionlint.stderr",
+      ".tools/orch-actionlint.stdout",
+      ".tools/orch-bootstrap-init.stderr",
+      ".tools/orch-bootstrap-init.stdout",
+      ".tools/orch-bootstrap-lint.stderr",
+      ".tools/orch-bootstrap-lint.stdout",
+      ".tools/orch-bootstrap-validate.stderr",
+      ".tools/orch-bootstrap-validate.stdout",
+      ".tools/orch-checkov.stderr",
+      ".tools/orch-checkov.stdout",
+      ".tools/orch-final-actionlint.stderr",
+      ".tools/orch-final-actionlint.stdout",
+      ".tools/orch-final-bootstrap-lint.stderr",
+      ".tools/orch-final-bootstrap-lint.stdout",
+      ".tools/orch-final-checkov.stderr",
+      ".tools/orch-final-checkov.stdout",
+      ".tools/orch-final-fmt.stderr",
+      ".tools/orch-final-fmt.stdout",
+      ".tools/orch-final-gitleaks.stderr",
+      ".tools/orch-final-gitleaks.stdout",
+      ".tools/orch-final-negative-scanner.stderr",
+      ".tools/orch-final-negative-scanner.stdout",
+      ".tools/orch-final-security-tests.stderr",
+      ".tools/orch-final-security-tests.stdout",
+      ".tools/orch-final.py",
+      ".tools/orch-fmt.stderr",
+      ".tools/orch-fmt.stdout",
+      ".tools/orch-gitleaks.stderr",
+      ".tools/orch-gitleaks.stdout",
+      ".tools/orch-guardrails.stderr",
+      ".tools/orch-guardrails.stdout",
+      ".tools/orch-provenance.stderr",
+      ".tools/orch-provenance.stdout",
+      ".tools/orch-security-tests.stderr",
+      ".tools/orch-security-tests.stdout",
+      ".tools/orch-site-init.stderr",
+      ".tools/orch-site-init.stdout",
+      ".tools/orch-site-lint.stderr",
+      ".tools/orch-site-lint.stdout",
+      ".tools/orch-site-validate.stderr",
+      ".tools/orch-site-validate.stdout",
+      ".tools/orch-verify.py",
+      ".tools/private-ci-encoding-and-metadata.py",
+      ".tools/private-ci-report-preparation.py",
+      ".tools/private-initial-commit.txt",
+      ".tools/provider-checksums.txt",
+      ".tools/read-ci-init-lock-warning.py",
+      ".tools/read-ci-validation-errors.py",
+      ".tools/read-scope.py",
+      ".tools/reconcile-reports.py",
+      ".tools/record-continuation.py",
+      ".tools/record-first-ci-failure.py",
+      ".tools/record-initial-private-push.py",
+      ".tools/record-successful-private-ci.py",
+      ".tools/refine-archive-guard.py",
+      ".tools/refine-exception-comments.py",
+      ".tools/refine-exception-docs.py",
+      ".tools/refine-integrity-fixture-handling.py",
+      ".tools/report-update.py",
+      ".tools/review-fixes.py",
+      ".tools/scan-fix.py",
+      ".tools/source-manifest.py",
+      ".tools/terraform.exe",
+      ".tools/terraform.rc",
+      ".tools/tflint.exe",
+      ".tools/tmp",
+      ".tools/validate-debug.log",
+      ".tools/venv",
+      ".tools/verification-evidence.py",
+      ".tools/verification-stage.py",
+      ".tools/windows-ca.pem",
+      ".tools/write-workflows.py",
+      ".local/github",
+      ".local/reviewer",
+      ".local/verification",
+      "infra/bootstrap/.terraform",
+      "infra/site/.terraform",
+      "test-results",
+      "scripts/__pycache__",
+      "tests/__pycache__"
+    ],
+    "empty_directory_decisions": [
+      {
+        "result": "REMOVED_EMPTY",
+        "path": "docs/continuation"
+      },
+      {
+        "result": "REMOVED_EMPTY",
+        "path": "docs/github"
+      },
+      {
+        "result": "REMOVED_EMPTY",
+        "path": "docs/reviewer/github"
+      },
+      {
+        "result": "REMOVED_EMPTY",
+        "path": "docs/reviewer"
+      }
+    ],
+    "source_files_before": 100,
+    "source_files_after": 69,
+    "physical_files_before_excluding_git": 19166,
+    "physical_files_after_snapshot_excluding_git": 945,
+    "physical_snapshot_note": "Retained ignored local audit evidence can grow after this dated snapshot; source publication count remains69. Git metadata excluded throughout.",
+    "after_groups": {
+      ".local": {
+        "files": 31,
+        "bytes": 12814307
+      },
+      ".tools": {
+        "files": 613,
+        "bytes": 801396913
+      },
+      "node_modules": {
+        "files": 232,
+        "bytes": 22555866
+      },
+      "source": {
+        "files": 69,
+        "bytes": 371801
+      }
+    },
+    "empty_directories_after": [],
+    "reparse_points_after": [],
+    "retained_source_tree": [
+      ".codex/agents/builder.toml",
+      ".codex/agents/planner.toml",
+      ".codex/agents/reviewer.toml",
+      ".github/workflows/ci.yml",
+      ".gitignore",
+      ".gitleaks.toml",
+      ".tflint.hcl",
+      "AGENTS.md",
+      "PROMPT.md",
+      "README.md",
+      "SPEC.md",
+      "docs/ARCHITECTURE.md",
+      "docs/DEPLOYMENT.md",
+      "docs/SDD_WORKFLOW.md",
+      "docs/SECURITY.md",
+      "docs/VERIFICATION.md",
+      "docs/decisions/001-linux-first-terraform.md",
+      "docs/evidence/cleanup-inventory.json",
+      "docs/evidence/provider-integrity.json",
+      "docs/evidence/verification-history.json",
+      "infra/bootstrap/.terraform.lock.hcl",
+      "infra/bootstrap/bootstrap.example.tfvars",
+      "infra/bootstrap/bootstrap.s3.tfbackend.example",
+      "infra/bootstrap/iam.tf",
+      "infra/bootstrap/main.tf",
+      "infra/bootstrap/variables.tf",
+      "infra/bootstrap/versions.tf",
+      "infra/modules/website/main.tf",
+      "infra/modules/website/outputs.tf",
+      "infra/modules/website/variables.tf",
+      "infra/modules/website/versions.tf",
+      "infra/site/.terraform.lock.hcl",
+      "infra/site/main.tf",
+      "infra/site/production.example.tfvars",
+      "infra/site/production.s3.tfbackend.example",
+      "infra/site/versions.tf",
+      "package-lock.json",
+      "package.json",
+      "playwright.config.mjs",
+      "requirements-tools.txt",
+      "requirements/RESUME_CONTENT.md",
+      "requirements/action-pins.json",
+      "scripts/check-repository.py",
+      "scripts/confirm.mjs",
+      "scripts/content.mjs",
+      "scripts/deploy-content.mjs",
+      "scripts/drift.mjs",
+      "scripts/gate.mjs",
+      "scripts/install-tools.py",
+      "scripts/plan-crypto.mjs",
+      "scripts/run-checks.py",
+      "scripts/security.py",
+      "scripts/smoke.mjs",
+      "scripts/verify-provenance.py",
+      "site/app.js",
+      "site/deployment.json",
+      "site/index.html",
+      "site/styles.css",
+      "tests/additional-security.mjs",
+      "tests/drift-execution.py",
+      "tests/independent_checks.py",
+      "tests/negative-scans.py",
+      "tests/repository-integrity.py",
+      "tests/security.test.mjs",
+      "tests/serve.mjs",
+      "tests/site.spec.mjs",
+      "workflow-templates/content.yml",
+      "workflow-templates/drift.yml",
+      "workflow-templates/infrastructure.yml"
+    ],
+    "local_checks": [
+      {
+        "command": "python scripts/check-repository.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python tests/repository-integrity.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python scripts/security.py",
+        "exit_code": 0
+      },
+      {
+        "command": "git diff --check",
+        "exit_code": 0
+      },
+      {
+        "command": ".tools/gitleaks.exe dir . --redact --no-banner",
+        "exit_code": 0
+      },
+      {
+        "command": ".tools/gitleaks.exe git . --redact --no-banner",
+        "exit_code": 0
+      },
+      {
+        "command": "python scripts/verify-provenance.py",
+        "exit_code": 0,
+        "observed": "All action pins/registries/17lockhashes and public IAM action names s3=30,cloudfront=15 verified; no AWS account call"
+      }
+    ],
+    "canonical_ubuntu_suite": "NOT RUN: separate private push authorization pending",
+    "native_windows_terraform": "OUT OF SCOPE"
+  }
+}

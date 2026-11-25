@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "scripts": { "test": "playwright test", "preview": "python -m http.server 4173 --bind 127.0.0.1 --directory site" },
+  "scripts": { "test": "playwright test", "preview": "node tests/serve.mjs" },
   "devDependencies": { "@playwright/test": "1.65.1", "@axe-core/playwright": "4.14.1" }
 }
