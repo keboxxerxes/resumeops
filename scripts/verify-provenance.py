@@ -57,7 +57,7 @@ def main():
     for repo,pin in pins.items():
         verify_action_tag(repo,pin['version'],pin['sha'])
         print(repo,pin['version'],pin['sha'],'VERIFIED via anonymous Git HTTPS')
-    for path in list(pathlib.Path('.github/workflows').glob('*.yml'))+list(pathlib.Path('workflow-templates').glob('*.yml')):
+    for path in pathlib.Path('.github/workflows').glob('*.yml'):
         for repo,sha in re.findall(r'uses:\s*([^\s@]+)@([a-f0-9]{40})',path.read_text()):
             assert pins[repo]['sha']==sha
     assert get('https://registry.terraform.io/v1/providers/hashicorp/aws/6.74.0')['version']=='6.74.0'

@@ -54,8 +54,75 @@ def action_tag_fixtures():
     print('PASS: anonymous Git action tag lightweight/peeled resolution and malformed/missing/duplicate/wrong/process/input negatives')
 
 
+def workflow_activation_fixtures():
+    """Mutate real valid workflow roles; never execute the fixture commands."""
+    import copy,importlib.util,yaml
+    root=pathlib.Path(__file__).resolve().parents[1]
+    specification=importlib.util.spec_from_file_location('workflow_security',root/'scripts/security.py')
+    policy=importlib.util.module_from_spec(specification);specification.loader.exec_module(policy)
+    baseline={name:policy.load_workflow((root/'.github/workflows'/name).read_text()) for name in policy.WORKFLOW_NAMES}
+    for name,document in baseline.items():
+        assert not policy.inspect_workflow('.github/workflows/'+name,yaml.safe_dump(document,sort_keys=False)), 'Valid role rejected: '+name
+    count=0
+    def reject(name,path,value):
+        nonlocal count
+        changed=copy.deepcopy(baseline[name]);target=changed
+        for key in path[:-1]:target=target[key]
+        target[path[-1]]=value
+        assert policy.inspect_workflow('.github/workflows/'+name,yaml.safe_dump(changed,sort_keys=False)), 'Unsafe capability accepted: '+name+' '+str(path)
+        count+=1
+    reject('ci.yml',['jobs','verify','permissions'],{'contents':'read','id-token':'write'})
+    reject('ci.yml',['env'],{'GH_PROTECTION_TOKEN':'${{ secrets.GH_PROTECTION_TOKEN }}'})
+    reject('ci.yml',['jobs','verify','steps',4,'run'],baseline['ci.yml']['jobs']['verify']['steps'][4]['run']+'\naws iam list-users')
+    reject('ci.yml',['jobs','extra'],{'runs-on':'ubuntu-24.04','steps':[{'run':'aws sts get-caller-identity'}]})
+    for name,key in [('content.yml','content'),('drift.yml','drift'),('infrastructure.yml','plan'),('infrastructure.yml','apply')]:
+        job=['jobs',key]
+        reject(name,['on'],{'pull_request':None})
+        reject(name,job+['if'],"github.ref == 'refs/heads/main' || vars.ALLOW_AWS_OPERATIONS == 'true'")
+        reject(name,job+['environment'],'production-plan' if key!='plan' else 'production-apply')
+        reject(name,job+['steps',2,'if'],False)
+        reject(name,job+['steps',2,'continue-on-error'],True)
+        reject(name,job+['steps',2,'run'],"echo 'node scripts/gate.mjs is only a decoy'")
+        reject(name,job+['steps',2,'run'],policy.PROGRAMS['PREFLIGHT'])
+        reject(name,job+['env'],{'GH_PROTECTION_TOKEN':'${{ secrets.GH_PROTECTION_TOKEN }}'})
+        aws_index=3 if name=='content.yml' else 4
+        reject(name,job+['steps',aws_index,'if'],'always()')
+        reject(name,job+['steps',aws_index,'continue-on-error'],True)
+        credential=copy.deepcopy(baseline[name]['jobs'][key]['steps'][aws_index]['with']);credential['aws-access-key-id']='${{ secrets.AWS_ACCESS_KEY_ID }}'
+        reject(name,job+['steps',aws_index,'with'],credential)
+        reordered=copy.deepcopy(baseline[name]['jobs'][key]['steps']);reordered[2],reordered[aws_index]=reordered[aws_index],reordered[2]
+        reject(name,job+['steps'],reordered)
+    pre=['jobs','preflight']
+    reject('preflight.yml',['on'],{'pull_request':None})
+    reject('preflight.yml',pre+['permissions'],{'contents':'read','id-token':'write'})
+    reject('preflight.yml',pre+['environment'],'production-content')
+    reject('preflight.yml',pre+['if'],policy.OPERATIONAL)
+    reject('preflight.yml',['env'],policy.TOKEN)
+    reject('preflight.yml',pre+['env'],policy.TOKEN)
+    reject('preflight.yml',pre+['steps',0,'env'],policy.TOKEN)
+    reject('preflight.yml',pre+['steps',2,'run'],policy.PROGRAMS['PREFLIGHT']+'; curl https://example.invalid')
+    reject('preflight.yml',pre+['steps'],baseline['preflight.yml']['jobs']['preflight']['steps']+[{'run':'terraform init'}])
+    reject('preflight.yml',pre+['steps'],baseline['preflight.yml']['jobs']['preflight']['steps']+[baseline['ci.yml']['jobs']['verify']['steps'][-1]])
+    reject('preflight.yml',pre+['steps',2,'env'],{'GH_PROTECTION_TOKEN':'${{ secrets.GH_PROTECTION_TOKEN }}','STATE_BUCKET':'${{ secrets.STATE_BUCKET }}'})
+    reject('infrastructure.yml',['on'],{'schedule':[{'cron':'* * * * *'}],'workflow_dispatch':None})
+    reject('infrastructure.yml',['jobs','apply','needs'],'unreviewed')
+    reject('infrastructure.yml',['jobs','plan','steps',7,'with','path'],'infra/site/candidate.tfplan')
+    reject('infrastructure.yml',['jobs','plan','steps',7,'with','retention-days'],True)
+    reject('infrastructure.yml',['jobs','apply','steps',6,'with','name'],'other-plan')
+    reject('infrastructure.yml',['on','workflow_dispatch','inputs','confirmation','default'],'DESTROY production SITE ONLY')
+    reject('infrastructure.yml',['jobs','apply','steps',7,'run'],'terraform -chdir=infra/site apply -auto-approve')
+    reject('drift.yml',['jobs','drift','steps',6,'run'],'terraform -chdir=infra/site apply -auto-approve')
+    raw=(root/'.github/workflows/preflight.yml').read_text()
+    assert policy.inspect_workflow('.github/workflows/preflight.yml',raw+'\npermissions: write-all\n'), 'Duplicate YAML key accepted'
+    count+=1
+    print('PASS: five valid workflow roles and',count,'semantic trigger/secret/token/order/approval/artifact negative mutations')
+
+
 # Explicit unit-only selection for hosts outside the supported Linux integration environment.
 # Credential-free CI invokes this file without arguments and still runs every integration check.
+if sys.argv[1:]==['--workflow-fixtures-only']:
+    workflow_activation_fixtures()
+    raise SystemExit(0)
 if sys.argv[1:]==['--action-tag-fixtures-only']:
     action_tag_fixtures()
     raise SystemExit(0)
@@ -94,6 +161,7 @@ for name,m,i in mutations:
     else: raise AssertionError('Mutation not rejected: '+name)
 print('PASS: independent IAM source invariants and five adversarial mutations (static source invariants; not rendered-policy or live IAM evaluation)')
 action_tag_fixtures()
+workflow_activation_fixtures()
 cli=ROOT/'.tools/venv'/'bin'/'checkov'
 with tempfile.TemporaryDirectory(prefix='unsafe-workflow-',dir=ROOT/'.local/reviewer') as temp:
     directory=pathlib.Path(temp); workflow=directory/'.github/workflows/unsafe.yml'; workflow.parent.mkdir(parents=True)

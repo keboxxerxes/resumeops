@@ -8,7 +8,7 @@ class IntegrityTests(unittest.TestCase):
  def fixture(self,extra=None):
   temporary=tempfile.TemporaryDirectory();self.addCleanup(temporary.cleanup)
   root=pathlib.Path(temporary.name)
-  contents={'README.md':'[Helper](scripts/required.py)\n','.github/workflows/ci.yml':'name: CI\n','scripts/required.py':'print("fixture")\n',**{name:'# Inert fixture\n' for name in checks.TEMPLATES},**(extra or {})}
+  contents={'README.md':'[Helper](scripts/required.py)\n','.github/workflows/ci.yml':'name: CI\n','scripts/required.py':'print("fixture")\n',**{name:'# Approved workflow fixture\n' for name in checks.WORKFLOWS-{'.github/workflows/ci.yml'}},**(extra or {})}
   for name,text in contents.items():
    path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(text,encoding='utf-8')
   return root,set(contents)
@@ -24,9 +24,9 @@ class IntegrityTests(unittest.TestCase):
  def test_missing_terraform_module(self):
   root,files=self.fixture({'infra/site/main.tf':'module "fixture" { source = "../missing" }\n'})
   self.assertTrue(any('Terraform module' in error for error in self.analyze(root,files)))
- def test_activated_operational_workflow(self):
+ def test_unapproved_workflow_role(self):
   root,files=self.fixture({'.github/workflows/deploy.yml':'name: Forbidden\n'})
-  self.assertTrue(any('Only ci.yml' in error for error in self.analyze(root,files)))
+  self.assertTrue(any('five approved' in error for error in self.analyze(root,files)))
  def test_orphan_script(self):
   root,files=self.fixture({'scripts/orphan.py':'print("unused")\n'})
   self.assertTrue(any('Orphan executable' in error and 'orphan.py' in error for error in self.analyze(root,files)))

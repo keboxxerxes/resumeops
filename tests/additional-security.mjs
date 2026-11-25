@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {gate,verifyProtection} from '../scripts/gate.mjs';
+import {gate,preflight,verifyProtection} from '../scripts/gate.mjs';
 import {seal,open,validatePlan} from '../scripts/plan-crypto.mjs';
 const owner='owner';
 const repositoryName='owner/independent';
@@ -7,13 +7,13 @@ let repositoryMetadata={id:2,name:'independent',full_name:repositoryName,owner:{
 const environment={can_admins_bypass:false,protection_rules:[{type:'required_reviewers',prevent_self_review:false,reviewers:[{type:'User',reviewer:{id:1,login:owner}}]}],deployment_branch_policy:{custom_branch_policies:true,protected_branches:false}};
 const policies={total_count:1,branch_policies:[{name:'main',type:'branch'}]};
 const branch={enforce_admins:{enabled:true},required_pull_request_reviews:{required_approving_review_count:0,dismiss_stale_reviews:false,require_last_push_approval:false,require_code_owner_reviews:false},required_status_checks:{strict:true,contexts:['verify']},allow_force_pushes:{enabled:false},allow_deletions:{enabled:false},required_conversation_resolution:{enabled:true}};
-process.env.ALLOW_AWS_OPERATIONS='true';process.env.GITHUB_REF='refs/heads/main';process.env.GITHUB_SHA='a'.repeat(40);process.env.GITHUB_REPOSITORY='owner/independent';process.env.GH_PROTECTION_TOKEN='dummy-local-test-value';
-let status=200,metadataStatus=200,stale=false,invalidJson=false;
+process.env.GITHUB_EVENT_NAME='workflow_dispatch';process.env.ALLOW_AWS_OPERATIONS='true';process.env.GITHUB_REF='refs/heads/main';process.env.GITHUB_SHA='a'.repeat(40);process.env.GITHUB_REPOSITORY='owner/independent';process.env.GH_PROTECTION_TOKEN='dummy-local-test-value';
+let status=200,metadataStatus=200,stale=false,invalidJson=false,deniedSuffix="";
 let requested=[];
 globalThis.fetch=async url=>{
  requested.push(url);
  const metadataRequest=url.toLowerCase()==='https://api.github.com/repos/owner/independent';
- const responseStatus=metadataRequest?metadataStatus:status;
+ const responseStatus=deniedSuffix && url.endsWith(deniedSuffix)?403:metadataRequest?metadataStatus:status;
  return {ok:responseStatus===200,status:responseStatus,json:async()=>{
   if(invalidJson)throw new Error('Dummy malformed JSON response');
   if(metadataRequest)return repositoryMetadata;
@@ -39,6 +39,25 @@ for(const environments of [undefined,[],['production-content','production-conten
 environment.protection_rules[0].reviewers[0].reviewer.login='different';await assert.rejects(()=>gate(['production-content']));environment.protection_rules[0].reviewers[0].reviewer.login=owner;
 const missing=structuredClone(branch);delete missing.required_pull_request_reviews.required_approving_review_count;assert.throws(()=>verifyProtection(environment,policies,missing,repositoryMetadata,repositoryName));
 const codeOwners=structuredClone(branch);codeOwners.required_pull_request_reviews.require_code_owner_reviews=true;assert.throws(()=>verifyProtection(environment,policies,codeOwners,repositoryMetadata,repositoryName));
+// Read-only entry point shares every trust check and cannot select a smaller environment set.
+process.env.ALLOW_AWS_OPERATIONS='false';requested=[];await preflight();
+assert.deepEqual(requested.filter(url=>/\/environments\/production-[^/]+$/.test(url)).map(url=>url.split('/').at(-1)).sort(),['production-apply','production-content','production-drift','production-plan']);
+await assert.rejects(()=>gate(['production-plan']));await assert.rejects(()=>gate(['production-plan'],{requireFlag:false}));await assert.rejects(()=>preflight(['production-plan']));
+for(const event of ['pull_request','pull_request_target','push','workflow_run','schedule']){
+ process.env.GITHUB_EVENT_NAME=event;await assert.rejects(()=>preflight());
+}
+process.env.GITHUB_EVENT_NAME='workflow_dispatch';
+process.env.GITHUB_REF='refs/pull/1/merge';await assert.rejects(()=>preflight());process.env.GITHUB_REF='refs/heads/main';
+stale=true;await assert.rejects(()=>preflight());stale=false;
+metadataStatus=403;await assert.rejects(()=>preflight());metadataStatus=200;
+for(const environmentName of ['production-plan','production-apply','production-content','production-drift']){deniedSuffix='environments/'+environmentName;await assert.rejects(()=>preflight());}deniedSuffix='';
+process.env.ALLOW_AWS_OPERATIONS='true';
+for(const event of ['pull_request','pull_request_target','push','workflow_run']){
+ process.env.GITHUB_EVENT_NAME=event;await assert.rejects(()=>gate(['production-content']));
+}
+await assert.rejects(()=>gate(['--preflight']));
+process.env.GITHUB_EVENT_NAME='schedule';await gate(['production-drift']);await assert.rejects(()=>gate(['production-content']));
+process.env.GITHUB_EVENT_NAME='workflow_dispatch';
 const savedMetadata=structuredClone(repositoryMetadata);
 for(const invalidMetadata of [undefined,null,{},[],false,{...savedMetadata,owner:{...savedMetadata.owner,type:'Organization'}},{...savedMetadata,owner:{...savedMetadata.owner,type:'Unknown'}},{...savedMetadata,owner:null},{...savedMetadata,full_name:'owner/other'},{...savedMetadata,owner:{...savedMetadata.owner,login:'different'}},{...savedMetadata,name:'other'},{...savedMetadata,owner:{...savedMetadata.owner,id:'1'}},Object.create(savedMetadata)]){
  repositoryMetadata=invalidMetadata;requested=[];await assert.rejects(()=>gate(['production-content']));assert.equal(requested.length,1);
@@ -50,8 +69,8 @@ for(const allowance of [undefined,null,false,'',{},[],{users:[],teams:[],apps:[]
 for(const staleValue of [undefined,null,'false',0]){
  branch.required_pull_request_reviews.dismiss_stale_reviews=staleValue;await assert.rejects(()=>gate(['production-content']));
 }branch.required_pull_request_reviews.dismiss_stale_reviews=false;
-delete process.env.GH_PROTECTION_TOKEN;await assert.rejects(()=>gate(['production-content']));
-console.log('PASS: independent User-metadata-bound gate, personal omission compatibility and API/malformed/bypass negatives');
+delete process.env.GH_PROTECTION_TOKEN;await assert.rejects(()=>gate(['production-content']));await assert.rejects(()=>preflight());
+console.log('PASS: independent operational/preflight separation, fixed-four-environment trust and API/malformed/bypass negatives');
 process.env.PLAN_ENCRYPTION_KEY=Buffer.alloc(32,7).toString('base64');const sha='a'.repeat(40), encrypted=seal(Buffer.from('dummy no-infrastructure bytes'),{sha,operation:'apply',created:new Date().toISOString()});
 const p=open(encrypted);assert.throws(()=>validatePlan({...p,created:new Date(Date.now()+100000).toISOString()},sha,'apply'));
 process.env.PLAN_ENCRYPTION_KEY=Buffer.alloc(32,8).toString('base64');assert.throws(()=>open(encrypted));

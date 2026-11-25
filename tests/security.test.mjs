@@ -63,7 +63,7 @@ test('destroy requires exact explicit site-only phrase',()=>{
 });
 test('drift classifies 0/1/2 distinctly and workflow captures nonzero under runner errexit',()=>{
  assert.equal(driftStatus(0),'NO_DRIFT');assert.equal(driftStatus(2),'DRIFT');assert.throws(()=>driftStatus(1));assert.throws(()=>driftStatus(127));
- const workflow=readFileSync('workflow-templates/drift.yml','utf8');
+ const workflow=readFileSync('.github/workflows/drift.yml','utf8');
  assert.match(workflow,/if terraform[\s\S]*then result=0; else result=\$\?; fi/);
  assert.doesNotMatch(workflow,/terraform[^\n]*\bapply\b/);
 });
@@ -77,9 +77,9 @@ test('repository policy rejects negative unsafe workflow and insecure IaC mutati
  const result=execFileSync(python,['-c',code],{encoding:'utf8'});assert.match(result,/fixtures rejected/);
 });
 
-test('verification stage has exactly one credential-free executable workflow',()=>{
+test('five workflow roles keep CI and read-only preflight isolated from operations',()=>{
  const active=readdirSync('.github/workflows').filter(name=>/\.ya?ml$/.test(name));
- assert.deepEqual(active,['ci.yml']);
+ assert.deepEqual(active.sort(),['ci.yml','content.yml','drift.yml','infrastructure.yml','preflight.yml']);
  const ci=readFileSync('.github/workflows/ci.yml','utf8');
  assert.doesNotMatch(ci,/id-token:|secrets\.|configure-aws-credentials|environment:|terraform (apply|destroy)/);
  assert.match(ci,/scripts\/run-checks\.py/);
@@ -93,5 +93,10 @@ test('verification stage has exactly one credential-free executable workflow',()
  assert.equal(permissions?.trim(),'contents: read');
  assert.equal([...ci.matchAll(/^\s*permissions:/gm)].length,1);
 
- assert.deepEqual(readdirSync('workflow-templates').filter(name=>/\.ya?ml$/.test(name)).sort(),['content.yml','drift.yml','infrastructure.yml']);
+ const preflight=readFileSync('.github/workflows/preflight.yml','utf8');
+ assert.match(preflight,/environment: production-plan/);
+ assert.match(preflight,/github\.event_name == 'workflow_dispatch' && github\.ref == 'refs\/heads\/main'/);
+ assert.doesNotMatch(preflight,/id-token|configure-aws-credentials|terraform|upload-artifact|download-artifact|ALLOW_AWS_OPERATIONS/);
+ assert.match(preflight,/import \{ preflight \} from '\.\/scripts\/gate\.mjs'/);
+
 });

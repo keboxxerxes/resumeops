@@ -13,13 +13,9 @@ concurrency:
   cancel-in-progress: false
 env:
   ALLOW_AWS_OPERATIONS: ${{ vars.ALLOW_AWS_OPERATIONS }}
-  TF_IN_AUTOMATION: 'true'
-  TF_INPUT: 'false'
-  TF_VAR_site_bucket: ${{ secrets.SITE_BUCKET }}
-  TF_VAR_region: ${{ vars.AWS_REGION }}
 jobs:
   content:
-    if: github.ref == 'refs/heads/main' && vars.ALLOW_AWS_OPERATIONS == 'true'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && vars.ALLOW_AWS_OPERATIONS == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     environment: production-content
@@ -35,6 +31,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+          ref: ${{ github.sha }}
           fetch-depth: 0
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:

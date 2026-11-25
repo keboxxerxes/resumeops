@@ -4037,5 +4037,151 @@
       "rule": "After reviewed push, independently verify latest branch head plus actual synthetic merge parents/tree, full logs/artifacts/all22zero/bothTFvalidations/lockimmutability; final evidence is attached to that exact commit and existingPR1. Do not substitute older results."
     },
     "authority": "User authorized this reviewed correction push and credential-free verification on existingbranch/PR1; no merge/visibility/protection/cloud/IAM/credential/operational change. Stop after successful verification and final recommendation."
+  },
+  "operational_workflow_activation": {
+    "date": "2026-11-25",
+    "baseline_main": "d7e9719781868203c0000cd36a08c5031aeef13e",
+    "branch": "operational-workflow-activation",
+    "authority": "Prepare activation source and new PR; request human authorization BEFORE push. No merge/ALLOW flag enable/AWS credentials/resources/IAM/Apply/Destroy/content action authorized.",
+    "maintainer_reported_progress": {
+      "status": "USER_REPORTED_NOT_NEW_INDEPENDENT_AWS_VERIFICATION",
+      "pr1_merged": true,
+      "post_merge_ci_passed": true,
+      "bootstrap_resources": 15,
+      "website_resources": 10,
+      "bootstrap_state": "Migrated to encrypted versioned S3",
+      "production_remote_state_verified": true,
+      "cloudshell_recovery_completed": true,
+      "iam_resource_rebinding_completed": true,
+      "post_rebinding_plan": "No changes"
+    },
+    "path_migration": {
+      "moves": [
+        {
+          "source": "workflow-templates/content.yml",
+          "destination": ".github/workflows/content.yml",
+          "action": "MOVE_AND_HARDEN",
+          "reason": "User-authorized operational workflow source activation; preserve pins/plan handoff/state/roles and add explicit trusted-main/flag checks, all references updated",
+          "baseline_blob": "c6b95bb3d5a3e65c40eded93a976b6ef075cd707",
+          "normalized_sha256": "e8b0eae7d4702a6739666282713c65eca136aeac9dabbe60bc9b10f5025bdf33"
+        },
+        {
+          "source": "workflow-templates/drift.yml",
+          "destination": ".github/workflows/drift.yml",
+          "action": "MOVE_AND_HARDEN",
+          "reason": "User-authorized operational workflow source activation; preserve pins/plan handoff/state/roles and add explicit trusted-main/flag checks, all references updated",
+          "baseline_blob": "639ecf1803cd59236357c36c1eab56a72305551e",
+          "normalized_sha256": "0488106d004f1959146d5a45b134f8cbbad5188182ccc231841cca0749f7a3fc"
+        },
+        {
+          "source": "workflow-templates/infrastructure.yml",
+          "destination": ".github/workflows/infrastructure.yml",
+          "action": "MOVE_AND_HARDEN",
+          "reason": "User-authorized operational workflow source activation; preserve pins/plan handoff/state/roles and add explicit trusted-main/flag checks, all references updated",
+          "baseline_blob": "e8816c7d487c8f63c73b995dfeab5e044da6b6cd",
+          "normalized_sha256": "14dd1af5db52f419dbb3051cfba3972877dffb01ed0e773f74fe82461e577265"
+        }
+      ],
+      "independent_pre_move_approval": true,
+      "approval_digest": "1516e6bec1d60d830dfbdb7973af4515e39fe18ae3a29b026357d4bef9a5406e",
+      "donor_directory": "Removed only after verified empty; no ignored/user deployment data touched",
+      "new_necessary_workflow": ".github/workflows/preflight.yml",
+      "intended_public_source_count": 70
+    },
+    "workflow_architecture": {
+      "ci": "Credential-free PR/branch/manual verification; no custom secret/OIDC/environment/cloud path",
+      "preflight": "Manual protected current-main fixed-four-environment GitHub API checks; works flag off; no OIDC/AWS/Terraform/backend/artifact",
+      "infrastructure": "Manual trusted-main/flag/protected plan and apply; successful plan dependency and explicit post-plan approval; same-run authenticated ciphertext only",
+      "content": "Manual trusted-main/flag/protected owner; exact main-ancestor allowlisted rollback/content using current tools",
+      "drift": "Scheduled/manual trusted-main/flag/protected owner; read-only role; exit0/1/2 classified; never apply"
+    },
+    "operations_flag_observations": {
+      "scope": "Specific flag only, repository and all four production environments",
+      "reads": [
+        {
+          "scope": "repository",
+          "name": "ALLOW_AWS_OPERATIONS",
+          "exit_code": 1,
+          "status": "HTTP404_NOT_FOUND",
+          "literal_true": false,
+          "disabled_by_exact_true_guard": true
+        },
+        {
+          "scope": "production-plan",
+          "name": "ALLOW_AWS_OPERATIONS",
+          "exit_code": 1,
+          "status": "HTTP404_NOT_FOUND",
+          "literal_true": false,
+          "disabled_by_exact_true_guard": true
+        },
+        {
+          "scope": "production-apply",
+          "name": "ALLOW_AWS_OPERATIONS",
+          "exit_code": 1,
+          "status": "HTTP404_NOT_FOUND",
+          "literal_true": false,
+          "disabled_by_exact_true_guard": true
+        },
+        {
+          "scope": "production-content",
+          "name": "ALLOW_AWS_OPERATIONS",
+          "exit_code": 1,
+          "status": "HTTP404_NOT_FOUND",
+          "literal_true": false,
+          "disabled_by_exact_true_guard": true
+        },
+        {
+          "scope": "production-drift",
+          "name": "ALLOW_AWS_OPERATIONS",
+          "exit_code": 1,
+          "status": "HTTP404_NOT_FOUND",
+          "literal_true": false,
+          "disabled_by_exact_true_guard": true
+        }
+      ],
+      "meaning": "API reported HTTP404_NOT_FOUND/absent, not a literal configured false. Exacttrue guards remain off. No flag change.",
+      "restricted_protection_token_verified": false
+    },
+    "preflight_token_scope": "Selected repository only; Metadata read, Administration read, Actions read; no writes/AWS authority; API success not proof token has no extra grants",
+    "local_checks": [
+      {
+        "command": "node --test --test-name-pattern='single-maintainer protection|authenticated plan handoff|destroy requires|drift classifies|content accepts|five workflow roles' tests/security.test.mjs",
+        "exit_code": 0,
+        "tests": 6
+      },
+      {
+        "command": "node tests/additional-security.mjs",
+        "exit_code": 0,
+        "coverage": "Flag-off readonly preflight, fixed all4, operationalCLI flag/event protections, API/plan negatives"
+      },
+      {
+        "command": "python tests/independent_checks.py --workflow-fixtures-only",
+        "exit_code": 0,
+        "valid_roles": 5,
+        "unsafe_semantic_mutations": 72
+      },
+      {
+        "command": "python tests/repository-integrity.py",
+        "exit_code": 0,
+        "tests": 19
+      },
+      {
+        "command": "python scripts/security.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python scripts/check-repository.py",
+        "exit_code": 0
+      },
+      {
+        "command": ".tools/gitleaks.exe dir .local/activation/public-candidate-001 --redact --no-banner",
+        "exit_code": 0,
+        "note": "Only intended70publicsourcefiles; no ignored deployment data read; final index independently rescanned before publication"
+      }
+    ],
+    "full_ubuntu_ci_at_handoff": "NOT RUN; requires independently reviewed concrete source, separate human push authorization and actual fresh push/PR runs with all22exits/bothrealTerraformroots/lockimmutability verified",
+    "restricted_token_preflight": "NOT RUN; available only after authorized merge on trusted main with protected owner approval; flag can remain off",
+    "aws_live_agent_actions": "NOT RUN/NOT AUTHORIZED; no private state/account identifiers/credential/key contents inspected or published",
+    "unchanged_controls": "Terraform/IAM/module source, all version constraints/17hash locks, action/npm/tool pins, all15Checkov rationales, remote state/locks, plancrypto, rollback/teardown and below1USDtarget/5USDbudget1/3/5alerts"
   }
 }
