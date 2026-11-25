@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "LOCAL_CLEANUP_COMPLETED_HOSTED_VERIFICATION_PENDING",
+  "status": "REVIEWED_CLEANUP_733730C_VERIFIED_22_OF_22",
   "baseline_commit": "61967de46dd5845c82853d07736f02545bd71ffb",
   "before": {
     "tracked_files": 100,
@@ -3024,7 +3024,18 @@
         "observed": "All action pins/registries/17lockhashes and public IAM action names s3=30,cloudfront=15 verified; no AWS account call"
       }
     ],
-    "canonical_ubuntu_suite": "NOT RUN: separate private push authorization pending",
-    "native_windows_terraform": "OUT OF SCOPE"
+    "canonical_ubuntu_suite": {
+      "status": "PASS",
+      "source_sha": "733730c42a1d49c9864585575ec71afda0d425a4",
+      "run_id": 45635134136,
+      "run_url": "https://github.com/keboxxerxes/resumeops/actions/runs/45635134136",
+      "job_id": 139278425158,
+      "checks": 22,
+      "all_exit_codes": 0,
+      "independent_review": true
+    },
+    "native_windows_terraform": "OUT OF SCOPE",
+    "authorization": "Human explicitly authorized reviewed private push, credential-free Ubuntu verification and reviewed evidence-only follow-ups; no public/cloud/operational authority",
+    "evidence_followup_rule": "Any later report-only HEAD must pass its own full CI and independent actual remote/job/artifact verification; this stored run proves733730c only."
   }
 }

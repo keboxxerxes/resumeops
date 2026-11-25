@@ -4,7 +4,7 @@ Canonical environment: GitHub-hosted Ubuntu 24.04, Terraform 1.17.2, AWS provide
 
 ## Current candidate and authority
 
-The Linux-first cleanup revision has not yet been pushed or verified in hosted CI. **Latest cleanup HEAD verification: NOT RUN / NO-GO until actual new evidence.** Historical successful CI is preserved, not reused as a new pass. The latest request treats a private push as a separate authorization boundary. No AWS resource, credentials, IAM, operational activation, public visibility or history rewrite is authorized.
+Human explicitly authorized the reviewed private push and credential-free Ubuntu verification, including reviewed evidence-only follow-ups. The cleanup implementation at `733730c42a1d49c9864585575ec71afda0d425a4` passed its own fresh [run 45635134136](https://github.com/keboxxerxes/resumeops/actions/runs/45635134136), job `139278425158`: **22/22 actual exit codes0**. The independent reviewer fetched actual remote HEAD, private-repository/workflow metadata, complete job logs and the sanitized artifact and reconciled the ordered commands/results. No previous run was substituted. Every later HEAD, including this evidence update, requires its own full CI; actual commit-linked Actions results/artifacts are the final identity proof. No AWS resource, credentials, IAM, operational activation, public visibility or history rewrite is authorized.
 
 ## Mandatory suite
 
@@ -25,7 +25,7 @@ Pinned CI installs official checksum-verified tools, exact npm dependencies and 
 | Repository integrity + negative tests | Docs/links, code/command/asset references, TFmoduleboundaries, artifactprivacy, inertoperations andorphans |
 | Lock immutability | Both locks SHA256 before/after; changes fail |
 
-Current runner emits **22** records: the original20 plus repository integrity and its negative cases. Unit counts are7security,19repository-integrity and6browser, plus scanner/IAM/API/crypto/drift cases. These expected counts do not fabricate an unexecuted pass.
+Current runner emits **22** records: the original20 plus repository integrity and its negative cases. Unit counts are7security,19repository-integrity and6browser, plus scanner/IAM/API/crypto/drift cases. All these counts were observed in the new implementation run; earlier Windows security prerequisite failure remains historical and is not relabeled as a pass.
 
 On trusted Linux amd64 with the pinned verified Terraform binary:
 
@@ -64,7 +64,7 @@ Independent path-specific approval preceded deletion:42 archived/consolidated do
 
 Observed source count **100 ->69**; physical snapshot excluding Git **19166 ->945** (installed Windows website/browser dependencies and ignored private audit evidence retained). Later ignored audit records can grow; these are timestamped snapshot counts. No empty directories or reparse points remain in this snapshot. Full per-file classifications and removed/retained tree are in the manifest; complete private audit snapshots stay ignored.
 
-Actual post-cleanup commands all exit0: `python scripts/check-repository.py`, `python tests/repository-integrity.py` (19tests), `python scripts/security.py`, `git diff --check`, `.tools/gitleaks.exe dir . --redact --no-banner`, `.tools/gitleaks.exe git . --redact --no-banner` (3commits, no leaks). Reviewer browser run `npm.cmd test` passed6tests. The Linux-only Node security command was attempted on Windows:6/7 passed,1failed for missing `.tools/venv/bin/python`; this is not reported as a passed suite. `python scripts/verify-provenance.py` also exited0: official action pins/dependency registries/all17lockhashes and30S3/15CloudFront action names verified via public metadata, without account calls. New Ubuntu22 remains NOT RUN. The dependency checker verifies retained source purpose/entrypoints and rejection cases; ignored installed dependencies are not public source assets.
+Actual post-cleanup commands all exit0: `python scripts/check-repository.py`, `python tests/repository-integrity.py` (19tests), `python scripts/security.py`, `git diff --check`, `.tools/gitleaks.exe dir . --redact --no-banner`, `.tools/gitleaks.exe git . --redact --no-banner` (3commits, no leaks). Reviewer browser run `npm.cmd test` passed6tests. The Linux-only Node security command was attempted on Windows:6/7 passed,1failed for missing `.tools/venv/bin/python`; this is not reported as a passed suite. `python scripts/verify-provenance.py` also exited0: official action pins/dependency registries/all17lockhashes and30S3/15CloudFront action names verified via public metadata, without account calls. The fresh Ubuntu suite subsequently passed all22records at `733730c`; this resolves implementation acceptance without changing the historical Windows observation. The dependency checker verifies retained source purpose/entrypoints and rejection cases; ignored installed dependencies are not public source assets.
 
 ## Final tree and readiness
 
@@ -142,16 +142,29 @@ workflow-templates/drift.yml
 workflow-templates/infrastructure.yml
 ```
 
-The new CI/SHA status remains pending any separately authorized private push.
+The separately authorized private push and fresh implementation run succeeded. Subsequent evidence-only HEADs require their own full CI and independent review; consult that exact commit's Actions run/artifact rather than inferring a pass from this document.
 
-| Readiness | Current cleanup candidate |
+| Readiness | Independently observed implementation revision `733730c` |
 |---|---|
-| Repository cleanliness | Pending approved deletion + final diff/privacy/link/purpose review |
-| Latest HEAD verification | NO-GO: current hosted CI NOT RUN |
-| Canonical Linux Terraform | Historical proof, current cleanup revision NOT RUN |
-| Source implementation | Pending complete fresh suite |
-| Public repository technical | Pending clean source/history/currentCI; public publishing still separately unauthorized |
-| AWS bootstrap | Secure [Linux procedure](DEPLOYMENT.md) prepared; execution NO-GO pending authority/account/session/key/recovery prerequisites |
-| Live AWS release | NO-GO: authority and actual live proofs absent |
+| Repository cleanliness | GO: approved exact cleanup,69purpose-checked source files, clean worktree, full diff/privacy/history review |
+| Latest reviewed HEAD verification | GO for733730c: actual22/22; each subsequent HEAD requires its own CI/artifact review |
+| Canonical Linux Terraform | GO: hostedUbuntu24.04, both readonly/backend-disabled init and real schema validates0 |
+| Source implementation | GO: full mandatory suite22/22, no confirmed open source finding |
+| Public repository technical | GO for reviewed source; public visibility/personal publication remains NOT AUTHORIZED |
+| AWS bootstrap | PROCEDURE PREPARED; execution NO-GO pending authority/account/session/key/recovery prerequisites |
+| Live AWS release | NO-GO: authority and mandatory live proofs absent |
+
+Actual Terraform commands from the sanitized artifact (all exit0):
+
+```sh
+terraform version -json
+terraform fmt -check -recursive infra
+terraform -chdir=infra/bootstrap init -backend=false -input=false -lockfile=readonly
+terraform -chdir=infra/bootstrap validate -no-color
+terraform -chdir=infra/site init -backend=false -input=false -lockfile=readonly
+terraform -chdir=infra/site validate -no-color
+```
+
+The recursive format command covers both roots and their module. TFLint both roots, actionlint active/inert workflows, secret/provenance scans, actual negative scanner/adversarial cases and drift shell tests all exited0. Checkov observed67passed,0failed,15individually reviewed skips; repository-integrity19, Node security7 and browser/axe6 all passed. Both17-hash locks and all version constraints remain unchanged. Full22ordered commands/exits, run/job/artifact identities/digests and independent findings are retained in [structured history](evidence/verification-history.json). No raw job logs were published. Native Windows Terraform is **OUT OF SCOPE**, not PASS.
 
 Remaining live checks are NOT RUN: GitHub protection availability, actual OIDC/least privilege, lock/recovery, origin denial, HTTPS/deploy/metadata, drift, rollback, budget delivery and authorized temporary teardown. Source/cleanup GO never authorizes account changes or public visibility.
