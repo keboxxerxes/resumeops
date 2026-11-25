@@ -1,0 +1,22 @@
+{
+  "infra/bootstrap/versions.tf": {
+    "unchanged_from_previous_execution": true,
+    "sha256": "99e4430cab35adc71f3908f587065805f6eedcd5770cebb3663216201a1a1703"
+  },
+  "infra/site/versions.tf": {
+    "unchanged_from_previous_execution": true,
+    "sha256": "e3310436d356e67398ae205ffa33db3ad43e6e790fdfd8e726a4f023eb32f36d"
+  },
+  "infra/modules/website/versions.tf": {
+    "unchanged_from_previous_execution": true,
+    "sha256": "99e4430cab35adc71f3908f587065805f6eedcd5770cebb3663216201a1a1703"
+  },
+  "infra/bootstrap/.terraform.lock.hcl": {
+    "unchanged_from_previous_execution": true,
+    "sha256": "68a32465876f8a19742c2a00fca6d62ab488d232430496c5efd6a0fc7d271fc6"
+  },
+  "infra/site/.terraform.lock.hcl": {
+    "unchanged_from_previous_execution": true,
+    "sha256": "68a32465876f8a19742c2a00fca6d62ab488d232430496c5efd6a0fc7d271fc6"
+  }
+}

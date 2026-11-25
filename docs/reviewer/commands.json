@@ -1,0 +1,158 @@
+[
+  {
+    "check": "terraform-fmt",
+    "command": ".tools\\terraform.exe fmt -check -recursive infra",
+    "exit": 0,
+    "seconds": 0.14
+  },
+  {
+    "check": "bootstrap-init",
+    "command": ".tools\\terraform.exe -chdir=infra/bootstrap init -backend=false -input=false -lockfile=readonly",
+    "exit": 0,
+    "seconds": 2.25
+  },
+  {
+    "check": "bootstrap-validate",
+    "command": ".tools\\terraform.exe -chdir=infra/bootstrap validate -no-color",
+    "exit": 1,
+    "seconds": 3.77
+  },
+  {
+    "check": "site-init",
+    "command": ".tools\\terraform.exe -chdir=infra/site init -backend=false -input=false -lockfile=readonly",
+    "exit": 0,
+    "seconds": 1.46
+  },
+  {
+    "check": "site-validate",
+    "command": ".tools\\terraform.exe -chdir=infra/site validate -no-color",
+    "exit": 1,
+    "seconds": 3.9
+  },
+  {
+    "check": "bootstrap-tflint",
+    "command": ".tools\\tflint.exe --chdir=infra/bootstrap --config=.tflint.hcl",
+    "exit": 0,
+    "seconds": 0.76
+  },
+  {
+    "check": "site-tflint",
+    "command": ".tools\\tflint.exe --chdir=infra/site --config=.tflint.hcl",
+    "exit": 0,
+    "seconds": 0.77
+  },
+  {
+    "check": "actionlint",
+    "command": ".tools\\actionlint.exe",
+    "exit": 0,
+    "seconds": 0.08
+  },
+  {
+    "check": "checkov",
+    "command": ".tools\\venv\\Scripts\\python.exe .tools\\venv\\Scripts\\checkov -d infra --framework terraform --compact --quiet --output json",
+    "exit": 0,
+    "seconds": 13.18
+  },
+  {
+    "check": "gitleaks",
+    "command": ".tools\\gitleaks.exe dir . --redact --no-banner",
+    "exit": 0,
+    "seconds": 0.8
+  },
+  {
+    "check": "guardrails",
+    "command": ".tools\\venv\\Scripts\\python.exe scripts/security.py",
+    "exit": 0,
+    "seconds": 0.21
+  },
+  {
+    "check": "security-tests",
+    "command": "node --test tests/security.test.mjs",
+    "exit": 0,
+    "seconds": 0.77
+  },
+  {
+    "check": "provenance",
+    "command": "python scripts/verify-provenance.py",
+    "exit": 0,
+    "seconds": 2.8
+  },
+  {
+    "check": "browser-tests",
+    "command": "node node_modules/@playwright/test/cli.js test",
+    "exit": 0,
+    "seconds": 6.8
+  },
+  {
+    "check": "final-fmt",
+    "command": ".tools\\terraform.exe fmt -check -recursive infra",
+    "exit": 0,
+    "seconds": 0.25
+  },
+  {
+    "check": "final-bootstrap-tflint",
+    "command": ".tools\\tflint.exe --chdir=infra/bootstrap --config=.tflint.hcl",
+    "exit": 0,
+    "seconds": 0.98
+  },
+  {
+    "check": "final-actionlint",
+    "command": ".tools\\actionlint.exe",
+    "exit": 0,
+    "seconds": 0.11
+  },
+  {
+    "check": "final-checkov",
+    "command": ".tools\\venv\\Scripts\\python.exe .tools\\venv\\Scripts\\checkov -d infra --framework terraform --compact --quiet --output json",
+    "exit": 0,
+    "seconds": 18.56
+  },
+  {
+    "check": "real-negative-public-s3",
+    "command": ".tools/venv/Scripts/python tests/negative-scans.py",
+    "exit": 0,
+    "nested_expected_exit": 1,
+    "detection": "CKV_AWS_20"
+  },
+  {
+    "check": "independent-source-and-workflow-negatives",
+    "command": ".tools/venv/Scripts/python docs/reviewer/independent_checks.py",
+    "exit": 0,
+    "nested_expected_exits": {
+      "Checkov CKV_GHA_2": 1,
+      "actionlint invalid workflow": 1
+    },
+    "note": "Five IAM source mutations rejected. Initial development matcher over-rejected allowed CreateInvalidation; corrected reviewer harness and reran, no implementation change."
+  },
+  {
+    "check": "independent-api-and-crypto-negatives",
+    "command": "node docs/reviewer/additional.mjs",
+    "exit": 0
+  },
+  {
+    "check": "actual-drift-shell-exit-capture",
+    "command": ".tools/venv/Scripts/python docs/reviewer/drift-execution.py",
+    "exit": 0,
+    "synthetic_terraform_to_workflow_exit": {
+      "0": 0,
+      "1": 1,
+      "2": 1
+    },
+    "note": "Shell function stub, no Terraform/AWS operation"
+  },
+  {
+    "check": "official-runtime-iam-action-names",
+    "command": "python docs/reviewer/action-names.py",
+    "exit": 0,
+    "verified_actions": {
+      "s3": 30,
+      "cloudfront": 15
+    }
+  },
+  {
+    "check": "security-tests-after-gate-fix",
+    "command": "node --test tests/security.test.mjs",
+    "exit": 0,
+    "passed": 6
+  }
+]

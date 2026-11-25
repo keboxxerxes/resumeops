@@ -1,0 +1,11 @@
+process.on('uncaughtException', () => { console.error('Operation failed; inspect privately without exposing command output'); process.exit(1); });
+process.on('unhandledRejection', () => { console.error('Operation failed; inspect privately without exposing command output'); process.exit(1); });
+import {ASSETS} from './content.mjs';
+import {execFileSync} from 'node:child_process';
+const {SITE_BUCKET,CF_DISTRIBUTION_ID} = process.env;
+if (!/^resumeops-[a-z0-9-]+-production$/.test(SITE_BUCKET ?? '') || !/^[A-Z0-9]+$/.test(CF_DISTRIBUTION_ID ?? '')) throw new Error('Invalid private target configuration');
+const types = {'index.html':'text/html; charset=utf-8','styles.css':'text/css; charset=utf-8','app.js':'text/javascript; charset=utf-8','deployment.json':'application/json'};
+for (const name of ASSETS) execFileSync('aws',['s3','cp',`dist/${name}`,`s3://${SITE_BUCKET}/${name}`,'--content-type',types[name],'--cache-control','public,max-age=0,must-revalidate','--only-show-errors'],{stdio:'pipe'});
+const result = JSON.parse(execFileSync('aws',['cloudfront','create-invalidation','--distribution-id',CF_DISTRIBUTION_ID,'--paths','/','/index.html','/styles.css','/app.js','/deployment.json','--output','json'],{encoding:'utf8'}));
+execFileSync('aws',['cloudfront','wait','invalidation-completed','--distribution-id',CF_DISTRIBUTION_ID,'--id',result.Invalidation.Id],{stdio:'pipe'});
+console.log('Approved assets deployed; invalidation completed');

@@ -1,0 +1,45 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.22.2'
+      - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e
+        with:
+          terraform_version: '1.17.2'
+          terraform_wrapper: false
+      - name: Install pinned verification tools
+        run: |
+          python3 scripts/install-tools.py
+          python3 -m venv .tools/venv
+          .tools/venv/bin/pip install -r requirements-tools.txt
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Run all checks and report every exit code
+        env:
+          AWS_EC2_METADATA_DISABLED: 'true'
+          CHECKPOINT_DISABLE: '1'
+          CKV_ENABLE_EXTERNAL_MODULES: 'false'
+        run: .tools/venv/bin/python scripts/run-checks.py
+      - name: Preserve sanitized verification evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: verification-evidence
+          path: .local/verification/results.json
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 3

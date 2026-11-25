@@ -1,0 +1,5 @@
+[extend]
+useDefault = true
+[[allowlists]]
+description = "Local tool caches, dependencies and ephemeral test output; no source exclusions"
+paths = ['''(^|[\\/])(?:\.tools|\.terraform|node_modules|test-results|playwright-report|\.git)(?:[\\/]|$)''']

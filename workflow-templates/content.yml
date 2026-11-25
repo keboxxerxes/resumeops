@@ -1,0 +1,62 @@
+name: Content deployment or rollback
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        type: string
+        description: 'Exact approved main-ancestor content SHA; blank uses current main'
+        required: false
+permissions:
+  contents: read
+concurrency:
+  group: resumeops-production
+  cancel-in-progress: false
+env:
+  ALLOW_AWS_OPERATIONS: ${{ vars.ALLOW_AWS_OPERATIONS }}
+  TF_IN_AUTOMATION: 'true'
+  TF_INPUT: 'false'
+  TF_VAR_site_bucket: ${{ secrets.SITE_BUCKET }}
+  TF_VAR_region: ${{ vars.AWS_REGION }}
+jobs:
+  content:
+    if: github.ref == 'refs/heads/main' && vars.ALLOW_AWS_OPERATIONS == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: production-content
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      REQUESTED_REVISION: ${{ inputs.revision }}
+      SITE_BUCKET: ${{ secrets.SITE_BUCKET }}
+      CF_DISTRIBUTION_ID: ${{ secrets.CF_DISTRIBUTION_ID }}
+      SITE_HOST: ${{ secrets.SITE_HOST }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.22.2'
+      - name: Verify actual repository protection before OIDC
+        env:
+          GH_PROTECTION_TOKEN: ${{ secrets.GH_PROTECTION_TOKEN }}
+        run: node scripts/gate.mjs production-content
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd
+        with:
+          role-to-assume: ${{ secrets.CONTENT_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          mask-aws-account-id: true
+          role-duration-seconds: 3600
+      - name: Prepare only approved assets using current trusted tooling
+        run: |
+          set -euo pipefail
+          CONTENT_SHA="${REQUESTED_REVISION:-$GITHUB_SHA}"
+          export CONTENT_SHA
+          node scripts/content.mjs
+          echo "CONTENT_SHA=$CONTENT_SHA" >> "$GITHUB_ENV"
+      - name: Upload allowlist and verify HTTPS revision
+        run: |
+          node scripts/deploy-content.mjs
+          node scripts/smoke.mjs

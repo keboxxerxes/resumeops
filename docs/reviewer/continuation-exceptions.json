@@ -1,0 +1,107 @@
+[
+  {
+    "resource": "module.website.aws_cloudfront_distribution.site",
+    "check_id": "CKV_AWS_86",
+    "check_name": "Ensure CloudFront distribution has Access Logging enabled",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "No visitor request/audit logs; request analysis is unavailable. Data minimization and cost choice; HTTPS smoke verifies sampled delivery only and does not replace logging."
+  },
+  {
+    "resource": "module.website.aws_cloudfront_distribution.site",
+    "check_id": "CKV_AWS_310",
+    "check_name": "Ensure CloudFront distributions should have origin failover configured",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "Single private S3 origin is intentional; no second persistent environment or failover origin."
+  },
+  {
+    "resource": "module.website.aws_cloudfront_distribution.site",
+    "check_id": "CKV_AWS_374",
+    "check_name": "Ensure AWS CloudFront web distribution has geo restriction enabled",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "Public professional portfolio intentionally reachable globally."
+  },
+  {
+    "resource": "module.website.aws_cloudfront_distribution.site",
+    "check_id": "CKV_AWS_174",
+    "check_name": "Verify CloudFront Distribution Viewer Certificate is using TLS v1.2 or higher",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "AWS default CloudFront certificate fixes minimum viewer TLS policy; custom domain/certificate excluded. HTTPS remains mandatory; legacy client TLS residual documented."
+  },
+  {
+    "resource": "module.website.aws_cloudfront_distribution.site",
+    "check_id": "CKV_AWS_68",
+    "check_name": "CloudFront Distribution should have WAF enabled",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "Read-only static assets/no backend; pay-as-you-go WAF exceeds target cost. Free CloudFront flat-rate WAF is a separate unenrolled offering, not this distribution."
+  },
+  {
+    "resource": "module.website.aws_cloudfront_distribution.site",
+    "check_id": "CKV2_AWS_42",
+    "check_name": "Ensure AWS CloudFront distribution uses custom SSL certificate",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "Specification requires default CloudFront hostname; no custom certificate/domain."
+  },
+  {
+    "resource": "module.website.aws_cloudfront_distribution.site",
+    "check_id": "CKV2_AWS_47",
+    "check_name": "Ensure AWS CloudFront attached WAFv2 WebACL is configured with AMR for Log4j Vulnerability",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "No runtime or Log4j; no WAF inspection/managed rules. Pay-as-you-go WAF cost excluded; separate free flat-rate plan not enrolled. CSP/origin isolation address different risks."
+  },
+  {
+    "resource": "aws_s3_bucket.state",
+    "check_id": "CKV2_AWS_62",
+    "check_name": "Ensure S3 buckets should have event notifications enabled",
+    "file": "\\bootstrap\\main.tf",
+    "reason": "No event-consumer requirement; no event-driven state-change alerting. Native locks control concurrency and are not event monitoring."
+  },
+  {
+    "resource": "module.website.aws_s3_bucket.site",
+    "check_id": "CKV2_AWS_62",
+    "check_name": "Ensure S3 buckets should have event notifications enabled",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "No event consumer or event-alert requirement in scope; absent notifications mean no event-driven object-change monitoring."
+  },
+  {
+    "resource": "aws_s3_bucket.state",
+    "check_id": "CKV_AWS_18",
+    "check_name": "Ensure the S3 bucket has access logging enabled",
+    "file": "\\bootstrap\\main.tf",
+    "reason": "State data-access audit logging is absent. S3 log delivery is free; storage/access costs and additional audit infrastructure omitted. Exact IAM/versioning/locks prevent other risks but do not audit state reads."
+  },
+  {
+    "resource": "module.website.aws_s3_bucket.site",
+    "check_id": "CKV_AWS_18",
+    "check_name": "Ensure the S3 bucket has access logging enabled",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "No S3 access audit log selected for this public static site; log delivery is free but storage/access fees and visitor-data retention remain. Origin blocks prevent bypass but do not provide auditing."
+  },
+  {
+    "resource": "aws_s3_bucket.state",
+    "check_id": "CKV_AWS_144",
+    "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+    "file": "\\bootstrap\\main.tf",
+    "reason": "Single-region versioned state is not regional disaster recovery. A private operator recovery backup is a release prerequisite, not verified to exist."
+  },
+  {
+    "resource": "module.website.aws_s3_bucket.site",
+    "check_id": "CKV_AWS_144",
+    "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "Single region required; versioned bucket provides recovery without replication cost."
+  },
+  {
+    "resource": "aws_s3_bucket.state",
+    "check_id": "CKV_AWS_145",
+    "check_name": "Ensure that S3 buckets are encrypted with KMS by default",
+    "file": "\\bootstrap\\main.tf",
+    "reason": "SSE-S3 at rest; no independent KMS key-policy boundary. Customer-managed key monthly/request costs excluded; AWS-managed KMS storage itself is free, requests may cost."
+  },
+  {
+    "resource": "module.website.aws_s3_bucket.site",
+    "check_id": "CKV_AWS_145",
+    "check_name": "Ensure that S3 buckets are encrypted with KMS by default",
+    "file": "\\modules\\website\\main.tf",
+    "reason": "SSE-S3 provides at-rest encryption without separate key-policy separation. Customer-managed KMS key monthly/request costs excluded; AWS-managed KMS has no key storage charge but request charges may apply."
+  }
+]
